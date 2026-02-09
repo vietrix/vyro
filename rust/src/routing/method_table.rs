@@ -4,6 +4,7 @@ use std::sync::Arc;
 use matchit::Router;
 
 use crate::errors::core_error::CoreError;
+use crate::routing::errors::RoutingResult;
 use crate::routing::params::LookupResult;
 use crate::routing::radix::{RouteDefinition, RouteHandler};
 
@@ -13,7 +14,7 @@ pub struct RouteRegistry {
 }
 
 impl RouteRegistry {
-    pub fn from_routes(routes: Vec<RouteDefinition>) -> Result<Self, CoreError> {
+    pub fn from_routes(routes: Vec<RouteDefinition>) -> RoutingResult<Self> {
         let mut per_method: HashMap<String, Router<RouteHandler>> = HashMap::new();
         for route in routes {
             let method = route.method.to_uppercase();

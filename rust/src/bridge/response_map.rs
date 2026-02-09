@@ -5,6 +5,7 @@ use pyo3::types::{PyAny, PyBytes, PyDict, PyList, PyString, PyTuple};
 
 use crate::errors::core_error::CoreError;
 use crate::http::response::OutgoingResponse;
+use crate::serialization::content_type::{APPLICATION_JSON_UTF8, TEXT_PLAIN_UTF8};
 use crate::serialization::json::to_json_bytes;
 
 pub fn py_to_response(
@@ -74,25 +75,19 @@ fn py_to_body(
     obj: &Bound<'_, PyAny>,
 ) -> Result<(Vec<u8>, Option<String>), CoreError> {
     if obj.is_none() {
-        return Ok((
-            Vec::new(),
-            Some("application/json; charset=utf-8".to_string()),
-        ));
+        return Ok((Vec::new(), Some(APPLICATION_JSON_UTF8.to_string())));
     }
     if let Ok(bytes) = obj.downcast::<PyBytes>() {
         return Ok((bytes.as_bytes().to_vec(), None));
     }
     if let Ok(text) = obj.downcast::<PyString>() {
         let s = text.to_string();
-        return Ok((
-            s.into_bytes(),
-            Some("text/plain; charset=utf-8".to_string()),
-        ));
+        return Ok((s.into_bytes(), Some(TEXT_PLAIN_UTF8.to_string())));
     }
     if obj.is_instance_of::<PyDict>() || obj.is_instance_of::<PyList>() {
         let body = to_json_bytes(py, obj)?;
-        return Ok((body, Some("application/json; charset=utf-8".to_string())));
+        return Ok((body, Some(APPLICATION_JSON_UTF8.to_string())));
     }
     let body = to_json_bytes(py, obj)?;
-    Ok((body, Some("application/json; charset=utf-8".to_string())))
+    Ok((body, Some(APPLICATION_JSON_UTF8.to_string())))
 }

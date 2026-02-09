@@ -18,7 +18,9 @@ use crate::http::headers::{header_name, header_value};
 use crate::http::query::parse_query;
 use crate::http::request::IncomingRequest;
 use crate::http::response::OutgoingResponse;
+use crate::http::status::{internal_error_status, method_not_allowed_status, not_found_status};
 use crate::routing::method_table::RouteRegistry;
+use crate::serialization::content_type::TEXT_PLAIN_UTF8;
 
 type Body = Full<Bytes>;
 
@@ -65,15 +67,15 @@ async fn process_request(
         found
     } else if registry.path_exists_for_other_method(&method, &path) {
         return Ok(simple_response(
-            StatusCode::METHOD_NOT_ALLOWED,
+            method_not_allowed_status(),
             b"Method Not Allowed".to_vec(),
-            "text/plain; charset=utf-8",
+            TEXT_PLAIN_UTF8,
         ));
     } else {
         return Ok(simple_response(
-            StatusCode::NOT_FOUND,
+            not_found_status(),
             b"Not Found".to_vec(),
-            "text/plain; charset=utf-8",
+            TEXT_PLAIN_UTF8,
         ));
     };
 
@@ -97,8 +99,6 @@ async fn process_request(
     let query = parse_query(parts.uri.query());
 
     let request = IncomingRequest {
-        method,
-        path,
         headers,
         query,
         path_params: lookup.path_params,
@@ -134,8 +134,8 @@ fn simple_response(status: StatusCode, body: Vec<u8>, content_type: &str) -> Res
 fn internal_error_response(err: CoreError) -> Response<Body> {
     eprintln!("internal error: {err}");
     simple_response(
-        StatusCode::INTERNAL_SERVER_ERROR,
+        internal_error_status(),
         b"Internal Server Error".to_vec(),
-        "text/plain; charset=utf-8",
+        TEXT_PLAIN_UTF8,
     )
 }
