@@ -1,0 +1,37 @@
+name: "Question"
+description: "Ask usage or implementation questions (Issues-only support mode)"
+title: "[Question] "
+labels: ["question", "needs-triage"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: What are you trying to achieve?
+      description: Describe the final outcome you want.
+    validations:
+      required: true
+  - type: textarea
+    id: attempted
+    attributes:
+      label: What have you tried so far?
+      description: Share attempts and observed results.
+    validations:
+      required: true
+  - type: textarea
+    id: snippet
+    attributes:
+      label: Relevant code or configuration
+      description: Paste the smallest useful snippet.
+      render: python
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      value: |
+        - OS:
+        - Python:
+        - vyro version:
+    validations:
+      required: true

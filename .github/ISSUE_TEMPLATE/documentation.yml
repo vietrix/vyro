@@ -1,0 +1,39 @@
+name: "Documentation"
+description: "Report docs gaps or propose documentation improvements"
+title: "[Docs] "
+labels: ["documentation", "needs-triage"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Documentation location
+      description: File path or URL that needs changes.
+      placeholder: README.md, docs/..., wiki page URL...
+    validations:
+      required: true
+  - type: textarea
+    id: current_gap
+    attributes:
+      label: Current gap
+      description: What is missing, inaccurate, or unclear?
+    validations:
+      required: true
+  - type: textarea
+    id: proposed_text
+    attributes:
+      label: Proposed update
+      description: Suggest wording or structure.
+    validations:
+      required: false
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Target audience
+      options:
+        - New users
+        - Contributors
+        - Maintainers
+        - All of the above
+      default: 0
+    validations:
+      required: true

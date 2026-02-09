@@ -1,0 +1,46 @@
+name: "Feature request"
+description: "Propose an enhancement for Vyro"
+title: "[Feature] "
+labels: ["enhancement", "needs-triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem statement
+      description: What problem are you trying to solve?
+      placeholder: Describe the limitation or pain point.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe your preferred solution.
+      placeholder: Explain the API/behavior you want.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What alternatives did you evaluate?
+    validations:
+      required: false
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case and impact
+      description: Who benefits and how?
+    validations:
+      required: true
+  - type: dropdown
+    id: breaking_change
+    attributes:
+      label: Potential breaking change?
+      options:
+        - "No"
+        - "Yes"
+        - "Not sure"
+      default: 0
+    validations:
+      required: true

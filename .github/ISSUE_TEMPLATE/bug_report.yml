@@ -1,0 +1,60 @@
+name: "Bug report"
+description: "Report incorrect behavior or runtime errors"
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: checkboxes
+    id: existing
+    attributes:
+      label: Existing issue check
+      description: Please verify this was not reported already.
+      options:
+        - label: I searched existing issues and did not find a duplicate.
+          required: true
+  - type: textarea
+    id: current_behavior
+    attributes:
+      label: Current behavior
+      description: What is currently happening?
+      placeholder: Describe the observed behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected behavior
+      description: What should happen instead?
+      placeholder: Describe the expected behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Provide minimal, reproducible steps.
+      placeholder: |
+        1. Install...
+        2. Run...
+        3. Observe...
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include runtime and platform details.
+      value: |
+        - OS:
+        - Python:
+        - vyro version:
+        - Rust toolchain (if building from source):
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs and traceback
+      description: Paste relevant logs, stack traces, or command output.
+      render: shell
+    validations:
+      required: false
