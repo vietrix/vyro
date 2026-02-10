@@ -5,6 +5,7 @@ from typing import Awaitable, Callable
 
 
 Handler = Callable[[dict], Awaitable[object]]
+NativeRoute = tuple[str, str, Handler]
 
 
 @dataclass(slots=True)

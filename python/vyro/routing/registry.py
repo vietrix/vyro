@@ -2,15 +2,17 @@ from __future__ import annotations
 
 from typing import Any, Callable
 
+from vyro.routing.aot import compile_routes
 from vyro.routing.dispatch import build_dispatch
 from vyro.routing.normalize import normalize_path
 from vyro.routing.validate import validate_handler
-from vyro.typing import RouteRecord
+from vyro.typing import NativeRoute, RouteRecord
 
 
 class RouterRegistry:
     def __init__(self) -> None:
         self._routes: list[RouteRecord] = []
+        self._compiled: list[NativeRoute] | None = None
 
     def add_route(self, method: str, path: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         normalized_path = normalize_path(path)
@@ -27,9 +29,15 @@ class RouterRegistry:
                     dispatch=dispatch,
                 )
             )
+            self._compiled = None
             return fn
 
         return decorator
 
-    def export_native(self) -> list[tuple[str, str, Callable[..., Any]]]:
-        return [(route.method, route.normalized_path, route.dispatch) for route in self._routes]
+    def compile(self) -> list[NativeRoute]:
+        if self._compiled is None:
+            self._compiled = compile_routes(self._routes)
+        return list(self._compiled)
+
+    def export_native(self) -> list[NativeRoute]:
+        return self.compile()

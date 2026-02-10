@@ -35,4 +35,5 @@ class Vyro:
         port: int = DEFAULT_PORT,
         workers: int = DEFAULT_WORKERS,
     ) -> None:
-        run_native_server(host, port, max(workers, 1), self._router.export_native())
+        compiled_plan = self._router.compile()
+        run_native_server(host, port, max(workers, 1), compiled_plan)
