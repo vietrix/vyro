@@ -28,6 +28,7 @@ from vyro.runtime.retry import RetryPolicy
 from vyro.runtime.secrets import SecretsManager
 from vyro.runtime.shutdown import GracefulShutdownPolicy
 from vyro.runtime.sql import SQLiteAsyncAdapter
+from vyro.runtime.schema_drift import SchemaDriftDetector
 from vyro.runtime.sql_policy import QueryExecutionPolicy
 from vyro.runtime.static_files import StaticFileService
 from vyro.runtime.timeout_budget import TimeoutBudget
@@ -237,6 +238,13 @@ def test_vyro_accepts_custom_sql_policy() -> None:
     policy = QueryExecutionPolicy(timeout_sec=3.0, slow_query_threshold_ms=50.0)
     app.set_sql_policy(policy)
     assert app._sql_policy.timeout_sec == pytest.approx(3.0)  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_schema_drift_detector(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    app = Vyro()
+    detector = SchemaDriftDetector(database=tmp_path / "app.db")
+    app.set_schema_drift_detector(detector)
+    assert app._schema_drift is detector  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_response_compressor() -> None:

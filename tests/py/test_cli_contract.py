@@ -53,3 +53,24 @@ def test_cli_migrate_dry_run() -> None:
         record = json.loads(result.stdout.strip())
         assert record["level"] == "INFO"
         assert "Migration dry-run completed." in record["message"]
+
+
+def test_cli_drift_reports_missing_schema(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    runner = CliRunner()
+    db = tmp_path / "app.db"
+    schema = tmp_path / "schema.json"
+    schema.write_text("{}", encoding="utf-8")
+    result = runner.invoke(
+        app,
+        [
+            "drift",
+            "--db",
+            str(db),
+            "--schema",
+            str(schema),
+        ],
+    )
+    assert result.exit_code == 0
+    record = json.loads(result.stdout.strip())
+    assert record["level"] == "INFO"
+    assert "Schema drift check passed." in record["message"]

@@ -29,6 +29,7 @@ from .runtime.negotiation import ContentNegotiator
 from .runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.retry import RetryPolicy
+from .runtime.schema_drift import SchemaDriftDetector
 from .runtime.secrets import SecretsManager
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
@@ -66,6 +67,7 @@ class Vyro:
         self._static_files = StaticFileService(root=Path(DEFAULT_STATIC_ROOT))
         self._sql: AsyncSQLAdapter = SQLiteAsyncAdapter(database=Path(":memory:"))
         self._sql_policy = QueryExecutionPolicy()
+        self._schema_drift = SchemaDriftDetector(database=Path("app.db"))
         self._compression = ResponseCompressor()
         self._cors = CORSProfile.preset("standard")
         self._csrf = CSRFProtector.with_random_secret()
@@ -192,6 +194,9 @@ class Vyro:
 
     def set_sql_policy(self, policy: QueryExecutionPolicy) -> None:
         self._sql_policy = policy
+
+    def set_schema_drift_detector(self, detector: SchemaDriftDetector) -> None:
+        self._schema_drift = detector
 
     def set_response_compressor(self, compressor: ResponseCompressor) -> None:
         self._compression = compressor

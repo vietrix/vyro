@@ -21,6 +21,7 @@ from .negotiation import ContentNegotiator, NegotiationResult
 from .oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OIDCClaims, OAuth2Config, OAuth2OIDCHelper
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .retry import RetryPolicy
+from .schema_drift import DriftIssue, DriftReport, SchemaDriftDetector
 from .secrets import EnvSecretsProvider, InMemorySecretsProvider, SecretsManager, SecretsProvider
 from .server import run_native_server
 from .shutdown import GracefulShutdownPolicy
@@ -70,6 +71,9 @@ __all__ = [
     "OutboundCircuitBreaker",
     "RouteConcurrencyLimiter",
     "RetryPolicy",
+    "DriftIssue",
+    "DriftReport",
+    "SchemaDriftDetector",
     "EnvSecretsProvider",
     "InMemorySecretsProvider",
     "SecretsManager",

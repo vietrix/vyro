@@ -53,6 +53,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
 - Query timeout and slow query log primitives.
+- Schema drift detector primitives.
 - Transaction scope decorator primitives.
 - Outbound circuit-breaker primitive for upstream dependency protection.
 - Outbound bulkhead primitive to isolate dependency pools.

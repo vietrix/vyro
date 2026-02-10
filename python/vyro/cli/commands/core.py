@@ -11,6 +11,7 @@ from vyro.openapi_compat import compare_openapi, load_openapi_document
 from vyro.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
 from vyro.routing.lint import lint_project
 from vyro.runtime.migrations import MigrationRunner
+from vyro.runtime.schema_drift import SchemaDriftDetector
 from vyro.cli.runtime import (
     get_version_string,
     info,
@@ -143,6 +144,20 @@ def migrate(
     info(
         f"Migration {mode} completed. applied={len(result.applied)} skipped={len(result.skipped)}"
     )
+
+
+@app.command("drift")
+def drift(
+    db: Path = typer.Option(Path("app.db"), "--db", help="SQLite database path."),
+    schema: Path = typer.Option(Path("schema.json"), "--schema", help="Expected schema JSON file."),
+) -> None:
+    detector = SchemaDriftDetector(database=db)
+    report = detector.detect_from_file(schema)
+    if report.has_drift:
+        for issue in report.issues:
+            typer.echo(f"ERROR: {issue.table} - {issue.message}", err=True)
+        raise typer.Exit(code=1)
+    info("Schema drift check passed.")
 
 
 @app.command("version")
