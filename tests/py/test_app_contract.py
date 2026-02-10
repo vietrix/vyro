@@ -48,6 +48,26 @@ def test_handler_must_have_ctx_param() -> None:
             return {"ok": True}
 
 
+def test_sync_websocket_handler_is_rejected() -> None:
+    app = Vyro()
+
+    with pytest.raises(HandlerSignatureError, match="websocket handler must be declared with async def"):
+
+        @app.websocket("/ws/:room")
+        def sync_ws(ctx):  # type: ignore[no-untyped-def]
+            return ctx
+
+
+def test_websocket_handler_is_registered() -> None:
+    app = Vyro()
+
+    @app.websocket("/ws/:room")
+    async def ws_handler(ctx):  # type: ignore[no-untyped-def]
+        return ctx
+
+    assert app._websocket.get("/ws/:room") is ws_handler  # noqa: SLF001
+
+
 def test_vyro_accepts_custom_shutdown_policy() -> None:
     app = Vyro()
     policy = GracefulShutdownPolicy(timeout_seconds=12, drain_inflight=False)

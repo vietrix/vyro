@@ -16,6 +16,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Outbound bulkhead isolation primitives per dependency.
 - Retry policy primitives with exponential backoff and jitter.
 - Timeout budget primitives for cross-call deadline propagation.
+- WebSocket route registry primitives for async handlers.
 
 ## Entry Points
 - `run_native_server`

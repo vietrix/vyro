@@ -8,6 +8,7 @@ from .retry import RetryPolicy
 from .server import run_native_server
 from .shutdown import GracefulShutdownPolicy
 from .timeout_budget import TimeoutBudget
+from .websocket import WebSocketRouteRegistry
 
 __all__ = [
     "BackpressureController",
@@ -20,6 +21,7 @@ __all__ = [
     "RetryPolicy",
     "TimeoutBudget",
     "TokenBucketRateLimiter",
+    "WebSocketRouteRegistry",
     "run_native_server",
     "GracefulShutdownPolicy",
 ]

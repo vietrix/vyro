@@ -15,6 +15,7 @@ from .runtime.retry import RetryPolicy
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
 from .runtime.timeout_budget import TimeoutBudget
+from .runtime.websocket import WebSocketRouteRegistry
 from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_WORKERS
 
 
@@ -32,6 +33,7 @@ class Vyro:
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
         self._timeout_budget = TimeoutBudget(timeout_sec=30.0)
+        self._websocket = WebSocketRouteRegistry()
 
     def get(
         self,
@@ -68,6 +70,13 @@ class Vyro:
         deprecated: bool | str = False,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         return self._router.add_route("DELETE", path, version=version, deprecated=deprecated)
+
+    def websocket(self, path: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+        def decorator(handler: Callable[..., Any]) -> Callable[..., Any]:
+            self._websocket.add(path, handler)
+            return handler
+
+        return decorator
 
     def add_middleware(
         self,

@@ -38,6 +38,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Retry policy primitive with exponential backoff and jitter.
 - Timeout budget primitive for end-to-end deadline propagation.
 - First-class SSE response primitive for server-sent events.
+- WebSocket route registry and `@app.websocket(...)` decorator.
 
 ## Quickstart
 
