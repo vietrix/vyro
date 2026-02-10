@@ -26,6 +26,7 @@ from .multipart_parser import MultipartParser, MultipartSection
 from .migrations import MigrationResult, MigrationRunner
 from .negotiation import ContentNegotiator, NegotiationResult
 from .oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OIDCClaims, OAuth2Config, OAuth2OIDCHelper
+from .outbox import InMemoryOutboxStore, OutboxMessage, OutboxPatternHelper, OutboxStore
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .response_cache import ResponseCachePolicy, ResponseCacheService
 from .retry import RetryPolicy
@@ -92,6 +93,10 @@ __all__ = [
     "OIDCClaims",
     "OAuth2OIDCHelper",
     "OAUTH2_DEFAULT_CONFIG",
+    "OutboxMessage",
+    "OutboxStore",
+    "InMemoryOutboxStore",
+    "OutboxPatternHelper",
     "GrpcGateway",
     "GrpcRoute",
     "OutboundBulkhead",

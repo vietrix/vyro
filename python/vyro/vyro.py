@@ -35,6 +35,7 @@ from .runtime.multipart_parser import MultipartParser
 from .runtime.migrations import MigrationRunner
 from .runtime.negotiation import ContentNegotiator
 from .runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
+from .runtime.outbox import OutboxPatternHelper
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.response_cache import ResponseCacheService
 from .runtime.retry import RetryPolicy
@@ -80,6 +81,7 @@ class Vyro:
         self._migrations = MigrationRunner(database=Path("app.db"), migrations_dir=Path("migrations"))
         self._negotiator = ContentNegotiator()
         self._oauth2 = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
+        self._outbox = OutboxPatternHelper()
         self._static_files = StaticFileService(root=Path(DEFAULT_STATIC_ROOT))
         self._sql: AsyncSQLAdapter = SQLiteAsyncAdapter(database=Path(":memory:"))
         self._sql_policy = QueryExecutionPolicy()
@@ -226,6 +228,9 @@ class Vyro:
 
     def set_oauth2_oidc_helper(self, helper: OAuth2OIDCHelper) -> None:
         self._oauth2 = helper
+
+    def set_outbox_helper(self, helper: OutboxPatternHelper) -> None:
+        self._outbox = helper
 
     def set_static_files(self, service: StaticFileService) -> None:
         self._static_files = service

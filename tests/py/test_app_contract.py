@@ -31,6 +31,7 @@ from vyro.runtime.multipart_upload import MultipartUploadStream
 from vyro.runtime.migrations import MigrationRunner
 from vyro.runtime.negotiation import ContentNegotiator
 from vyro.runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
+from vyro.runtime.outbox import OutboxPatternHelper
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.response_cache import ResponseCacheService
 from vyro.runtime.retry import RetryPolicy
@@ -273,6 +274,13 @@ def test_vyro_accepts_custom_oauth2_oidc_helper() -> None:
     helper = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
     app.set_oauth2_oidc_helper(helper)
     assert app._oauth2 is helper  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_outbox_helper() -> None:
+    app = Vyro()
+    helper = OutboxPatternHelper()
+    app.set_outbox_helper(helper)
+    assert app._outbox is helper  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_static_file_service(tmp_path) -> None:  # type: ignore[no-untyped-def]
