@@ -33,6 +33,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Global token-bucket rate limiter with burst support.
 - Multi-key rate limiter for compound identities (IP/user/token).
 - Native async outbound HTTP client primitive.
+- HTTP/2 stream helper primitives.
 - Outbound circuit-breaker primitive for upstream dependency protection.
 - Outbound bulkhead primitive to isolate dependency pools.
 - Retry policy primitive with exponential backoff and jitter.

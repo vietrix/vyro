@@ -3,6 +3,7 @@ from .bulkhead import OutboundBulkhead
 from .circuit_breaker import OutboundCircuitBreaker
 from .concurrency import RouteConcurrencyLimiter
 from .http_client import AsyncHttpClient, HttpResponse
+from .http2 import Http2Stream, Http2StreamManager
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .retry import RetryPolicy
 from .server import run_native_server
@@ -15,6 +16,8 @@ __all__ = [
     "MultiKeyRateLimiter",
     "AsyncHttpClient",
     "HttpResponse",
+    "Http2Stream",
+    "Http2StreamManager",
     "OutboundBulkhead",
     "OutboundCircuitBreaker",
     "RouteConcurrencyLimiter",

@@ -7,6 +7,7 @@ from vyro.runtime.bulkhead import OutboundBulkhead
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.http_client import AsyncHttpClient
+from vyro.runtime.http2 import Http2StreamManager
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.retry import RetryPolicy
 from vyro.runtime.shutdown import GracefulShutdownPolicy
@@ -109,6 +110,13 @@ def test_vyro_accepts_custom_http_client() -> None:
     client = AsyncHttpClient()
     app.set_http_client(client)
     assert app._http_client is client  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_http2_stream_manager() -> None:
+    app = Vyro()
+    manager = Http2StreamManager()
+    app.set_http2_stream_manager(manager)
+    assert app._http2_streams is manager  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:

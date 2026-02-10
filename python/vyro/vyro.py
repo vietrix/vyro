@@ -10,6 +10,7 @@ from .runtime.bulkhead import OutboundBulkhead
 from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.concurrency import RouteConcurrencyLimiter
 from .runtime.http_client import AsyncHttpClient
+from .runtime.http2 import Http2StreamManager
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.retry import RetryPolicy
 from .runtime.shutdown import GracefulShutdownPolicy
@@ -29,6 +30,7 @@ class Vyro:
         self._rate_limiter = TokenBucketRateLimiter(rate_per_sec=1000.0, burst=2000)
         self._multi_rate_limiter = MultiKeyRateLimiter(rate_per_sec=500.0, burst=1000)
         self._http_client = AsyncHttpClient()
+        self._http2_streams = Http2StreamManager()
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
@@ -104,6 +106,9 @@ class Vyro:
 
     def set_http_client(self, client: AsyncHttpClient) -> None:
         self._http_client = client
+
+    def set_http2_stream_manager(self, manager: Http2StreamManager) -> None:
+        self._http2_streams = manager
 
     def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
         self._outbound_circuit_breaker = breaker
