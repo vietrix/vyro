@@ -25,6 +25,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - OpenTelemetry-friendly trace span exporter with `traceparent` propagation.
 - Prometheus metrics registry primitives (`vyro_requests_total` baseline).
 - Built-in latency tracker with p50/p95/p99 quantiles.
+- Per-route throughput counters for method/path traffic visibility.
 
 ## Quickstart
 

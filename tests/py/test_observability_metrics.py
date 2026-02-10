@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.observability.metrics import MetricsRegistry, create_default_registry
+from vyro.observability.metrics import MetricsRegistry, ThroughputTracker, create_default_registry
 
 
 def test_metrics_counter_increment_and_render() -> None:
@@ -30,3 +30,20 @@ def test_default_registry_has_core_metric() -> None:
     registry = create_default_registry()
     rendered = registry.render_prometheus()
     assert "vyro_requests_total" in rendered
+
+
+def test_throughput_tracker_counts_per_route() -> None:
+    tracker = ThroughputTracker()
+    tracker.observe("get", "/users/{id}")
+    tracker.observe("GET", "/users/{id}", amount=2)
+    tracker.observe("post", "/users")
+    assert tracker.value("GET", "/users/{id}") == 3
+    assert tracker.value("POST", "/users") == 1
+
+
+def test_throughput_tracker_renders_prometheus() -> None:
+    tracker = ThroughputTracker()
+    tracker.observe("GET", "/healthz")
+    rendered = tracker.render_prometheus()
+    assert "# HELP vyro_route_requests_total" in rendered
+    assert 'vyro_route_requests_total{method="GET",route="/healthz"} 1' in rendered

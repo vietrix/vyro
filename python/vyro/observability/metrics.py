@@ -56,3 +56,24 @@ def create_default_registry() -> MetricsRegistry:
         "Total number of requests processed by Vyro runtime",
     )
     return registry
+
+
+@dataclass(slots=True)
+class ThroughputTracker:
+    _counts: dict[tuple[str, str], int] = field(default_factory=dict)
+
+    def observe(self, method: str, route: str, amount: int = 1) -> None:
+        key = (method.upper(), route)
+        self._counts[key] = self._counts.get(key, 0) + amount
+
+    def value(self, method: str, route: str) -> int:
+        return self._counts.get((method.upper(), route), 0)
+
+    def render_prometheus(self, metric_name: str = "vyro_route_requests_total") -> str:
+        lines = [f"# HELP {metric_name} Number of requests per route"]
+        lines.append(f"# TYPE {metric_name} counter")
+        for (method, route), value in sorted(self._counts.items()):
+            lines.append(
+                f'{metric_name}{{method="{method}",route="{route}"}} {value}'
+            )
+        return "\n".join(lines) + "\n"
