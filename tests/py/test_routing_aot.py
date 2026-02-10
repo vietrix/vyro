@@ -21,12 +21,14 @@ def test_compile_routes_is_deterministic() -> None:
             original_path="/users",
             normalized_path="/users",
             dispatch=_dispatch_a,
+            handler=_dispatch_a,
         ),
         RouteRecord(
             method="GET",
             original_path="/users/:id",
             normalized_path="/users/{id}",
             dispatch=_dispatch_b,
+            handler=_dispatch_b,
         ),
     ]
 
@@ -44,12 +46,14 @@ def test_compile_routes_rejects_duplicates() -> None:
             original_path="/users/:id",
             normalized_path="/users/{id}",
             dispatch=_dispatch_a,
+            handler=_dispatch_a,
         ),
         RouteRecord(
             method="GET",
             original_path="/users/:uid",
             normalized_path="/users/{id}",
             dispatch=_dispatch_b,
+            handler=_dispatch_b,
         ),
     ]
 

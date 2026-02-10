@@ -27,6 +27,7 @@ class RouterRegistry:
                     original_path=path,
                     normalized_path=normalized_path,
                     dispatch=dispatch,
+                    handler=fn,
                 )
             )
             self._compiled = None
