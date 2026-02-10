@@ -13,6 +13,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Multi-key rate-limiting primitives (ip/user/token tuple support).
 - Native async outbound HTTP client primitives.
 - ETag generation and conditional-request primitives.
+- JWT auth guard primitives (issue/verify/authorize).
 - HTTP/2 stream helper primitives.
 - gRPC gateway mapping/transcoding foundation primitives.
 - Streaming multipart upload collector primitives.

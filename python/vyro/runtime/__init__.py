@@ -9,6 +9,7 @@ from .etag import ETagEvaluation, ETagManager
 from .grpc_gateway import GrpcGateway, GrpcRoute
 from .http_client import AsyncHttpClient, HttpResponse
 from .http2 import Http2Stream, Http2StreamManager
+from .jwt_auth import JWTAuthGuard
 from .multipart_upload import MultipartUploadStream
 from .multipart_parser import MultipartParser, MultipartSection
 from .negotiation import ContentNegotiator, NegotiationResult
@@ -31,6 +32,7 @@ __all__ = [
     "CORSProfile",
     "CORSProfileName",
     "CSRFProtector",
+    "JWTAuthGuard",
     "HttpResponse",
     "Http2Stream",
     "Http2StreamManager",

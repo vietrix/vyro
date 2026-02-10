@@ -17,6 +17,7 @@ from .runtime.etag import ETagManager
 from .runtime.grpc_gateway import GrpcGateway
 from .runtime.http_client import AsyncHttpClient
 from .runtime.http2 import Http2StreamManager
+from .runtime.jwt_auth import JWTAuthGuard
 from .runtime.multipart_upload import MultipartUploadStream
 from .runtime.multipart_parser import MultipartParser
 from .runtime.negotiation import ContentNegotiator
@@ -41,6 +42,7 @@ class Vyro:
         self._multi_rate_limiter = MultiKeyRateLimiter(rate_per_sec=500.0, burst=1000)
         self._http_client = AsyncHttpClient()
         self._etag = ETagManager()
+        self._jwt = JWTAuthGuard(secret=b"vyro-dev-secret")
         self._http2_streams = Http2StreamManager()
         self._grpc_gateway = GrpcGateway()
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
@@ -128,6 +130,9 @@ class Vyro:
 
     def set_etag_manager(self, manager: ETagManager) -> None:
         self._etag = manager
+
+    def set_jwt_auth_guard(self, guard: JWTAuthGuard) -> None:
+        self._jwt = guard
 
     def set_http2_stream_manager(self, manager: Http2StreamManager) -> None:
         self._http2_streams = manager
