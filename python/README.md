@@ -7,6 +7,7 @@ Developer-facing API layer for vyro.
 - Route declaration and validation.
 - Context and middleware contracts.
 - Thin bridge invocation to native Rust module.
+- Handler contract enforcement (`async def`, first arg is `ctx`).
 
 ## Entry Points
 - `vyro.Vyro`
