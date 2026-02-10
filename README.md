@@ -77,6 +77,8 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - ABI-stable plugin system primitives.
 - Extension marketplace manifest primitives.
 - Service discovery adapter primitives for multi-service runtime.
+- Kubernetes manifest generator primitives.
+- No-GIL worker tuning primitives.
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
 - Query timeout and slow query log primitives.
@@ -153,6 +155,8 @@ vyro new my_service --template service
 vyro new my_hex_app --template hexagonal
 vyro workspace init platform --apps api,worker --libs common,events
 vyro workspace status --root platform
+vyro nogil-tune --workload balanced --cpu-count 8 --out nogil_profile.json
+vyro k8s --name vyro-api --image ghcr.io/vietrix/vyro:latest --out k8s.yaml
 vyro run --app examples.hello_world:app --port 8000
 vyro openapi --app examples.hello_world:app --out openapi.json
 vyro compat --base openapi-prev.json --target openapi.json

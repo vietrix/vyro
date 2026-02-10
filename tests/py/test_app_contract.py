@@ -31,11 +31,13 @@ from vyro.runtime.http_client import AsyncHttpClient
 from vyro.runtime.http2 import Http2StreamManager
 from vyro.runtime.jwt_auth import JWTAuthGuard
 from vyro.runtime.jobs import JobRuntime
+from vyro.runtime.kubernetes import KubernetesManifestGenerator
 from vyro.runtime.multipart_parser import MultipartParser
 from vyro.runtime.multipart_upload import MultipartUploadStream
 from vyro.runtime.marketplace import ExtensionMarketplaceManifest
 from vyro.runtime.migrations import MigrationRunner
 from vyro.runtime.negotiation import ContentNegotiator
+from vyro.runtime.nogil import NoGILWorkerTuner
 from vyro.runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from vyro.runtime.outbox import OutboxPatternHelper
 from vyro.runtime.plugins import ABIStablePluginSystem
@@ -298,6 +300,20 @@ def test_vyro_accepts_custom_runtime_config_reloader() -> None:
     reloader = SafeRuntimeConfigReloader()
     app.set_runtime_config_reloader(reloader)
     assert app._hot_reload is reloader  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_no_gil_tuner() -> None:
+    app = Vyro()
+    tuner = NoGILWorkerTuner()
+    app.set_no_gil_tuner(tuner)
+    assert app._nogil_tuner is tuner  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_kubernetes_manifest_generator() -> None:
+    app = Vyro()
+    generator = KubernetesManifestGenerator()
+    app.set_kubernetes_manifest_generator(generator)
+    assert app._k8s_generator is generator  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_content_negotiator() -> None:

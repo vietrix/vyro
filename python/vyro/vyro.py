@@ -35,11 +35,13 @@ from .runtime.http_client import AsyncHttpClient
 from .runtime.http2 import Http2StreamManager
 from .runtime.jwt_auth import JWTAuthGuard
 from .runtime.jobs import JobRuntime
+from .runtime.kubernetes import KubernetesManifestGenerator
 from .runtime.multipart_upload import MultipartUploadStream
 from .runtime.multipart_parser import MultipartParser
 from .runtime.migrations import MigrationRunner
 from .runtime.marketplace import ExtensionMarketplaceManifest
 from .runtime.negotiation import ContentNegotiator
+from .runtime.nogil import NoGILWorkerTuner
 from .runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from .runtime.outbox import OutboxPatternHelper
 from .runtime.plugins import ABIStablePluginSystem
@@ -93,6 +95,8 @@ class Vyro:
         self._migrations = MigrationRunner(database=Path("app.db"), migrations_dir=Path("migrations"))
         self._marketplace = ExtensionMarketplaceManifest()
         self._hot_reload = SafeRuntimeConfigReloader()
+        self._nogil_tuner = NoGILWorkerTuner()
+        self._k8s_generator = KubernetesManifestGenerator()
         self._negotiator = ContentNegotiator()
         self._oauth2 = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
         self._outbox = OutboxPatternHelper()
@@ -286,6 +290,12 @@ class Vyro:
 
     def set_runtime_config_reloader(self, reloader: SafeRuntimeConfigReloader) -> None:
         self._hot_reload = reloader
+
+    def set_no_gil_tuner(self, tuner: NoGILWorkerTuner) -> None:
+        self._nogil_tuner = tuner
+
+    def set_kubernetes_manifest_generator(self, generator: KubernetesManifestGenerator) -> None:
+        self._k8s_generator = generator
 
     def set_content_negotiator(self, negotiator: ContentNegotiator) -> None:
         self._negotiator = negotiator

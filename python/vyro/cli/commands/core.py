@@ -14,7 +14,9 @@ import typer
 from vyro.openapi_compat import compare_openapi, load_openapi_document
 from vyro.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
 from vyro.routing.lint import lint_project
+from vyro.runtime.kubernetes import KubernetesAppConfig, KubernetesManifestGenerator
 from vyro.runtime.migrations import MigrationRunner
+from vyro.runtime.nogil import NoGILWorkerTuner
 from vyro.runtime.schema_drift import SchemaDriftDetector
 from vyro.cli.runtime import (
     get_version_string,
@@ -196,6 +198,59 @@ def bench(
         }
         out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
         info(f"Benchmark result written to '{out}'.")
+
+
+@app.command("k8s")
+def k8s_generate(
+    name: str = typer.Option(..., "--name", help="Application name."),
+    image: str = typer.Option(..., "--image", help="Container image."),
+    namespace: str = typer.Option("default", "--namespace"),
+    replicas: int = typer.Option(2, "--replicas"),
+    container_port: int = typer.Option(8000, "--container-port"),
+    service_port: int = typer.Option(80, "--service-port"),
+    workers: int = typer.Option(2, "--workers"),
+    env: str = typer.Option("", "--env", help="Comma-separated KEY=VALUE pairs."),
+    out: Path = typer.Option(Path("k8s.yaml"), "--out", help="Output manifest path."),
+) -> None:
+    if replicas < 1:
+        typer.echo("ERROR: --replicas must be >= 1", err=True)
+        raise typer.Exit(code=2)
+    env_map = _parse_env_pairs(env)
+    generator = KubernetesManifestGenerator()
+    manifest = generator.generate(
+        KubernetesAppConfig(
+            name=name,
+            image=image,
+            namespace=namespace,
+            replicas=replicas,
+            container_port=container_port,
+            service_port=service_port,
+            workers=workers,
+            env=env_map,
+        )
+    )
+    out.write_text(manifest, encoding="utf-8")
+    info(f"Kubernetes manifest generated at '{out}'.")
+
+
+@app.command("nogil-tune")
+def nogil_tune(
+    workload: str = typer.Option("balanced", "--workload", help="Workload profile: cpu|io|balanced"),
+    cpu_count: int = typer.Option(0, "--cpu-count", help="CPU count override (0 means auto-detect)."),
+    out: Path | None = typer.Option(None, "--out", help="Optional JSON output file."),
+) -> None:
+    detected_cpu = cpu_count if cpu_count > 0 else (os.cpu_count() or 1)
+    tuner = NoGILWorkerTuner()
+    profile = tuner.recommend(cpu_count=detected_cpu, workload=workload)
+    payload = profile.as_dict()
+    info(
+        "nogil tuning "
+        f"mode={payload['mode']} cpu={payload['cpu_count']} workers={payload['workers']} "
+        f"tokio_threads={payload['tokio_worker_threads']} python_threads={payload['python_threads']}"
+    )
+    if out is not None:
+        out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        info(f"No-GIL tuning profile written to '{out}'.")
 
 
 @app.command("migrate")
@@ -410,6 +465,23 @@ def _bench_latency(iterations: int) -> float:
     mean_ns = statistics.fmean(samples) if samples else 0.0
     total_sec = (mean_ns * iterations) / 1_000_000_000
     return total_sec
+
+
+def _parse_env_pairs(raw: str) -> dict[str, str]:
+    result: dict[str, str] = {}
+    for item in raw.split(","):
+        part = item.strip()
+        if not part:
+            continue
+        key, sep, value = part.partition("=")
+        if not sep:
+            raise typer.BadParameter(f"invalid env pair '{part}', expected KEY=VALUE")
+        k = key.strip()
+        v = value.strip()
+        if not k:
+            raise typer.BadParameter(f"invalid env key in '{part}'")
+        result[k] = v
+    return result
 
 
 def _to_package_name(raw: str) -> str:

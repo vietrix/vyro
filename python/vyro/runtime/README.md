@@ -49,6 +49,8 @@ Bootstrap helpers for invoking native runtime from Python.
 - ABI-stable plugin system primitives.
 - Extension marketplace manifest primitives.
 - Service discovery adapter primitives for multi-service runtime.
+- Kubernetes manifest generator primitives.
+- No-GIL worker tuning primitives.
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
 - Query timeout and slow query log primitives.

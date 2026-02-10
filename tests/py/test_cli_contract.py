@@ -226,6 +226,54 @@ def test_cli_bench_writes_result_file(tmp_path) -> None:  # type: ignore[no-unty
     assert "routing" in payload["results"]
 
 
+def test_cli_k8s_generates_manifest(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    runner = CliRunner()
+    out_file = tmp_path / "k8s.yaml"
+    result = runner.invoke(
+        app,
+        [
+            "k8s",
+            "--name",
+            "vyro-api",
+            "--image",
+            "ghcr.io/vietrix/vyro:latest",
+            "--namespace",
+            "production",
+            "--replicas",
+            "2",
+            "--env",
+            "VYRO_ENV=production",
+            "--out",
+            str(out_file),
+        ],
+    )
+    assert result.exit_code == 0
+    text = out_file.read_text(encoding="utf-8")
+    assert "kind: Deployment" in text
+    assert "kind: Service" in text
+
+
+def test_cli_nogil_tune_writes_profile(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    runner = CliRunner()
+    out_file = tmp_path / "nogil.json"
+    result = runner.invoke(
+        app,
+        [
+            "nogil-tune",
+            "--workload",
+            "cpu",
+            "--cpu-count",
+            "8",
+            "--out",
+            str(out_file),
+        ],
+    )
+    assert result.exit_code == 0
+    payload = json.loads(out_file.read_text(encoding="utf-8"))
+    assert payload["mode"] == "cpu"
+    assert payload["workers"] == 8
+
+
 def test_cli_new_service_template_scaffold() -> None:
     runner = CliRunner()
     with runner.isolated_filesystem():

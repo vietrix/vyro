@@ -32,11 +32,13 @@ from .http_client import AsyncHttpClient, HttpResponse
 from .http2 import Http2Stream, Http2StreamManager
 from .jwt_auth import JWTAuthGuard
 from .jobs import JobRuntime
+from .kubernetes import KubernetesAppConfig, KubernetesManifestGenerator
 from .multipart_upload import MultipartUploadStream
 from .multipart_parser import MultipartParser, MultipartSection
 from .migrations import MigrationResult, MigrationRunner
 from .marketplace import ExtensionManifest, ExtensionMarketplaceManifest, ManifestError
 from .negotiation import ContentNegotiator, NegotiationResult
+from .nogil import NoGILTuningProfile, NoGILWorkerTuner
 from .oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OIDCClaims, OAuth2Config, OAuth2OIDCHelper
 from .outbox import InMemoryOutboxStore, OutboxMessage, OutboxPatternHelper, OutboxStore
 from .plugins import ABI_VERSION, ABIStablePluginSystem, PluginError, PluginIncompatibleError, RegisteredPlugin
@@ -109,6 +111,8 @@ __all__ = [
     "SafeRuntimeConfigReloader",
     "JWTAuthGuard",
     "JobRuntime",
+    "KubernetesAppConfig",
+    "KubernetesManifestGenerator",
     "HttpResponse",
     "Http2Stream",
     "Http2StreamManager",
@@ -122,6 +126,8 @@ __all__ = [
     "ExtensionMarketplaceManifest",
     "ContentNegotiator",
     "NegotiationResult",
+    "NoGILTuningProfile",
+    "NoGILWorkerTuner",
     "OAuth2Config",
     "OIDCClaims",
     "OAuth2OIDCHelper",
