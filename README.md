@@ -150,6 +150,7 @@ vyro run --app examples.hello_world:app --port 8000
 vyro openapi --app examples.hello_world:app --out openapi.json
 vyro compat --base openapi-prev.json --target openapi.json
 vyro release notes --tag v0.1.0 --out release_notes.md
+vyro release changelog --tag v0.1.0 --changelog CHANGELOG.md --out release_notes.md
 ```
 
 You can also run it as a module:

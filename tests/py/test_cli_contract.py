@@ -15,6 +15,13 @@ def test_cli_help() -> None:
     assert "release" in result.stdout
 
 
+def test_cli_release_help_includes_changelog_command() -> None:
+    runner = CliRunner()
+    result = runner.invoke(app, ["release", "--help"])
+    assert result.exit_code == 0
+    assert "changelog" in result.stdout
+
+
 def test_cli_version() -> None:
     runner = CliRunner()
     result = runner.invoke(app, ["version"])

@@ -72,10 +72,10 @@ jobs:
 
       - name: Generate release notes and changelog block
         run: |
-          PYTHONPATH=python python -m vyro release notes \
+          PYTHONPATH=python python -m vyro release changelog \
             --tag "${GITHUB_REF_NAME}" \
-            --out release_notes.md \
-            --update-changelog CHANGELOG.md
+            --changelog CHANGELOG.md \
+            --out release_notes.md
 
       - name: Build artifacts
         run: maturin build --release --sdist
