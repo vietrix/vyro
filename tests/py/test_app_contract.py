@@ -42,6 +42,7 @@ from vyro.runtime.sql import SQLiteAsyncAdapter
 from vyro.runtime.schema_drift import SchemaDriftDetector
 from vyro.runtime.sql_policy import QueryExecutionPolicy
 from vyro.runtime.static_files import StaticFileService
+from vyro.runtime.tenant import TenantIsolationModel
 from vyro.runtime.timeout_budget import TimeoutBudget
 from vyro.runtime.transaction import TransactionScope
 
@@ -403,6 +404,13 @@ def test_vyro_accepts_custom_retry_policy() -> None:
     policy = RetryPolicy(max_attempts=5, base_delay_sec=0.2)
     app.set_retry_policy(policy)
     assert app._retry_policy.max_attempts == 5  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_tenant_isolation() -> None:
+    app = Vyro()
+    isolation = TenantIsolationModel()
+    app.set_tenant_isolation(isolation)
+    assert app._tenant_isolation is isolation  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_timeout_budget() -> None:

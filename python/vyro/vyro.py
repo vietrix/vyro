@@ -47,6 +47,7 @@ from .runtime.server import run_native_server
 from .runtime.sql import AsyncSQLAdapter, SQLiteAsyncAdapter
 from .runtime.sql_policy import QueryExecutionPolicy
 from .runtime.static_files import StaticFileService
+from .runtime.tenant import TenantIsolationModel
 from .runtime.timeout_budget import TimeoutBudget
 from .runtime.transaction import TransactionScope
 from .runtime.websocket import WebSocketRouteRegistry
@@ -100,6 +101,7 @@ class Vyro:
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
+        self._tenant_isolation = TenantIsolationModel()
         self._timeout_budget = TimeoutBudget(timeout_sec=30.0)
         self._transaction = TransactionScope()
         self._websocket = WebSocketRouteRegistry()
@@ -285,6 +287,9 @@ class Vyro:
 
     def set_retry_policy(self, policy: RetryPolicy) -> None:
         self._retry_policy = policy
+
+    def set_tenant_isolation(self, isolation: TenantIsolationModel) -> None:
+        self._tenant_isolation = isolation
 
     def set_timeout_budget(self, budget: TimeoutBudget) -> None:
         self._timeout_budget = budget

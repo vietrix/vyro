@@ -38,6 +38,7 @@ from .shutdown import GracefulShutdownPolicy
 from .sql import AsyncSQLAdapter, SQLiteAsyncAdapter
 from .sql_policy import PolicySQLAdapter, QueryExecutionPolicy
 from .static_files import StaticFileService
+from .tenant import TenantIsolationError, TenantIsolationModel, TenantProfile
 from .timeout_budget import TimeoutBudget
 from .task_trace import TaskTraceContext, create_trace_id, current_task_trace
 from .transaction import TransactionScope
@@ -123,6 +124,9 @@ __all__ = [
     "QueryExecutionPolicy",
     "SQLiteAsyncAdapter",
     "StaticFileService",
+    "TenantIsolationError",
+    "TenantIsolationModel",
+    "TenantProfile",
     "TimeoutBudget",
     "TaskTraceContext",
     "create_trace_id",

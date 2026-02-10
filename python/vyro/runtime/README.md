@@ -40,6 +40,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - CQRS scaffolding primitives (command/query bus).
 - Transactional outbox pattern helper primitives.
 - Saga orchestration primitives.
+- Multi-tenant isolation model primitives.
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
 - Query timeout and slow query log primitives.
