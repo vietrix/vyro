@@ -10,6 +10,7 @@ from .runtime.backpressure import BackpressureController
 from .runtime.authorization import AuthorizationCore
 from .runtime.api_keys import APIKeyManager
 from .runtime.audit import SecurityAuditLogger
+from .runtime.cache import CacheBackend, MemoryCacheBackend
 from .runtime.bulkhead import OutboundBulkhead
 from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.compression import ResponseCompressor
@@ -49,6 +50,7 @@ class Vyro:
         self._authz = AuthorizationCore()
         self._api_keys = APIKeyManager()
         self._audit = SecurityAuditLogger()
+        self._cache: CacheBackend = MemoryCacheBackend()
         self._shutdown_policy = GracefulShutdownPolicy()
         self._backpressure = BackpressureController()
         self._concurrency = RouteConcurrencyLimiter()
@@ -143,6 +145,9 @@ class Vyro:
 
     def set_security_audit_logger(self, logger: SecurityAuditLogger) -> None:
         self._audit = logger
+
+    def set_cache_backend(self, backend: CacheBackend) -> None:
+        self._cache = backend
 
     def set_backpressure(self, controller: BackpressureController) -> None:
         self._backpressure = controller
