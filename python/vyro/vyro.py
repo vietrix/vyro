@@ -6,6 +6,7 @@ from .middleware import Middleware
 from .middleware.registry import MiddlewareRegistry
 from .routing.registry import RouterRegistry
 from .runtime.backpressure import BackpressureController
+from .runtime.concurrency import RouteConcurrencyLimiter
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
 from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_WORKERS
@@ -17,6 +18,7 @@ class Vyro:
         self._middlewares = MiddlewareRegistry()
         self._shutdown_policy = GracefulShutdownPolicy()
         self._backpressure = BackpressureController()
+        self._concurrency = RouteConcurrencyLimiter()
 
     def get(
         self,
@@ -68,6 +70,9 @@ class Vyro:
 
     def set_backpressure(self, controller: BackpressureController) -> None:
         self._backpressure = controller
+
+    def set_concurrency_limiter(self, limiter: RouteConcurrencyLimiter) -> None:
+        self._concurrency = limiter
 
     def run(
         self,

@@ -3,6 +3,7 @@ import pytest
 from vyro import Vyro
 from vyro.errors import HandlerSignatureError
 from vyro.runtime.backpressure import BackpressureController
+from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.shutdown import GracefulShutdownPolicy
 
 
@@ -54,3 +55,10 @@ def test_vyro_accepts_custom_backpressure_controller() -> None:
     controller = BackpressureController(max_inflight=8)
     app.set_backpressure(controller)
     assert app._backpressure.max_inflight == 8  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_concurrency_limiter() -> None:
+    app = Vyro()
+    limiter = RouteConcurrencyLimiter(default_limit=12)
+    app.set_concurrency_limiter(limiter)
+    assert app._concurrency.default_limit == 12  # noqa: SLF001
