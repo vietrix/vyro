@@ -4,7 +4,7 @@ import asyncio
 
 import pytest
 
-from vyro.runtime.outbox import InMemoryOutboxStore, OutboxPatternHelper
+from vyro.runtime.data.outbox import InMemoryOutboxStore, OutboxPatternHelper
 
 
 def test_outbox_stage_and_pending() -> None:

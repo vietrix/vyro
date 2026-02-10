@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.discovery import (
+from vyro.runtime.platform.discovery import (
     EnvDiscoveryAdapter,
     ServiceDiscoveryRegistry,
     ServiceEndpoint,

@@ -19,3 +19,17 @@ vyro separates developer-facing Python APIs from the Rust execution engine.
 - Feature folders own one concern only.
 - Every feature folder includes a short `README.md`.
 - Public Python API stays under `python/vyro`.
+
+## Python Module Map
+- `python/vyro/app`: composition root (`Vyro`) and component wiring.
+- `python/vyro/api`: OpenAPI + schema + compatibility contracts.
+- `python/vyro/http`: request/context/response wrappers.
+- `python/vyro/routing`: DSL normalization, validation, dispatch, registry.
+- `python/vyro/middleware`: middleware contracts and chain orchestration.
+- `python/vyro/observability`: logging, tracing, metrics, latency helpers.
+- `python/vyro/runtime/resilience`: limiter/retry/timeout/backpressure primitives.
+- `python/vyro/runtime/security`: auth, keys, secrets, tenant, CORS/CSRF.
+- `python/vyro/runtime/data`: SQL, migration, CQRS, transaction, outbox.
+- `python/vyro/runtime/async_ops`: jobs, cron, saga, event bus, task trace.
+- `python/vyro/runtime/edge`: HTTP client, WS, gRPC gateway, multipart/static/etag/compression.
+- `python/vyro/runtime/platform`: rollout, discovery, k8s, no-gil, plugins, cache/flags.

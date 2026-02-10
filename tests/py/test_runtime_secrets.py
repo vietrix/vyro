@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.secrets import EnvSecretsProvider, InMemorySecretsProvider, SecretsManager
+from vyro.runtime.security.secrets import EnvSecretsProvider, InMemorySecretsProvider, SecretsManager
 
 
 def test_in_memory_secrets_provider_returns_value() -> None:

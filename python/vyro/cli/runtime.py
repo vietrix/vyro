@@ -10,7 +10,7 @@ from typing import Any
 import typer
 
 from vyro.observability.logging import SamplingPolicy, emit_log
-from vyro.vyro import Vyro
+from vyro.app.vyro import Vyro
 
 
 def _read_rate(env_name: str, default: float) -> float:

@@ -4,7 +4,7 @@ import asyncio
 
 import pytest
 
-from vyro.runtime.cron import CronScheduler
+from vyro.runtime.async_ops.cron import CronScheduler
 
 
 def test_cron_scheduler_runs_due_jobs() -> None:

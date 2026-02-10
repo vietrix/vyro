@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.concurrency import RouteConcurrencyLimiter
+from vyro.runtime.resilience.concurrency import RouteConcurrencyLimiter
 
 
 def test_route_concurrency_limiter_default_limit() -> None:

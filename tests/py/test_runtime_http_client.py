@@ -4,8 +4,8 @@ import asyncio
 
 import pytest
 
-from vyro.runtime.http_client import AsyncHttpClient, HttpResponse
-from vyro.runtime.timeout_budget import TimeoutBudget
+from vyro.runtime.edge.http_client import AsyncHttpClient, HttpResponse
+from vyro.runtime.resilience.timeout_budget import TimeoutBudget
 
 
 def test_async_http_client_returns_response_and_decodes_json(monkeypatch: pytest.MonkeyPatch) -> None:

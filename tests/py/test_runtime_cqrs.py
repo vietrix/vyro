@@ -4,7 +4,7 @@ import asyncio
 
 import pytest
 
-from vyro.runtime.cqrs import CommandBus, DuplicateHandlerError, QueryBus, UnknownHandlerError
+from vyro.runtime.data.cqrs import CommandBus, DuplicateHandlerError, QueryBus, UnknownHandlerError
 
 
 def test_command_bus_dispatches_async_handler() -> None:

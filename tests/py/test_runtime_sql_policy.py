@@ -4,7 +4,7 @@ import asyncio
 
 import pytest
 
-from vyro.runtime.sql_policy import PolicySQLAdapter, QueryExecutionPolicy
+from vyro.runtime.data.sql_policy import PolicySQLAdapter, QueryExecutionPolicy
 
 
 class FakeAdapter:

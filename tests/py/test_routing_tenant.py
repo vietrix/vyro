@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from vyro import Context, Vyro
-from vyro.runtime.tenant_routing import TenantRoutingConfig
+from vyro.runtime.security.tenant_routing import TenantRoutingConfig
 
 
 def test_tenant_route_prefix_is_added() -> None:

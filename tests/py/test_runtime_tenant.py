@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from vyro.runtime.tenant import TenantIsolationError, TenantIsolationModel
+from vyro.runtime.security.tenant import TenantIsolationError, TenantIsolationModel
 
 
 def test_tenant_model_register_and_lookup() -> None:

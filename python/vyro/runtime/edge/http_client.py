@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Any
 from urllib.request import Request, urlopen
 
-from .timeout_budget import TimeoutBudget
+from ..resilience.timeout_budget import TimeoutBudget
 
 
 @dataclass(slots=True)

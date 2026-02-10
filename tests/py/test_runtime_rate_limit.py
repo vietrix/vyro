@@ -4,7 +4,7 @@ import time
 
 import pytest
 
-from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
+from vyro.runtime.resilience.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 
 
 def test_rate_limiter_respects_burst_capacity() -> None:

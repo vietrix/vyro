@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.oauth2_oidc import OAuth2Config, OAuth2OIDCHelper
+from vyro.runtime.security.oauth2_oidc import OAuth2Config, OAuth2OIDCHelper
 
 
 def test_oauth2_oidc_helper_builds_authorize_url() -> None:

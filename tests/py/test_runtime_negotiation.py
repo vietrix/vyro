@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.negotiation import ContentNegotiator
+from vyro.runtime.edge.negotiation import ContentNegotiator
 
 
 def test_content_negotiator_respects_q_weights() -> None:

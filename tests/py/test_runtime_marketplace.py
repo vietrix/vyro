@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from vyro.runtime.marketplace import ExtensionManifest, ExtensionMarketplaceManifest, ManifestError
+from vyro.runtime.platform.marketplace import ExtensionManifest, ExtensionMarketplaceManifest, ManifestError
 
 
 def test_manifest_from_dict_accepts_valid_payload() -> None:

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.authorization import AuthorizationCore
+from vyro.runtime.security.authorization import AuthorizationCore
 
 
 def test_authorization_core_grants_rbac_permissions() -> None:

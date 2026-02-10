@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from vyro.runtime.grpc_gateway import GrpcGateway, GrpcRoute
+from vyro.runtime.edge.grpc_gateway import GrpcGateway, GrpcRoute
 
 
 def test_grpc_gateway_register_and_resolve_route() -> None:

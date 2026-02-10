@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from vyro.runtime.static_files import StaticFileService
+from vyro.runtime.edge.static_files import StaticFileService
 
 
 def test_static_file_service_reads_file_inside_root(tmp_path: Path) -> None:

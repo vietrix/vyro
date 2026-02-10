@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from vyro.runtime.bulkhead import OutboundBulkhead
+from vyro.runtime.resilience.bulkhead import OutboundBulkhead
 
 
 def test_bulkhead_isolates_capacity_per_dependency() -> None:

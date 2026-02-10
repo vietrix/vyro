@@ -4,7 +4,7 @@ import asyncio
 
 import pytest
 
-from vyro.runtime.transaction import TransactionScope
+from vyro.runtime.data.transaction import TransactionScope
 
 
 class FakeAdapter:

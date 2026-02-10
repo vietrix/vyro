@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.csrf import CSRFProtector
+from vyro.runtime.security.csrf import CSRFProtector
 
 
 def test_csrf_protector_issues_and_verifies_token_for_mutating_method() -> None:

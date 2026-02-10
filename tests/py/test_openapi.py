@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from uuid import UUID
 
-from vyro.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
+from vyro.api.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
 from vyro.typing import RouteRecord
 
 

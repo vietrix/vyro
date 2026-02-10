@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from vyro.runtime.timeout_budget import TimeoutBudget
+from vyro.runtime.resilience.timeout_budget import TimeoutBudget
 
 
 def test_timeout_budget_tracks_remaining_time() -> None:

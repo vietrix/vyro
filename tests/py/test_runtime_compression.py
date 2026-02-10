@@ -3,7 +3,7 @@ from __future__ import annotations
 import gzip
 import zlib
 
-from vyro.runtime.compression import ResponseCompressor
+from vyro.runtime.edge.compression import ResponseCompressor
 
 
 def test_response_compressor_skips_small_payload() -> None:

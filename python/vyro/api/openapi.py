@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, get_type_hints
 
-from vyro.jsonschema import annotation_to_schema
+from vyro.api.jsonschema import annotation_to_schema
 from vyro.typing import RouteRecord
 
 

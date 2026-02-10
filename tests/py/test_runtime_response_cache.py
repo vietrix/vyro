@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import time
 
-from vyro.runtime.response_cache import ResponseCachePolicy, ResponseCacheService
+from vyro.runtime.platform.response_cache import ResponseCachePolicy, ResponseCacheService
 
 
 def test_response_cache_policy_uses_route_specific_ttl() -> None:

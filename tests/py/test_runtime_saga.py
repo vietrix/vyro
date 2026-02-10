@@ -4,7 +4,7 @@ import asyncio
 
 import pytest
 
-from vyro.runtime.saga import SagaOrchestrator, SagaStep, SagaStepFailedError
+from vyro.runtime.async_ops.saga import SagaOrchestrator, SagaStep, SagaStepFailedError
 
 
 def test_saga_orchestrator_executes_steps_in_order() -> None:

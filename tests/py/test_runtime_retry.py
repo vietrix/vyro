@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from vyro.runtime.retry import RetryPolicy
+from vyro.runtime.resilience.retry import RetryPolicy
 
 
 def test_retry_policy_delay_respects_exponential_backoff_and_cap() -> None:

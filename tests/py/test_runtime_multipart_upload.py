@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from vyro.runtime.multipart_upload import MultipartUploadStream
+from vyro.runtime.edge.multipart_upload import MultipartUploadStream
 
 
 def test_multipart_upload_stream_collects_chunks_and_detects_closing_boundary() -> None:

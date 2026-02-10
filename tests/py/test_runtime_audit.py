@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.audit import SecurityAuditLogger
+from vyro.runtime.security.audit import SecurityAuditLogger
 
 
 def test_security_audit_logger_records_event() -> None:

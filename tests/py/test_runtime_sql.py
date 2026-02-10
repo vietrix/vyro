@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 from pathlib import Path
 
-from vyro.runtime.sql import SQLiteAsyncAdapter
+from vyro.runtime.data.sql import SQLiteAsyncAdapter
 
 
 def test_sqlite_async_adapter_execute_and_fetch_all(tmp_path: Path) -> None:

@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from vyro.runtime.cache import MemoryCacheBackend
-from vyro.runtime.cache_invalidation import CacheInvalidationHooks
+from vyro.runtime.platform.cache import MemoryCacheBackend
+from vyro.runtime.platform.cache_invalidation import CacheInvalidationHooks
 
 
 def test_cache_invalidation_hooks_trigger_on_set_and_delete() -> None:

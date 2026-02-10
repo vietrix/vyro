@@ -1,130 +1,131 @@
 from __future__ import annotations
 
-from pathlib import Path
 from typing import Any, Callable
 
-from .middleware import Middleware
-from .middleware.idempotency import IdempotencyKeyMiddleware
-from .middleware.registry import MiddlewareRegistry
-from .routing.registry import RouterRegistry
-from .runtime.backpressure import BackpressureController
-from .runtime.authorization import AuthorizationCore
-from .runtime.api_keys import APIKeyManager
-from .runtime.audit import SecurityAuditLogger
-from .runtime.cache import CacheBackend, MemoryCacheBackend
-from .runtime.cache_invalidation import CacheInvalidationHooks
-from .runtime.blue_green import BlueGreenRolloutHelper
-from .runtime.bulkhead import OutboundBulkhead
-from .runtime.canary import CanaryRoutingControls
-from .runtime.circuit_breaker import OutboundCircuitBreaker
-from .runtime.compression import ResponseCompressor
-from .runtime.concurrency import RouteConcurrencyLimiter
-from .runtime.cors import CORSProfile
-from .runtime.cron import CronScheduler
-from .runtime.cqrs import CommandBus, QueryBus
-from .runtime.csrf import CSRFProtector
-from .runtime.db_pool import DBConnectionPoolManager
-from .runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
-from .runtime.discovery import ServiceDiscoveryRegistry
-from .runtime.etag import ETagManager
-from .runtime.event_bus import InternalEventBus
-from .runtime.feature_flags import FeatureFlagEngine
-from .runtime.grpc_gateway import GrpcGateway
-from .runtime.hot_reload import SafeRuntimeConfigReloader
-from .runtime.http_client import AsyncHttpClient
-from .runtime.http2 import Http2StreamManager
-from .runtime.jwt_auth import JWTAuthGuard
-from .runtime.jobs import JobRuntime
-from .runtime.kubernetes import KubernetesManifestGenerator
-from .runtime.multipart_upload import MultipartUploadStream
-from .runtime.multipart_parser import MultipartParser
-from .runtime.migrations import MigrationRunner
-from .runtime.marketplace import ExtensionMarketplaceManifest
-from .runtime.negotiation import ContentNegotiator
-from .runtime.nogil import NoGILWorkerTuner
-from .runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
-from .runtime.outbox import OutboxPatternHelper
-from .runtime.plugins import ABIStablePluginSystem
-from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
-from .runtime.response_cache import ResponseCacheService
-from .runtime.retry import RetryPolicy
-from .runtime.saga import SagaOrchestrator
-from .runtime.schema_drift import SchemaDriftDetector
-from .runtime.secrets import SecretsManager
-from .runtime.shutdown import GracefulShutdownPolicy
-from .runtime.server import run_native_server
-from .runtime.sql import AsyncSQLAdapter, SQLiteAsyncAdapter
-from .runtime.sql_policy import QueryExecutionPolicy
-from .runtime.static_files import StaticFileService
-from .runtime.tenant import TenantIsolationModel
-from .runtime.tenant_routing import TenantRoutingConfig
-from .runtime.timeout_budget import TimeoutBudget
-from .runtime.transaction import TransactionScope
-from .runtime.websocket import WebSocketRouteRegistry
-from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_STATIC_ROOT, DEFAULT_WORKERS
+from vyro.middleware import Middleware
+from vyro.middleware.idempotency import IdempotencyKeyMiddleware
+from vyro.middleware.registry import MiddlewareRegistry
+from vyro.routing.registry import RouterRegistry
+from vyro.runtime.async_ops.cron import CronScheduler
+from vyro.runtime.async_ops.dead_letter import DeadLetterQueue, JobRetryExecutor
+from vyro.runtime.async_ops.event_bus import InternalEventBus
+from vyro.runtime.async_ops.jobs import JobRuntime
+from vyro.runtime.async_ops.saga import SagaOrchestrator
+from vyro.runtime.data.cqrs import CommandBus, QueryBus
+from vyro.runtime.data.db_pool import DBConnectionPoolManager
+from vyro.runtime.data.migrations import MigrationRunner
+from vyro.runtime.data.outbox import OutboxPatternHelper
+from vyro.runtime.data.schema_drift import SchemaDriftDetector
+from vyro.runtime.data.sql import AsyncSQLAdapter, SQLiteAsyncAdapter
+from vyro.runtime.data.sql_policy import QueryExecutionPolicy
+from vyro.runtime.data.transaction import TransactionScope
+from vyro.runtime.edge.compression import ResponseCompressor
+from vyro.runtime.edge.etag import ETagManager
+from vyro.runtime.edge.grpc_gateway import GrpcGateway
+from vyro.runtime.edge.http_client import AsyncHttpClient
+from vyro.runtime.edge.http2 import Http2StreamManager
+from vyro.runtime.edge.multipart_parser import MultipartParser
+from vyro.runtime.edge.multipart_upload import MultipartUploadStream
+from vyro.runtime.edge.negotiation import ContentNegotiator
+from vyro.runtime.edge.static_files import StaticFileService
+from vyro.runtime.edge.websocket import WebSocketRouteRegistry
+from vyro.runtime.platform.blue_green import BlueGreenRolloutHelper
+from vyro.runtime.platform.cache import CacheBackend, MemoryCacheBackend
+from vyro.runtime.platform.cache_invalidation import CacheInvalidationHooks
+from vyro.runtime.platform.canary import CanaryRoutingControls
+from vyro.runtime.platform.discovery import ServiceDiscoveryRegistry
+from vyro.runtime.platform.feature_flags import FeatureFlagEngine
+from vyro.runtime.platform.hot_reload import SafeRuntimeConfigReloader
+from vyro.runtime.platform.kubernetes import KubernetesManifestGenerator
+from vyro.runtime.platform.marketplace import ExtensionMarketplaceManifest
+from vyro.runtime.platform.nogil import NoGILWorkerTuner
+from vyro.runtime.platform.plugins import ABIStablePluginSystem
+from vyro.runtime.platform.response_cache import ResponseCacheService
+from vyro.runtime.resilience.backpressure import BackpressureController
+from vyro.runtime.resilience.bulkhead import OutboundBulkhead
+from vyro.runtime.resilience.circuit_breaker import OutboundCircuitBreaker
+from vyro.runtime.resilience.concurrency import RouteConcurrencyLimiter
+from vyro.runtime.resilience.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
+from vyro.runtime.resilience.retry import RetryPolicy
+from vyro.runtime.resilience.timeout_budget import TimeoutBudget
+from vyro.runtime.security.api_keys import APIKeyManager
+from vyro.runtime.security.audit import SecurityAuditLogger
+from vyro.runtime.security.authorization import AuthorizationCore
+from vyro.runtime.security.cors import CORSProfile
+from vyro.runtime.security.csrf import CSRFProtector
+from vyro.runtime.security.jwt_auth import JWTAuthGuard
+from vyro.runtime.security.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
+from vyro.runtime.security.secrets import SecretsManager
+from vyro.runtime.security.tenant import TenantIsolationModel
+from vyro.runtime.security.tenant_routing import TenantRoutingConfig
+from vyro.runtime.server import run_native_server
+from vyro.runtime.shutdown import GracefulShutdownPolicy
+from vyro.settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_WORKERS
+from vyro.app.container import build_default_components
 
 
 class Vyro:
     def __init__(self) -> None:
+        components = build_default_components()
         self._router = RouterRegistry()
         self._middlewares = MiddlewareRegistry()
-        self._idempotency = IdempotencyKeyMiddleware()
-        self._authz = AuthorizationCore()
-        self._api_keys = APIKeyManager()
-        self._audit = SecurityAuditLogger()
-        self._cache: CacheBackend = MemoryCacheBackend()
-        self._cache_invalidation = CacheInvalidationHooks()
-        self._blue_green = BlueGreenRolloutHelper()
-        self._canary = CanaryRoutingControls()
-        self._shutdown_policy = GracefulShutdownPolicy()
-        self._backpressure = BackpressureController()
-        self._concurrency = RouteConcurrencyLimiter()
-        self._rate_limiter = TokenBucketRateLimiter(rate_per_sec=1000.0, burst=2000)
-        self._multi_rate_limiter = MultiKeyRateLimiter(rate_per_sec=500.0, burst=1000)
-        self._http_client = AsyncHttpClient()
-        self._etag = ETagManager()
-        self._jwt = JWTAuthGuard(secret=b"vyro-dev-secret")
-        self._jobs = JobRuntime()
-        self._cron = CronScheduler()
-        self._command_bus = CommandBus()
-        self._query_bus = QueryBus()
-        self._http2_streams = Http2StreamManager()
-        self._grpc_gateway = GrpcGateway()
-        self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
-        self._multipart_parser = MultipartParser()
-        self._migrations = MigrationRunner(database=Path("app.db"), migrations_dir=Path("migrations"))
-        self._marketplace = ExtensionMarketplaceManifest()
-        self._hot_reload = SafeRuntimeConfigReloader()
-        self._nogil_tuner = NoGILWorkerTuner()
-        self._k8s_generator = KubernetesManifestGenerator()
-        self._negotiator = ContentNegotiator()
-        self._oauth2 = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
-        self._outbox = OutboxPatternHelper()
-        self._plugins = ABIStablePluginSystem()
-        self._static_files = StaticFileService(root=Path(DEFAULT_STATIC_ROOT))
-        self._sql: AsyncSQLAdapter = SQLiteAsyncAdapter(database=Path(":memory:"))
-        self._sql_policy = QueryExecutionPolicy()
-        self._schema_drift = SchemaDriftDetector(database=Path("app.db"))
-        self._compression = ResponseCompressor()
-        self._cors = CORSProfile.preset("standard")
-        self._csrf = CSRFProtector.with_random_secret()
-        self._db_pools = DBConnectionPoolManager()
-        self._dead_letter_queue = DeadLetterQueue()
-        self._job_retry = JobRetryExecutor(dead_letter_queue=self._dead_letter_queue)
-        self._discovery = ServiceDiscoveryRegistry()
-        self._event_bus = InternalEventBus()
-        self._feature_flags = FeatureFlagEngine()
-        self._secrets = SecretsManager()
-        self._response_cache = ResponseCacheService(backend=self._cache)
-        self._saga = SagaOrchestrator()
-        self._outbound_circuit_breaker = OutboundCircuitBreaker()
-        self._outbound_bulkhead = OutboundBulkhead()
-        self._retry_policy = RetryPolicy()
-        self._tenant_isolation = TenantIsolationModel()
-        self._tenant_routing = TenantRoutingConfig()
-        self._timeout_budget = TimeoutBudget(timeout_sec=30.0)
-        self._transaction = TransactionScope()
-        self._websocket = WebSocketRouteRegistry()
+        self._idempotency = components["idempotency"]
+        self._authz = components["authz"]
+        self._api_keys = components["api_keys"]
+        self._audit = components["audit"]
+        self._cache = components["cache"]
+        self._cache_invalidation = components["cache_invalidation"]
+        self._blue_green = components["blue_green"]
+        self._canary = components["canary"]
+        self._shutdown_policy = components["shutdown_policy"]
+        self._backpressure = components["backpressure"]
+        self._concurrency = components["concurrency"]
+        self._rate_limiter = components["rate_limiter"]
+        self._multi_rate_limiter = components["multi_rate_limiter"]
+        self._http_client = components["http_client"]
+        self._etag = components["etag"]
+        self._jwt = components["jwt"]
+        self._jobs = components["jobs"]
+        self._cron = components["cron"]
+        self._command_bus = components["command_bus"]
+        self._query_bus = components["query_bus"]
+        self._http2_streams = components["http2_streams"]
+        self._grpc_gateway = components["grpc_gateway"]
+        self._multipart_upload = components["multipart_upload"]
+        self._multipart_parser = components["multipart_parser"]
+        self._migrations = components["migrations"]
+        self._marketplace = components["marketplace"]
+        self._hot_reload = components["hot_reload"]
+        self._nogil_tuner = components["nogil_tuner"]
+        self._k8s_generator = components["k8s_generator"]
+        self._negotiator = components["negotiator"]
+        self._oauth2 = components["oauth2"]
+        self._outbox = components["outbox"]
+        self._plugins = components["plugins"]
+        self._static_files = components["static_files"]
+        self._sql = components["sql"]
+        self._sql_policy = components["sql_policy"]
+        self._schema_drift = components["schema_drift"]
+        self._compression = components["compression"]
+        self._cors = components["cors"]
+        self._csrf = components["csrf"]
+        self._db_pools = components["db_pools"]
+        self._dead_letter_queue = components["dead_letter_queue"]
+        self._job_retry = components["job_retry"]
+        self._discovery = components["discovery"]
+        self._event_bus = components["event_bus"]
+        self._feature_flags = components["feature_flags"]
+        self._secrets = components["secrets"]
+        self._response_cache = components["response_cache"]
+        self._saga = components["saga"]
+        self._outbound_circuit_breaker = components["circuit_breaker"]
+        self._outbound_bulkhead = components["bulkhead"]
+        self._retry_policy = components["retry_policy"]
+        self._tenant_isolation = components["tenant_isolation"]
+        self._tenant_routing = components["tenant_routing"]
+        self._timeout_budget = components["timeout_budget"]
+        self._transaction = components["transaction"]
+        self._websocket = components["websocket"]
 
     def get(
         self,

@@ -3,58 +3,58 @@ import pytest
 from vyro import Vyro
 from vyro.errors import HandlerSignatureError
 from vyro.middleware.idempotency import IdempotencyKeyMiddleware
-from vyro.runtime.backpressure import BackpressureController
-from vyro.runtime.authorization import AuthorizationCore
-from vyro.runtime.api_keys import APIKeyManager
-from vyro.runtime.audit import SecurityAuditLogger
-from vyro.runtime.cache import MemoryCacheBackend
-from vyro.runtime.cache_invalidation import CacheInvalidationHooks
-from vyro.runtime.blue_green import BlueGreenRolloutHelper
-from vyro.runtime.bulkhead import OutboundBulkhead
-from vyro.runtime.canary import CanaryRoutingControls
-from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
-from vyro.runtime.compression import ResponseCompressor
-from vyro.runtime.concurrency import RouteConcurrencyLimiter
-from vyro.runtime.cors import CORSProfile
-from vyro.runtime.cron import CronScheduler
-from vyro.runtime.cqrs import CommandBus, QueryBus
-from vyro.runtime.csrf import CSRFProtector
-from vyro.runtime.db_pool import DBConnectionPoolManager
-from vyro.runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
-from vyro.runtime.discovery import ServiceDiscoveryRegistry
-from vyro.runtime.etag import ETagManager
-from vyro.runtime.event_bus import InternalEventBus
-from vyro.runtime.feature_flags import FeatureFlagEngine
-from vyro.runtime.grpc_gateway import GrpcGateway
-from vyro.runtime.hot_reload import SafeRuntimeConfigReloader
-from vyro.runtime.http_client import AsyncHttpClient
-from vyro.runtime.http2 import Http2StreamManager
-from vyro.runtime.jwt_auth import JWTAuthGuard
-from vyro.runtime.jobs import JobRuntime
-from vyro.runtime.kubernetes import KubernetesManifestGenerator
-from vyro.runtime.multipart_parser import MultipartParser
-from vyro.runtime.multipart_upload import MultipartUploadStream
-from vyro.runtime.marketplace import ExtensionMarketplaceManifest
-from vyro.runtime.migrations import MigrationRunner
-from vyro.runtime.negotiation import ContentNegotiator
-from vyro.runtime.nogil import NoGILWorkerTuner
-from vyro.runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
-from vyro.runtime.outbox import OutboxPatternHelper
-from vyro.runtime.plugins import ABIStablePluginSystem
-from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
-from vyro.runtime.response_cache import ResponseCacheService
-from vyro.runtime.retry import RetryPolicy
-from vyro.runtime.saga import SagaOrchestrator
-from vyro.runtime.secrets import SecretsManager
+from vyro.runtime.resilience.backpressure import BackpressureController
+from vyro.runtime.security.authorization import AuthorizationCore
+from vyro.runtime.security.api_keys import APIKeyManager
+from vyro.runtime.security.audit import SecurityAuditLogger
+from vyro.runtime.platform.cache import MemoryCacheBackend
+from vyro.runtime.platform.cache_invalidation import CacheInvalidationHooks
+from vyro.runtime.platform.blue_green import BlueGreenRolloutHelper
+from vyro.runtime.resilience.bulkhead import OutboundBulkhead
+from vyro.runtime.platform.canary import CanaryRoutingControls
+from vyro.runtime.resilience.circuit_breaker import OutboundCircuitBreaker
+from vyro.runtime.edge.compression import ResponseCompressor
+from vyro.runtime.resilience.concurrency import RouteConcurrencyLimiter
+from vyro.runtime.security.cors import CORSProfile
+from vyro.runtime.async_ops.cron import CronScheduler
+from vyro.runtime.data.cqrs import CommandBus, QueryBus
+from vyro.runtime.security.csrf import CSRFProtector
+from vyro.runtime.data.db_pool import DBConnectionPoolManager
+from vyro.runtime.async_ops.dead_letter import DeadLetterQueue, JobRetryExecutor
+from vyro.runtime.platform.discovery import ServiceDiscoveryRegistry
+from vyro.runtime.edge.etag import ETagManager
+from vyro.runtime.async_ops.event_bus import InternalEventBus
+from vyro.runtime.platform.feature_flags import FeatureFlagEngine
+from vyro.runtime.edge.grpc_gateway import GrpcGateway
+from vyro.runtime.platform.hot_reload import SafeRuntimeConfigReloader
+from vyro.runtime.edge.http_client import AsyncHttpClient
+from vyro.runtime.edge.http2 import Http2StreamManager
+from vyro.runtime.security.jwt_auth import JWTAuthGuard
+from vyro.runtime.async_ops.jobs import JobRuntime
+from vyro.runtime.platform.kubernetes import KubernetesManifestGenerator
+from vyro.runtime.edge.multipart_parser import MultipartParser
+from vyro.runtime.edge.multipart_upload import MultipartUploadStream
+from vyro.runtime.platform.marketplace import ExtensionMarketplaceManifest
+from vyro.runtime.data.migrations import MigrationRunner
+from vyro.runtime.edge.negotiation import ContentNegotiator
+from vyro.runtime.platform.nogil import NoGILWorkerTuner
+from vyro.runtime.security.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
+from vyro.runtime.data.outbox import OutboxPatternHelper
+from vyro.runtime.platform.plugins import ABIStablePluginSystem
+from vyro.runtime.resilience.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
+from vyro.runtime.platform.response_cache import ResponseCacheService
+from vyro.runtime.resilience.retry import RetryPolicy
+from vyro.runtime.async_ops.saga import SagaOrchestrator
+from vyro.runtime.security.secrets import SecretsManager
 from vyro.runtime.shutdown import GracefulShutdownPolicy
-from vyro.runtime.sql import SQLiteAsyncAdapter
-from vyro.runtime.schema_drift import SchemaDriftDetector
-from vyro.runtime.sql_policy import QueryExecutionPolicy
-from vyro.runtime.static_files import StaticFileService
-from vyro.runtime.tenant import TenantIsolationModel
-from vyro.runtime.tenant_routing import TenantRoutingConfig
-from vyro.runtime.timeout_budget import TimeoutBudget
-from vyro.runtime.transaction import TransactionScope
+from vyro.runtime.data.sql import SQLiteAsyncAdapter
+from vyro.runtime.data.schema_drift import SchemaDriftDetector
+from vyro.runtime.data.sql_policy import QueryExecutionPolicy
+from vyro.runtime.edge.static_files import StaticFileService
+from vyro.runtime.security.tenant import TenantIsolationModel
+from vyro.runtime.security.tenant_routing import TenantRoutingConfig
+from vyro.runtime.resilience.timeout_budget import TimeoutBudget
+from vyro.runtime.data.transaction import TransactionScope
 
 
 def test_sync_handler_is_rejected() -> None:

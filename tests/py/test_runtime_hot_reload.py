@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from vyro.runtime.hot_reload import RuntimeConfigReloadError, SafeRuntimeConfigReloader
+from vyro.runtime.platform.hot_reload import RuntimeConfigReloadError, SafeRuntimeConfigReloader
 
 
 def test_hot_reload_loads_initial_snapshot() -> None:

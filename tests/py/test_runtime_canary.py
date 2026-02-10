@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.canary import CanaryRoutingControls
+from vyro.runtime.platform.canary import CanaryRoutingControls
 
 
 def test_canary_defaults_to_primary_without_rule() -> None:

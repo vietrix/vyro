@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.blue_green import BlueGreenRolloutHelper
+from vyro.runtime.platform.blue_green import BlueGreenRolloutHelper
 
 
 def test_blue_green_defaults_to_blue() -> None:

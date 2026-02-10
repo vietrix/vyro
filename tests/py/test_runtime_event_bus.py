@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import asyncio
 
-from vyro.runtime.event_bus import InternalEventBus
+from vyro.runtime.async_ops.event_bus import InternalEventBus
 
 
 def test_event_bus_publish_to_sync_subscriber() -> None:

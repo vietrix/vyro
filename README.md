@@ -31,8 +31,8 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Automatic correlation-id injection on request context.
 - Structured JSON logging primitives for CLI/runtime output.
 - Production-readiness doctor checks with strict mode for CI gates.
-- API contract lint integration in `vyro check` (OpenAPI compatibility gate).
-- Built-in `vyro bench` command for routing/json/latency smoke benchmarking.
+- API contract lint integration via `python -m scripts.dev.check`.
+- Benchmark smoke via `python -m scripts.dev.bench`.
 - CI benchmark regression gate with baseline comparison.
 - `vyro new` architecture templates (`minimal`, `service`, `hexagonal`).
 - Monorepo workspace support via `vyro workspace init|status`.
@@ -149,8 +149,6 @@ Vyro ships with an official CLI:
 vyro --help
 vyro doctor
 vyro doctor --strict
-vyro check --app examples.hello_world:app --contract-base openapi.contract.json
-vyro bench --suite all --iterations 10000 --out bench.json
 vyro new my_service --template service
 vyro new my_hex_app --template hexagonal
 vyro workspace init platform --apps api,worker --libs common,events
@@ -171,7 +169,14 @@ You can also run it as a module:
 python -m vyro --help
 ```
 
-`vyro check` includes static route signature linting (`async def` + first arg `ctx`).
+Developer automation lives in `scripts/dev`:
+
+```bash
+python -m scripts.dev.check
+python -m scripts.dev.test
+python -m scripts.dev.build --sdist
+python -m scripts.dev.bench --suite all --iterations 10000 --out bench.json
+```
 
 ## Migration (`App` -> `Vyro`)
 
@@ -187,7 +192,9 @@ app = Vyro()
 
 ## Project structure
 
-- `python/vyro/`: user-facing Python APIs.
+- `python/vyro/app`: composition root (`Vyro`) and wiring.
+- `python/vyro/api`: OpenAPI/JSON schema/compat contracts.
+- `python/vyro/runtime`: runtime primitives grouped by domain (`resilience`, `security`, `data`, `async_ops`, `edge`, `platform`).
 - `rust/src/`: native runtime and bridge.
 - `tests/`: Python, Rust, and integration tests.
 - `.github/workflows/`: CI and release automation.

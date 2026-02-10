@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.tenant_routing import TenantRoutingConfig
+from vyro.runtime.security.tenant_routing import TenantRoutingConfig
 
 
 def test_tenant_routing_apply_disabled_keeps_path() -> None:

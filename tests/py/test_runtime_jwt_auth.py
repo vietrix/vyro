@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.jwt_auth import JWTAuthGuard
+from vyro.runtime.security.jwt_auth import JWTAuthGuard
 
 
 def test_jwt_auth_guard_issue_and_verify_token() -> None:

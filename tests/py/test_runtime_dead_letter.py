@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import asyncio
 
-from vyro.runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
-from vyro.runtime.task_trace import current_task_trace
+from vyro.runtime.async_ops.dead_letter import DeadLetterQueue, JobRetryExecutor
+from vyro.runtime.async_ops.task_trace import current_task_trace
 
 
 def test_job_retry_executor_retries_then_succeeds() -> None:

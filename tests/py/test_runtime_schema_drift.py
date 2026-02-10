@@ -4,7 +4,7 @@ import json
 import sqlite3
 from pathlib import Path
 
-from vyro.runtime.schema_drift import SchemaDriftDetector
+from vyro.runtime.data.schema_drift import SchemaDriftDetector
 
 
 def _create_db(path: Path) -> None:

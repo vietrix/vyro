@@ -3,7 +3,7 @@ from __future__ import annotations
 import pytest
 
 from vyro.errors import HandlerSignatureError, RouteDefinitionError
-from vyro.runtime.websocket import WebSocketRouteRegistry
+from vyro.runtime.edge.websocket import WebSocketRouteRegistry
 
 
 def test_websocket_registry_accepts_async_handler_and_normalizes_path() -> None:

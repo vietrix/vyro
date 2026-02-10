@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.api_keys import APIKeyManager
+from vyro.runtime.security.api_keys import APIKeyManager
 
 
 def test_api_key_manager_issue_and_verify() -> None:

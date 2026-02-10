@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.openapi_compat import compare_openapi
+from vyro.api.openapi_compat import compare_openapi
 
 
 def test_openapi_compat_detects_removed_path() -> None:

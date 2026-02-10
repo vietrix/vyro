@@ -5,7 +5,7 @@ import types
 import pytest
 
 from vyro import Vyro
-from vyro.runtime.plugins import ABIStablePluginSystem, PluginError, PluginIncompatibleError
+from vyro.runtime.platform.plugins import ABIStablePluginSystem, PluginError, PluginIncompatibleError
 
 
 class _GoodPlugin:
@@ -53,7 +53,7 @@ def test_plugin_system_loads_module_and_runs_setup(monkeypatch) -> None:  # type
         assert path == "my.plugin"
         return fake_module
 
-    monkeypatch.setattr("vyro.runtime.plugins.import_module", fake_import)
+    monkeypatch.setattr("vyro.runtime.platform.plugins.import_module", fake_import)
     record = system.load_from_module("my.plugin", app)
 
     assert record.name == "good"
@@ -68,6 +68,6 @@ def test_plugin_system_requires_exported_plugin_symbol(monkeypatch) -> None:  # 
         assert path == "empty.plugin"
         return types.SimpleNamespace()
 
-    monkeypatch.setattr("vyro.runtime.plugins.import_module", fake_import)
+    monkeypatch.setattr("vyro.runtime.platform.plugins.import_module", fake_import)
     with pytest.raises(PluginError, match="does not expose 'plugin'"):
         system.load_from_module("empty.plugin", Vyro())

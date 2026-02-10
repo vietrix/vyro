@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-from vyro.runtime.db_pool import DBConnectionPoolManager
+from vyro.runtime.data.db_pool import DBConnectionPoolManager
 
 
 def test_db_connection_pool_manager_register_and_get(tmp_path: Path) -> None:

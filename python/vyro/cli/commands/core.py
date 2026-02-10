@@ -9,12 +9,12 @@ from pathlib import Path
 
 import typer
 
-from vyro.openapi_compat import compare_openapi, load_openapi_document
-from vyro.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
-from vyro.runtime.kubernetes import KubernetesAppConfig, KubernetesManifestGenerator
-from vyro.runtime.migrations import MigrationRunner
-from vyro.runtime.nogil import NoGILWorkerTuner
-from vyro.runtime.schema_drift import SchemaDriftDetector
+from vyro.api.openapi_compat import compare_openapi, load_openapi_document
+from vyro.api.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
+from vyro.runtime.platform.kubernetes import KubernetesAppConfig, KubernetesManifestGenerator
+from vyro.runtime.data.migrations import MigrationRunner
+from vyro.runtime.platform.nogil import NoGILWorkerTuner
+from vyro.runtime.data.schema_drift import SchemaDriftDetector
 from vyro.cli.runtime import (
     error,
     get_version_string,

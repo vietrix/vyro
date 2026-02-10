@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.multipart_parser import MultipartParser
+from vyro.runtime.edge.multipart_parser import MultipartParser
 
 
 def test_multipart_parser_extracts_multiple_sections() -> None:

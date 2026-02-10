@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from vyro.runtime.http2 import Http2StreamManager
+from vyro.runtime.edge.http2 import Http2StreamManager
 
 
 def test_http2_stream_manager_opens_odd_stream_ids() -> None:

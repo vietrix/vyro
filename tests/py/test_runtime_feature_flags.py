@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.feature_flags import FeatureFlagEngine
+from vyro.runtime.platform.feature_flags import FeatureFlagEngine
 
 
 def test_flag_defaults_to_disabled_when_missing() -> None:

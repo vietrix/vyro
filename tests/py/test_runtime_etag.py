@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.etag import ETagManager
+from vyro.runtime.edge.etag import ETagManager
 
 
 def test_etag_manager_generates_stable_tag_for_same_payload() -> None:

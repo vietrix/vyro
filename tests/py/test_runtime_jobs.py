@@ -4,8 +4,8 @@ import asyncio
 
 import pytest
 
-from vyro.runtime.jobs import JobRuntime
-from vyro.runtime.task_trace import current_task_trace
+from vyro.runtime.async_ops.jobs import JobRuntime
+from vyro.runtime.async_ops.task_trace import current_task_trace
 
 
 def test_job_runtime_register_enqueue_and_run_once() -> None:

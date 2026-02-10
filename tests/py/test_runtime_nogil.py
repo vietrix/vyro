@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.nogil import NoGILWorkerTuner
+from vyro.runtime.platform.nogil import NoGILWorkerTuner
 
 
 def test_nogil_tuner_balanced_profile() -> None:

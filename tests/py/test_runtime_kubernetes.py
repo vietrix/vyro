@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.kubernetes import KubernetesAppConfig, KubernetesManifestGenerator
+from vyro.runtime.platform.kubernetes import KubernetesAppConfig, KubernetesManifestGenerator
 
 
 def test_kubernetes_generator_renders_deployment_and_service() -> None:

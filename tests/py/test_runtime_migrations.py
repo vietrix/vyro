@@ -3,7 +3,7 @@ from __future__ import annotations
 import sqlite3
 from pathlib import Path
 
-from vyro.runtime.migrations import MigrationRunner
+from vyro.runtime.data.migrations import MigrationRunner
 
 
 def test_migration_runner_applies_sql_files_once(tmp_path: Path) -> None:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import time
 
-from vyro.runtime.cache import MemoryCacheBackend, RedisCacheBackend
+from vyro.runtime.platform.cache import MemoryCacheBackend, RedisCacheBackend
 
 
 class FakeRedis:

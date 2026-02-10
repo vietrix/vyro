@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import time
 
-from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
+from vyro.runtime.resilience.circuit_breaker import OutboundCircuitBreaker
 
 
 def test_circuit_breaker_opens_after_failure_threshold() -> None:

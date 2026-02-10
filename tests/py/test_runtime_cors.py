@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.cors import CORSProfile
+from vyro.runtime.security.cors import CORSProfile
 
 
 def test_cors_preset_standard_allows_origin_and_methods() -> None:

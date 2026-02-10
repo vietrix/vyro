@@ -4,8 +4,8 @@ import inspect
 from dataclasses import dataclass, field
 from typing import Any, Awaitable, Callable
 
-from ..errors import HandlerSignatureError, RouteDefinitionError
-from ..routing.normalize import normalize_path
+from vyro.errors import HandlerSignatureError, RouteDefinitionError
+from vyro.routing.normalize import normalize_path
 
 WebSocketHandler = Callable[..., Awaitable[Any]]
 

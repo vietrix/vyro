@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from vyro.runtime.backpressure import BackpressureController
+from vyro.runtime.resilience.backpressure import BackpressureController
 
 
 def test_backpressure_acquire_release_flow() -> None:
