@@ -31,6 +31,7 @@ from .migrations import MigrationResult, MigrationRunner
 from .negotiation import ContentNegotiator, NegotiationResult
 from .oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OIDCClaims, OAuth2Config, OAuth2OIDCHelper
 from .outbox import InMemoryOutboxStore, OutboxMessage, OutboxPatternHelper, OutboxStore
+from .plugins import ABI_VERSION, ABIStablePluginSystem, PluginError, PluginIncompatibleError, RegisteredPlugin
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .response_cache import ResponseCachePolicy, ResponseCacheService
 from .retry import RetryPolicy
@@ -113,6 +114,11 @@ __all__ = [
     "OutboxStore",
     "InMemoryOutboxStore",
     "OutboxPatternHelper",
+    "ABI_VERSION",
+    "ABIStablePluginSystem",
+    "PluginError",
+    "PluginIncompatibleError",
+    "RegisteredPlugin",
     "GrpcGateway",
     "GrpcRoute",
     "OutboundBulkhead",

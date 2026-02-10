@@ -36,6 +36,7 @@ from vyro.runtime.migrations import MigrationRunner
 from vyro.runtime.negotiation import ContentNegotiator
 from vyro.runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from vyro.runtime.outbox import OutboxPatternHelper
+from vyro.runtime.plugins import ABIStablePluginSystem
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.response_cache import ResponseCacheService
 from vyro.runtime.retry import RetryPolicy
@@ -309,6 +310,13 @@ def test_vyro_accepts_custom_outbox_helper() -> None:
     helper = OutboxPatternHelper()
     app.set_outbox_helper(helper)
     assert app._outbox is helper  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_plugin_system() -> None:
+    app = Vyro()
+    plugins = ABIStablePluginSystem()
+    app.set_plugin_system(plugins)
+    assert app._plugins is plugins  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_static_file_service(tmp_path) -> None:  # type: ignore[no-untyped-def]
