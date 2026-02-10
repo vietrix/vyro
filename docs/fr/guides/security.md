@@ -1,17 +1,17 @@
-# Security
+# Sécurité
 
-## Built-in primitives
+## Primitives intégrées
 
-- JWT guard
-- API key manager
-- CORS profiles
-- CSRF protector
-- Secrets manager
-- Audit logger
+- Garde JWT
+- Gestionnaire de clés API
+- Profils CORS
+- Protecteur CSRF
+- Gestionnaire de secrets
+- Enregistreur d'audit
 
-## Best practices
+## Bonnes pratiques
 
-- Rotate secrets and keys
-- Use strict CORS in production
-- Enforce authz checks for sensitive routes
-- Log security events with correlation IDs
+- Faites pivoter les secrets et les clés
+- Utiliser un CORS strict en production
+- Appliquer les contrôles d'authentification pour les routes sensibles
+- Enregistrez les événements de sécurité avec les ID de corrélation

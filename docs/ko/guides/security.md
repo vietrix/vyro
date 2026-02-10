@@ -1,17 +1,17 @@
-# Security
+# 보안
 
-## Built-in primitives
+## 내장 프리미티브
 
-- JWT guard
-- API key manager
-- CORS profiles
-- CSRF protector
-- Secrets manager
-- Audit logger
+- JWT 가드
+- API 키 관리자
+- CORS 프로필
+- CSRF 보호기
+- 비밀 관리자
+- 감사 로거
 
-## Best practices
+## 모범 사례
 
-- Rotate secrets and keys
-- Use strict CORS in production
-- Enforce authz checks for sensitive routes
-- Log security events with correlation IDs
+- 비밀과 키 순환
+- 프로덕션에서는 엄격한 CORS를 사용합니다.
+- 민감한 경로에 대한 인증 확인을 시행합니다.
+- 상관 관계 ID로 보안 이벤트를 기록합니다.

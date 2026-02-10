@@ -1,16 +1,16 @@
-# CLI Reference
+# CLI リファレンス
 
-## Main commands
+## 主なコマンド
 
-- `vyro run --app <module:attr>`
+- ZXQコード0ZXQ
 - `vyro dev --app <module:attr>`
 - `vyro doctor [--strict]`
 - `vyro openapi ...`
-- `vyro compat ...`
+- ZXQコード4ZXQ
 - `vyro release ...`
 
-## Exit codes
+## 終了コード
 
-- `0`: success
-- `1`: execution/tooling/runtime error
-- `2`: validation/usage error
+- `0`: 成功
+- `1`: 実行/ツール/ランタイム エラー
+- `2`: 検証/使用エラー

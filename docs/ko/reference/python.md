@@ -1,13 +1,13 @@
-# Python API Reference
+# 파이썬 API 참조
 
-## Package
+## 패키지
 
 ::: vyro
 
-## Runtime
+## 런타임
 
 ::: vyro.runtime
 
-## Routing
+## 라우팅
 
 ::: vyro.routing

@@ -1,16 +1,16 @@
-# Deployment
+# 部署
 
-## Checklist
+## 清单
 
-1. Set `VYRO_ENV=production`
-2. Configure strong `VYRO_SECRET_KEY`
-3. Set worker count from CPU profile
-4. Enable observability and health probes
-5. Validate API contract before rollout
+1.设置`VYRO_ENV=production`
+2.配置强`VYRO_SECRET_KEY`
+3. 从 CPU 配置文件中设置工作线程数
+4. 启用可观察性和运行状况探测
+5. 推出前验证 API 合约
 
-## Kubernetes
+## 库伯内特斯
 
-Generate manifests:
+生成清单：
 
 ```bash
 vyro k8s --name vyro-api --image ghcr.io/vietrix/vyro:latest --out k8s.yaml

@@ -1,12 +1,12 @@
-# Error Reference
+# 오류 참조
 
-Common errors:
+일반적인 오류:
 
 - `HandlerSignatureError`
-- `RouteDefinitionError`
+-`RouteDefinitionError`
 
-Guideline:
+지침:
 
-- Fix handler signatures first
-- Then validate route DSL and normalization
-- Re-run tests for regression check
+- 핸들러 서명을 먼저 수정하세요.
+- 그런 다음 경로 DSL 및 정규화를 검증합니다.
+- 회귀 확인을 위한 테스트 재실행

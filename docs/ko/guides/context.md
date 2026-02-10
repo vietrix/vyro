@@ -1,13 +1,13 @@
-# Context and Request/Response
+# 컨텍스트 및 요청/응답
 
-`Context` gives access to request metadata:
+`Context`는 요청 메타데이터에 대한 액세스를 제공합니다.
 
-- `ctx.headers`
-- `ctx.query`
-- `ctx.path_params`
-- `ctx.body_bytes()`
+-`ctx.headers`
+-`ctx.query`
+-`ctx.path_params`
+-`ctx.body_bytes()`
 
-Example:
+예:
 
 ```python
 @app.post("/events")

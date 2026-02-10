@@ -1,13 +1,13 @@
-# Python API Reference
+# Python API リファレンス
 
-## Package
+＃＃ パッケージ
 
 ::: vyro
 
-## Runtime
+## ランタイム
 
 ::: vyro.runtime
 
-## Routing
+＃＃ ルーティング
 
 ::: vyro.routing

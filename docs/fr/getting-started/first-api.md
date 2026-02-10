@@ -1,6 +1,6 @@
-# First API
+# Première API
 
-This example shows path params, query access, and JSON response.
+Cet exemple montre les paramètres de chemin, l'accès aux requêtes et la réponse JSON.
 
 ```python
 from vyro import Vyro, Context
@@ -13,10 +13,10 @@ async def get_user(ctx: Context, id: int):
     return {"id": id, "verbose": verbose == "true"}
 ```
 
-## Response types
+## Types de réponses
 
 - `dict` / `list` -> JSON
-- `str` -> text response
-- `bytes` -> binary response
+- `str` -> réponse texte
+- `bytes` -> réponse binaire
 - `(body, status)`
 - `(body, status, headers)`

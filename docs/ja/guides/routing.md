@@ -1,11 +1,11 @@
-# Routing
+＃ ルーティング
 
-## Path DSL
+## パス DSL
 
-- `/users/:id` -> named param
-- `/static/*` -> catch-all
+- `/users/:id` -> 名前付きパラメータ
+- `/static/*` -> キャッチオール
 
-## Versioning and deprecation
+## バージョン管理と非推奨化
 
 ```python
 @app.get("/v1/items/:id", version="v1", deprecated="use /v2")
@@ -13,6 +13,6 @@ async def get_item(ctx: Context, id: int):
     return {"id": id}
 ```
 
-## Errors
+## エラー
 
-Invalid signatures or ambiguous routes raise `RouteDefinitionError` / `HandlerSignatureError`.
+無効な署名または曖昧なルートでは、`RouteDefinitionError` / `HandlerSignatureError` が発生します。

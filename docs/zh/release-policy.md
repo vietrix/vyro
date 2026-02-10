@@ -1,18 +1,18 @@
-# Release Policy
+# 发布策略
 
-## Versioning
+## 版本控制
 
-- Stable tags: `vX.Y.Z`
-- Pre-release tags: `vX.Y.Z-rc.N`
+- 稳定标签：`vX.Y.Z`
+- 预发布标签：`vX.Y.Z-rc.N`
 
-## Release pipeline
+## 发布管道
 
-1. Quality gate
-2. Build artifacts
-3. Publish PyPI
-4. Create GitHub Release
-5. Publish docs on push to `main`
+1. 质量门
+2. 构建工件
+3. 发布PyPI
+4. 创建 GitHub 版本
+5.发布文档推送到`main`
 
-## Changelog
+## 变更日志
 
-Generated from Conventional Commits and curated release notes.
+由常规提交和策划的发行说明生成。

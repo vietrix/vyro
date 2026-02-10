@@ -1,6 +1,6 @@
-# Quickstart
+# クイックスタート
 
-Create `app.py`:
+`app.py` を作成します。
 
 ```python
 from vyro import Vyro, Context
@@ -15,13 +15,13 @@ if __name__ == "__main__":
     app.run(port=8000, workers=1)
 ```
 
-Run:
+走る：
 
 ```bash
 python app.py
 ```
 
-Or run through CLI:
+または、CLI を介して実行します。
 
 ```bash
 vyro run --app app:app --port 8000

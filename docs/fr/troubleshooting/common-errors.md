@@ -1,17 +1,17 @@
-# Troubleshooting
+# Dépannage
 
 ## `Invalid --app format`
 
-Use `<module>:<attribute>`, for example `examples.hello_world:app`.
+Utilisez `<module>:<attribute>`, par exemple `examples.hello_world:app`.
 
-## Route signature errors
+## Erreurs de signature de route
 
-Ensure handlers are `async def` and first arg is `ctx`.
+Assurez-vous que les gestionnaires sont `async def` et que le premier argument est `ctx`.
 
-## Native build issues
+## Problèmes de build natif
 
-Install Rust toolchain and rebuild with `maturin build --release`.
+Installez la chaîne d'outils Rust et reconstruisez avec `maturin build --release`.
 
-## Docs build errors
+## Erreurs de compilation de Docs
 
-Run `mkdocs build --strict` and fix broken links or missing pages.
+Exécutez `mkdocs build --strict` et corrigez les liens rompus ou les pages manquantes.

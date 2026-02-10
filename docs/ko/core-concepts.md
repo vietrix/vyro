@@ -1,17 +1,17 @@
-# Core Concepts
+# 핵심 개념
 
-## Design model
+## 디자인 모델
 
-- Python declares routes and handlers
-- Rust executes networking/runtime work
-- `Context` carries request metadata
+- Python은 경로와 핸들러를 선언합니다.
+- Rust는 네트워킹/런타임 작업을 실행합니다.
+- `Context`는 요청 메타데이터를 전달합니다.
 
-## Handler rules
+## 핸들러 규칙
 
-- Must be `async def`
-- First arg must be `ctx`
-- Additional typed args are bound from route/query
+- `async def`여야 합니다.
+- 첫 번째 인수는 `ctx`여야 합니다.
+- 추가로 입력된 인수는 경로/쿼리에서 바인딩됩니다.
 
-## Runtime ownership
+## 런타임 소유권
 
-`app.run()` starts the native runtime and worker model.
+`app.run()`는 기본 런타임 및 작업자 모델을 시작합니다.

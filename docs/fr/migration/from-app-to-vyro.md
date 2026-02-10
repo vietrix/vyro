@@ -1,19 +1,19 @@
-# Migration Guide: App to Vyro
+# Guide de migration : application vers Vyro
 
-## Breaking change
+## Briser le changement
 
-Old:
+Vieux:
 
 ```python
 from vyro import App
 app = App()
 ```
 
-New:
+Nouveau:
 
 ```python
 from vyro import Vyro
 app = Vyro()
 ```
 
-No `App` alias is provided. Update imports directly.
+Aucun alias `App` n’est fourni. Mettez à jour les importations directement.

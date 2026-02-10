@@ -1,6 +1,6 @@
-# First API
+# 最初の API
 
-This example shows path params, query access, and JSON response.
+この例では、パス パラメーター、クエリ アクセス、および JSON 応答を示します。
 
 ```python
 from vyro import Vyro, Context
@@ -13,10 +13,10 @@ async def get_user(ctx: Context, id: int):
     return {"id": id, "verbose": verbose == "true"}
 ```
 
-## Response types
+## 応答タイプ
 
 - `dict` / `list` -> JSON
-- `str` -> text response
-- `bytes` -> binary response
-- `(body, status)`
+- `str` -> テキスト応答
+- `bytes` -> バイナリ応答
+- ZXQコード4ZXQ
 - `(body, status, headers)`

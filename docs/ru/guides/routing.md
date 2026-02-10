@@ -1,11 +1,11 @@
-# Routing
+# Маршрутизация
 
-## Path DSL
+## Путь DSL
 
-- `/users/:id` -> named param
-- `/static/*` -> catch-all
+- `/users/:id` -> именованный параметр
+- `/static/*` -> всеобъемлющий
 
-## Versioning and deprecation
+## Версии и устаревание
 
 ```python
 @app.get("/v1/items/:id", version="v1", deprecated="use /v2")
@@ -13,6 +13,6 @@ async def get_item(ctx: Context, id: int):
     return {"id": id}
 ```
 
-## Errors
+## Ошибки
 
-Invalid signatures or ambiguous routes raise `RouteDefinitionError` / `HandlerSignatureError`.
+Неверные подписи или неоднозначные маршруты вызывают `RouteDefinitionError`/`HandlerSignatureError`.

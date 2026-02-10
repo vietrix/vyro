@@ -1,19 +1,19 @@
-# Migration Guide: App to Vyro
+# 마이그레이션 가이드: Vyro로의 앱
 
-## Breaking change
+## 획기적인 변화
 
-Old:
+오래된:
 
 ```python
 from vyro import App
 app = App()
 ```
 
-New:
+새로운:
 
 ```python
 from vyro import Vyro
 app = Vyro()
 ```
 
-No `App` alias is provided. Update imports directly.
+`App` 별칭은 제공되지 않습니다. 가져오기를 직접 업데이트합니다.

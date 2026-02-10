@@ -1,13 +1,13 @@
-# Context and Request/Response
+# 上下文和请求/响应
 
-`Context` gives access to request metadata:
+`Context` 提供对请求元数据的访问：
 
-- `ctx.headers`
-- `ctx.query`
-- `ctx.path_params`
-- `ctx.body_bytes()`
+- ZXQ代码1ZXQ
+- ZXQ代码2ZXQ
+- ZXQ代码3ZXQ
+- ZXQ代码4ZXQ
 
-Example:
+例子：
 
 ```python
 @app.post("/events")

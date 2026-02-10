@@ -1,16 +1,16 @@
-# Deployment
+# デプロイメント
 
-## Checklist
+## チェックリスト
 
-1. Set `VYRO_ENV=production`
-2. Configure strong `VYRO_SECRET_KEY`
-3. Set worker count from CPU profile
-4. Enable observability and health probes
-5. Validate API contract before rollout
+1.`VYRO_ENV=production`を設定します
+2. 強力な `VYRO_SECRET_KEY` を構成する
+3. CPU プロファイルからワーカー数を設定する
+4. 可観測性と正常性プローブを有効にする
+5. ロールアウト前に API コントラクトを検証する
 
 ## Kubernetes
 
-Generate manifests:
+マニフェストを生成します。
 
 ```bash
 vyro k8s --name vyro-api --image ghcr.io/vietrix/vyro:latest --out k8s.yaml

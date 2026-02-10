@@ -1,17 +1,17 @@
-# Middleware
+# Промежуточное ПО
 
-Register middleware with explicit order:
+Зарегистрируйте промежуточное программное обеспечение с явным порядком:
 
 ```python
 app.add_middleware(my_middleware, priority=100)
 ```
 
-## Recommendations
+## Рекомендации
 
-- Keep middleware pure and fast
-- Use explicit priorities
-- Keep IO-heavy work in runtime primitives
+- Поддерживайте чистоту и скорость промежуточного программного обеспечения.
+- Используйте явные приоритеты.
+- Сохраняйте интенсивную работу ввода-вывода в примитивах времени выполнения.
 
-## Idempotency
+## Идемпотентность
 
-Use idempotency middleware for write endpoints to avoid duplicate side effects.
+Используйте промежуточное программное обеспечение идемпотентности для конечных точек записи, чтобы избежать дублирования побочных эффектов.

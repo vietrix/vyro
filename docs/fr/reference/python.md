@@ -1,13 +1,13 @@
-# Python API Reference
+# Référence de l'API Python
 
-## Package
+## Emballer
 
 ::: vyro
 
-## Runtime
+## Durée d'exécution
 
 ::: vyro.runtime
 
-## Routing
+## Routage
 
 ::: vyro.routing

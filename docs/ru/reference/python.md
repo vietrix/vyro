@@ -1,13 +1,13 @@
-# Python API Reference
+# Справочник по API Python
 
-## Package
+## Упаковка
 
 ::: vyro
 
-## Runtime
+## Время выполнения
 
 ::: vyro.runtime
 
-## Routing
+## Маршрутизация
 
 ::: vyro.routing

@@ -1,17 +1,17 @@
-# Observability
+# 可观察性
 
-## Logging
+## 日志记录
 
-Structured logs with sampling and redaction support.
+具有采样和编辑支持的结构化日志。
 
-## Metrics
+## 指标
 
-Expose counters and latency distributions (`p50/p95/p99`).
+公开计数器和延迟分布 (`p50/p95/p99`)。
 
-## Tracing
+## 追踪
 
-Use trace context propagation for cross-service request tracking.
+使用跟踪上下文传播进行跨服务请求跟踪。
 
-## Health
+＃＃ 健康
 
-Use liveness/readiness/startup checks for orchestration systems.
+对编排系统使用活动/就绪/启动检查。

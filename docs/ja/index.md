@@ -1,16 +1,16 @@
-# Vyro Documentation JP
+# Vyro ドキュメント
 
-Vyro combines Python DX and a Rust execution engine for high-performance APIs.
+Vyro は、Python DX と Rust 実行エンジンを組み合わせて、高性能 API を実現します。
 
-## What you can do
+## あなたにできること
 
-- Build async APIs with `Vyro()`
-- Run services with `vyro run`
-- Generate API contracts with OpenAPI
-- Operate production services with observability and security primitives
+- `Vyro()` を使用して非同期 API を構築する
+- `vyro run` でサービスを実行する
+- OpenAPI を使用して API コントラクトを生成する
+- 可観測性とセキュリティプリミティブを備えた運用サービスを運用する
 
-## Start here
+## ここから始めましょう
 
-1. Read [Installation](getting-started/installation.md)
-2. Follow [Quickstart](getting-started/quickstart.md)
-3. Build your first endpoint in [First API](getting-started/first-api.md)
+1. [インストール](getting-started/installation.md)を読みます。
+2. [クイックスタート](getting-started/quickstart.md)に従ってください。
+3. [最初の API](getting-started/first-api.md) で最初のエンドポイントを構築します。

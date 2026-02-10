@@ -1,12 +1,12 @@
-# Error Reference
+# Ссылка на ошибку
 
-Common errors:
+Распространенные ошибки:
 
 - `HandlerSignatureError`
 - `RouteDefinitionError`
 
-Guideline:
+Руководство:
 
-- Fix handler signatures first
-- Then validate route DSL and normalization
-- Re-run tests for regression check
+- Сначала исправьте подписи обработчиков.
+- Затем проверьте маршрут DSL и нормализацию.
+- Повторный запуск тестов для регрессионной проверки.

@@ -1,17 +1,17 @@
-# Troubleshooting
+# トラブルシューティング
 
 ## `Invalid --app format`
 
-Use `<module>:<attribute>`, for example `examples.hello_world:app`.
+`<module>:<attribute>` (例: `examples.hello_world:app`) を使用します。
 
-## Route signature errors
+## ルート署名エラー
 
-Ensure handlers are `async def` and first arg is `ctx`.
+ハンドラーが `async def` であり、最初の引数が `ctx` であることを確認してください。
 
-## Native build issues
+## ネイティブ ビルドの問題
 
-Install Rust toolchain and rebuild with `maturin build --release`.
+Rust ツールチェーンをインストールし、`maturin build --release` で再構築します。
 
-## Docs build errors
+## ドキュメントのビルド エラー
 
-Run `mkdocs build --strict` and fix broken links or missing pages.
+`mkdocs build --strict` を実行して、壊れたリンクや欠落しているページを修正します。

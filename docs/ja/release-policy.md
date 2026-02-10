@@ -1,18 +1,18 @@
-# Release Policy
+# リリースポリシー
 
-## Versioning
+## バージョン管理
 
-- Stable tags: `vX.Y.Z`
-- Pre-release tags: `vX.Y.Z-rc.N`
+- 安定したタグ: `vX.Y.Z`
+- プレリリースタグ: `vX.Y.Z-rc.N`
 
-## Release pipeline
+## リリースパイプライン
 
-1. Quality gate
-2. Build artifacts
-3. Publish PyPI
-4. Create GitHub Release
-5. Publish docs on push to `main`
+1. クオリティゲート
+2. アーティファクトを構築する
+3.PyPIを公開する
+4. GitHub リリースの作成
+5. `main` へのプッシュでドキュメントを公開する
 
-## Changelog
+## 変更履歴
 
-Generated from Conventional Commits and curated release notes.
+従来のコミットと厳選されたリリースノートから生成されます。

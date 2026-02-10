@@ -1,6 +1,6 @@
-# Quickstart
+# Démarrage rapide
 
-Create `app.py`:
+Créez `app.py` :
 
 ```python
 from vyro import Vyro, Context
@@ -15,13 +15,13 @@ if __name__ == "__main__":
     app.run(port=8000, workers=1)
 ```
 
-Run:
+Courir:
 
 ```bash
 python app.py
 ```
 
-Or run through CLI:
+Ou exécutez via CLI :
 
 ```bash
 vyro run --app app:app --port 8000

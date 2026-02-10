@@ -1,6 +1,6 @@
-# Quickstart
+# 빠른 시작
 
-Create `app.py`:
+`app.py` 생성:
 
 ```python
 from vyro import Vyro, Context
@@ -15,13 +15,13 @@ if __name__ == "__main__":
     app.run(port=8000, workers=1)
 ```
 
-Run:
+달리다:
 
 ```bash
 python app.py
 ```
 
-Or run through CLI:
+또는 CLI를 통해 실행하세요.
 
 ```bash
 vyro run --app app:app --port 8000

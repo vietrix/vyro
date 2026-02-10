@@ -1,16 +1,16 @@
-# Vyro Documentation RU
+# Документация Виро
 
-Vyro combines Python DX and a Rust execution engine for production-grade APIs.
+Vyro сочетает Python DX с механизмом выполнения Rust для высокопроизводительных API.
 
-## What you can do
+## Что ты можешь сделать
 
-- Build async APIs with `Vyro()`
-- Run services with `vyro run`
-- Generate API contracts with OpenAPI
-- Operate production services with observability and security primitives
+- Создайте асинхронные API с помощью `Vyro()`.
+- Запускайте службы с помощью `vyro run`.
+- Генерация контрактов API с помощью OpenAPI.
+- Управление производственными сервисами с помощью примитивов наблюдения и безопасности.
 
-## Start here
+## Начните здесь
 
-1. Read [Installation](getting-started/installation.md)
-2. Follow [Quickstart](getting-started/quickstart.md)
-3. Build your first endpoint in [First API](getting-started/first-api.md)
+1. Прочтите [Установка](getting-started/installation.md)
+2. Следуйте инструкциям [Quickstart](getting-started/quickstart.md).
+3. Создайте свою первую конечную точку в [First API](getting-started/first-api.md).

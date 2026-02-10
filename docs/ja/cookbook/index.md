@@ -1,14 +1,14 @@
-# Cookbook
+# クックブック
 
-## Recipes
+## レシピ
 
-- Multi-tenant routing
-- Background jobs and retries
-- Cache + invalidation
-- Rate limiting policies
-- Static files with ETag/compression
-- WebSocket basics
-- gRPC gateway foundations
-- Migration runner usage
+- マルチテナントルーティング
+- バックグラウンドジョブと再試行
+- キャッシュ + 無効化
+- レート制限ポリシー
+- ETag/圧縮付きの静的ファイル
+- WebSocketの基本
+- gRPC ゲートウェイ基盤
+- 移行ランナーの使用法
 
-Each recipe should be copied and adapted to your production constraints.
+各レシピをコピーして、生産上の制約に適応させる必要があります。

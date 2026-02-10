@@ -1,18 +1,18 @@
-# Configuration
+＃ 配置
 
-## Runtime parameters
+## 运行时参数
 
-- `host`
-- `port`
-- `workers`
+- ZXQ代码0ZXQ
+- ZXQ代码1ZXQ
+- ZXQ代码2ZXQ
 
-## Environment variables
+## 环境变量
 
-- `VYRO_ENV`
-- `VYRO_SECRET_KEY`
-- `VYRO_WORKERS`
-- `VYRO_LOG_SAMPLE_INFO`
-- `VYRO_LOG_SAMPLE_WARN`
+- ZXQ代码3ZXQ
+- ZXQ代码4ZXQ
+- ZXQ代码5ZXQ
+- ZXQ代码6ZXQ
+- ZXQ代码7ZXQ
 - `VYRO_LOG_SAMPLE_ERROR`
 
-Use `vyro doctor --strict` in CI for production readiness checks.
+在 CI 中使用 `vyro doctor --strict` 进行生产准备情况检查。

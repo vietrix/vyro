@@ -1,6 +1,6 @@
-# CLI Reference
+# Référence CLI
 
-## Main commands
+## Commandes principales
 
 - `vyro run --app <module:attr>`
 - `vyro dev --app <module:attr>`
@@ -9,8 +9,8 @@
 - `vyro compat ...`
 - `vyro release ...`
 
-## Exit codes
+## Codes de sortie
 
-- `0`: success
-- `1`: execution/tooling/runtime error
-- `2`: validation/usage error
+- `0` : réussite
+- `1` : erreur d'exécution/outillage/exécution
+- `2` : erreur de validation/utilisation

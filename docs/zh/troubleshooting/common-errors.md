@@ -1,17 +1,17 @@
-# Troubleshooting
+# 故障排除
 
-## `Invalid --app format`
+## ZXQ代码0ZXQ
 
-Use `<module>:<attribute>`, for example `examples.hello_world:app`.
+使用 `<module>:<attribute>`，例如 `examples.hello_world:app`。
 
-## Route signature errors
+## 路由签名错误
 
-Ensure handlers are `async def` and first arg is `ctx`.
+确保处理程序是 `async def` 并且第一个参数是 `ctx`。
 
-## Native build issues
+## 本机构建问题
 
-Install Rust toolchain and rebuild with `maturin build --release`.
+安装 Rust 工具链并使用 `maturin build --release` 进行重建。
 
-## Docs build errors
+## 文档构建错误
 
-Run `mkdocs build --strict` and fix broken links or missing pages.
+运行 `mkdocs build --strict` 并修复损坏的链接或丢失的页面。

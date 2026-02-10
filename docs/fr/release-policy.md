@@ -1,18 +1,18 @@
-# Release Policy
+# Politique de publication
 
-## Versioning
+## Gestion des versions
 
-- Stable tags: `vX.Y.Z`
-- Pre-release tags: `vX.Y.Z-rc.N`
+- Balises stables : `vX.Y.Z`
+- Balises de pré-version : `vX.Y.Z-rc.N`
 
-## Release pipeline
+## Pipeline de publication
 
-1. Quality gate
-2. Build artifacts
-3. Publish PyPI
-4. Create GitHub Release
-5. Publish docs on push to `main`
+1. Porte de qualité
+2. Construisez des artefacts
+3. Publier PyPI
+4. Créer une version GitHub
+5. Publier des documents en push sur `main`
 
-## Changelog
+## Journal des modifications
 
-Generated from Conventional Commits and curated release notes.
+Généré à partir de commits conventionnels et de notes de version organisées.

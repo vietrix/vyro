@@ -1,15 +1,15 @@
-# OpenAPI and API Contracts
+# OpenAPI и контракты API
 
-Generate OpenAPI:
+Создайте OpenAPI:
 
 ```bash
 vyro openapi --app examples.hello_world:app --out openapi.json
 ```
 
-Compare compatibility:
+Сравните совместимость:
 
 ```bash
 vyro compat --base openapi-prev.json --target openapi.json
 ```
 
-Use this in CI to prevent breaking API changes.
+Используйте это в CI, чтобы предотвратить нарушение изменений API.

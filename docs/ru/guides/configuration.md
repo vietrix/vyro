@@ -1,12 +1,12 @@
-# Configuration
+# Конфигурация
 
-## Runtime parameters
+## Параметры времени выполнения
 
 - `host`
 - `port`
 - `workers`
 
-## Environment variables
+## Переменные среды
 
 - `VYRO_ENV`
 - `VYRO_SECRET_KEY`
@@ -15,4 +15,4 @@
 - `VYRO_LOG_SAMPLE_WARN`
 - `VYRO_LOG_SAMPLE_ERROR`
 
-Use `vyro doctor --strict` in CI for production readiness checks.
+Используйте `vyro doctor --strict` в CI для проверки готовности производства.

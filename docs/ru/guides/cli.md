@@ -1,29 +1,29 @@
-# CLI User Guide
+# Руководство пользователя CLI
 
-## Command model
+## Модель команды
 
-Vyro CLI is split into two surfaces:
+Интерфейс командной строки Vyro разделен на две поверхности:
 
-1. End-user commands (`vyro ...`) for running and operating applications.
-2. Developer scripts (`python -m scripts.dev...`) for internal checks/build/bench.
+1. Команды конечного пользователя (`vyro ...`) для запуска и работы приложений.
+2. Скрипты разработчика (`python -m scripts.dev...`) для внутренних проверок/сборки/тестирования.
 
-## End-user commands
+## Команды конечного пользователя
 
-- `vyro new` - scaffold a new project.
-- `vyro run` - run app in production-style mode.
-- `vyro dev` - run app with reload behavior.
-- `vyro doctor` - validate environment and readiness hints.
-- `vyro openapi` - generate OpenAPI from app routes.
-- `vyro compat` - compare API contracts.
-- `vyro migrate` - execute migrations.
-- `vyro drift` - detect schema drift.
-- `vyro k8s` - generate Kubernetes manifests.
-- `vyro nogil-tune` - recommend worker tuning.
-- `vyro release ...` - release automation commands.
+- `vyro new` - создаем новый проект.
+- `vyro run` - запустить приложение в рабочем режиме.
+- `vyro dev` - запустить приложение с перезагрузкой.
+- `vyro doctor` — проверка среды и подсказок о готовности.
+— `vyro openapi` — генерировать OpenAPI на основе маршрутов приложений.
+- `vyro compat` - сравнить контракты API.
+— `vyro migrate` — выполнить миграцию.
+- `vyro drift` - обнаружить дрейф схемы.
+— `vyro k8s` — генерировать манифесты Kubernetes.
+- `vyro nogil-tune` - рекомендуем рабочий тюнинг.
+- `vyro release ...` - команды автоматизации выпуска.
 
-## Developer-only scripts
+## Скрипты только для разработчиков
 
-Use these for project maintenance, not end-user runtime operations:
+Используйте их для обслуживания проекта, а не для выполнения операций конечного пользователя:
 
 ```bash
 python -m scripts.dev.check
@@ -32,8 +32,8 @@ python -m scripts.dev.build --sdist
 python -m scripts.dev.bench --suite all --iterations 10000 --out bench.json
 ```
 
-## Exit codes
+## Коды выхода
 
-- `0`: success
-- `1`: execution/runtime/tooling failure
-- `2`: invalid user input/arguments
+- `0`: успех
+- `1`: сбой выполнения/время выполнения/инструментария.
+- `2`: неверный пользовательский ввод/аргументы.

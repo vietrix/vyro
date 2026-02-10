@@ -1,18 +1,18 @@
-# Configuration
+＃ 構成
 
-## Runtime parameters
+## ランタイムパラメータ
 
-- `host`
+- ZXQコード0ZXQ
 - `port`
 - `workers`
 
-## Environment variables
+## 環境変数
 
 - `VYRO_ENV`
-- `VYRO_SECRET_KEY`
+- ZXQコード4ZXQ
 - `VYRO_WORKERS`
-- `VYRO_LOG_SAMPLE_INFO`
-- `VYRO_LOG_SAMPLE_WARN`
-- `VYRO_LOG_SAMPLE_ERROR`
+- ZXQコード6ZXQ
+- ZXQコード7ZXQ
+- ZXQコード8ZXQ
 
-Use `vyro doctor --strict` in CI for production readiness checks.
+実稼働準備状況チェックには、CI で `vyro doctor --strict` を使用します。

@@ -1,14 +1,14 @@
-# Cookbook
+# 食谱
 
-## Recipes
+## 食谱
 
-- Multi-tenant routing
-- Background jobs and retries
-- Cache + invalidation
-- Rate limiting policies
-- Static files with ETag/compression
-- WebSocket basics
-- gRPC gateway foundations
-- Migration runner usage
+- 多租户路由
+- 后台作业和重试
+- 缓存+失效
+- 速率限制政策
+- 带 ETag/压缩的静态文件
+- WebSocket 基础知识
+- gRPC 网关基础
+- 迁移运行器的使用
 
-Each recipe should be copied and adapted to your production constraints.
+应复制每个配方并根据您的生产限制进行调整。

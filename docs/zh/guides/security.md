@@ -1,17 +1,17 @@
-# Security
+＃ 安全
 
-## Built-in primitives
+## 内置原语
 
-- JWT guard
-- API key manager
-- CORS profiles
-- CSRF protector
-- Secrets manager
-- Audit logger
+- 智威汤逊警卫
+- API密钥管理器
+- CORS配置文件
+- CSRF保护器
+- 秘密经理
+- 审计记录器
 
-## Best practices
+## 最佳实践
 
-- Rotate secrets and keys
-- Use strict CORS in production
-- Enforce authz checks for sensitive routes
-- Log security events with correlation IDs
+- 轮换秘密和密钥
+- 在生产中使用严格的CORS
+- 对敏感路由强制执行授权检查
+- 使用相关 ID 记录安全事件

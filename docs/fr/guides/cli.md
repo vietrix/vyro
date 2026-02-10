@@ -1,29 +1,29 @@
-# CLI User Guide
+# Guide de l'utilisateur CLI
 
-## Command model
+## Modèle de commande
 
-Vyro CLI is split into two surfaces:
+Vyro CLI est divisé en deux surfaces :
 
-1. End-user commands (`vyro ...`) for running and operating applications.
-2. Developer scripts (`python -m scripts.dev...`) for internal checks/build/bench.
+1. Commandes de l'utilisateur final (`vyro ...`) pour exécuter et exploiter les applications.
+2. Scripts de développeur (`python -m scripts.dev...`) pour les vérifications/construction/bench internes.
 
-## End-user commands
+## Commandes de l'utilisateur final
 
-- `vyro new` - scaffold a new project.
-- `vyro run` - run app in production-style mode.
-- `vyro dev` - run app with reload behavior.
-- `vyro doctor` - validate environment and readiness hints.
-- `vyro openapi` - generate OpenAPI from app routes.
-- `vyro compat` - compare API contracts.
-- `vyro migrate` - execute migrations.
-- `vyro drift` - detect schema drift.
-- `vyro k8s` - generate Kubernetes manifests.
-- `vyro nogil-tune` - recommend worker tuning.
-- `vyro release ...` - release automation commands.
+- `vyro new` - échafauder un nouveau projet.
+- `vyro run` - exécutez l'application en mode production.
+- `vyro dev` - exécutez l'application avec un comportement de rechargement.
+- `vyro doctor` - valide les conseils d'environnement et de préparation.
+- `vyro openapi` - génère OpenAPI à partir des routes d'application.
+- `vyro compat` - comparez les contrats API.
+- `vyro migrate` - exécute les migrations.
+- `vyro drift` - détecte la dérive du schéma.
+- `vyro k8s` - génère des manifestes Kubernetes.
+- `vyro nogil-tune` - recommande le réglage des travailleurs.
+- `vyro release ...` - libère les commandes d'automatisation.
 
-## Developer-only scripts
+## Scripts réservés aux développeurs
 
-Use these for project maintenance, not end-user runtime operations:
+Utilisez-les pour la maintenance du projet, et non pour les opérations d'exécution de l'utilisateur final :
 
 ```bash
 python -m scripts.dev.check
@@ -32,8 +32,8 @@ python -m scripts.dev.build --sdist
 python -m scripts.dev.bench --suite all --iterations 10000 --out bench.json
 ```
 
-## Exit codes
+## Codes de sortie
 
-- `0`: success
-- `1`: execution/runtime/tooling failure
-- `2`: invalid user input/arguments
+- `0` : réussite
+- `1` : échec d'exécution/d'exécution/outillage
+- `2` : entrées/arguments utilisateur non valides

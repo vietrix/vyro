@@ -1,12 +1,12 @@
-# Error Reference
+# エラー参照
 
-Common errors:
+よくあるエラー:
 
-- `HandlerSignatureError`
+- ZXQコード0ZXQ
 - `RouteDefinitionError`
 
-Guideline:
+ガイドライン：
 
-- Fix handler signatures first
-- Then validate route DSL and normalization
-- Re-run tests for regression check
+- 最初にハンドラー署名を修正する
+- 次に、ルート DSL と正規化を検証します。
+- 回帰チェックのためのテストの再実行

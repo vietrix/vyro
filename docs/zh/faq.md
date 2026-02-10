@@ -1,21 +1,21 @@
-# FAQ
+＃ 常问问题
 
-## Is Vyro a FastAPI replacement?
+## Vyro 是 FastAPI 的替代品吗？
 
-Vyro targets Python DX with a Rust execution engine. Evaluate by your workload, latency goals, and operational model.
+Vyro 的目标是使用 Rust 执行引擎的 Python DX。根据您的工作负载、延迟目标和运营模型进行评估。
 
-## Why does documentation mention `python -m vyro`?
+## 为什么文档提到`python -m vyro`？
 
-`vyro` is the primary command for end users. `python -m vyro` is a fallback when shell PATH is not configured yet.
+`vyro` 是最终用户的主要命令。 `python -m vyro` 是尚未配置 shell PATH 时的后备方案。
 
-## Should users run `scripts.dev.*` commands?
+## 用户是否应该运行 `scripts.dev.*` 命令？
 
-No. End users should use `vyro ...`. Developer scripts are internal maintenance tooling.
+否。最终用户应使用 `vyro ...`。开发人员脚本是内部维护工具。
 
-## Does Vyro support WebSocket?
+## Vyro 支持 WebSocket 吗？
 
-Yes, through runtime edge primitives and route-level WebSocket handlers.
+是的，通过运行时边缘原语和路由级 WebSocket 处理程序。
 
-## Can I run on Python 3.13?
+## 我可以在 Python 3.13 上运行吗？
 
-Yes. Vyro targets Python 3.10-3.13.
+是的。 Vyro 的目标是 Python 3.10-3.13。

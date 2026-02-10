@@ -1,16 +1,16 @@
-# CLI Reference
+# CLI 참조
 
-## Main commands
+## 주요 명령어
 
 - `vyro run --app <module:attr>`
-- `vyro dev --app <module:attr>`
-- `vyro doctor [--strict]`
-- `vyro openapi ...`
-- `vyro compat ...`
-- `vyro release ...`
+-`vyro dev --app <module:attr>`
+-`vyro doctor [--strict]`
+-`vyro openapi ...`
+-`vyro compat ...`
+-`vyro release ...`
 
-## Exit codes
+## 종료 코드
 
-- `0`: success
-- `1`: execution/tooling/runtime error
-- `2`: validation/usage error
+- `0`: 성공
+- `1`: 실행/툴링/런타임 오류
+- `2`: 유효성 검사/사용 오류

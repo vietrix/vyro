@@ -1,18 +1,18 @@
-# Release Policy
+# 출시 정책
 
-## Versioning
+## 버전 관리
 
-- Stable tags: `vX.Y.Z`
-- Pre-release tags: `vX.Y.Z-rc.N`
+- 안정적인 태그: `vX.Y.Z`
+- 사전 출시 태그: `vX.Y.Z-rc.N`
 
-## Release pipeline
+## 릴리스 파이프라인
 
-1. Quality gate
-2. Build artifacts
-3. Publish PyPI
-4. Create GitHub Release
-5. Publish docs on push to `main`
+1. 품질 게이트
+2. 아티팩트 구축
+3. PyPI 게시
+4. GitHub 릴리스 생성
+5. `main`에 푸시할 때 문서 게시
 
-## Changelog
+## 변경 내역
 
-Generated from Conventional Commits and curated release notes.
+기존 커밋 및 선별된 릴리스 노트에서 생성되었습니다.

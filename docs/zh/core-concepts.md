@@ -1,17 +1,17 @@
-# Core Concepts
+# 核心概念
 
-## Design model
+## 设计模型
 
-- Python declares routes and handlers
-- Rust executes networking/runtime work
-- `Context` carries request metadata
+- Python 声明路由和处理程序
+- Rust 执行网络/运行时工作
+- `Context`携带请求元数据
 
-## Handler rules
+## 处理程序规则
 
-- Must be `async def`
-- First arg must be `ctx`
-- Additional typed args are bound from route/query
+- 必须是 `async def`
+- 第一个参数必须是 `ctx`
+- 附加类型参数从路由/查询绑定
 
-## Runtime ownership
+## 运行时所有权
 
-`app.run()` starts the native runtime and worker model.
+`app.run()` 启动本机运行时和工作模型。

@@ -1,12 +1,12 @@
-# Error Reference
+# 错误参考
 
-Common errors:
+常见错误：
 
-- `HandlerSignatureError`
-- `RouteDefinitionError`
+- ZXQ代码0ZXQ
+- ZXQ代码1ZXQ
 
-Guideline:
+指导方针：
 
-- Fix handler signatures first
-- Then validate route DSL and normalization
-- Re-run tests for regression check
+- 首先修复处理程序签名
+- 然后验证路由 DSL 和标准化
+- 重新运行回归检查测试

@@ -1,18 +1,18 @@
-# Release Policy
+# Политика выпуска
 
-## Versioning
+## Управление версиями
 
-- Stable tags: `vX.Y.Z`
-- Pre-release tags: `vX.Y.Z-rc.N`
+- Стабильные теги: `vX.Y.Z`
+- Теги предварительной версии: `vX.Y.Z-rc.N`.
 
-## Release pipeline
+## Конвейер выпуска
 
-1. Quality gate
-2. Build artifacts
-3. Publish PyPI
-4. Create GitHub Release
-5. Publish docs on push to `main`
+1. Качественные ворота
+2. Создание артефактов
+3. Опубликовать PyPI
+4. Создайте выпуск GitHub
+5. Публикуйте документы при отправке на `main`.
 
-## Changelog
+## Список изменений
 
-Generated from Conventional Commits and curated release notes.
+Создано на основе обычных коммитов и тщательно подобранных примечаний к выпуску.

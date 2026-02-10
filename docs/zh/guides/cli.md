@@ -1,29 +1,29 @@
-# CLI User Guide
+# CLI 用户指南
 
-## Command model
+## 命令模型
 
-Vyro CLI is split into two surfaces:
+Vyro CLI 分为两个表面：
 
-1. End-user commands (`vyro ...`) for running and operating applications.
-2. Developer scripts (`python -m scripts.dev...`) for internal checks/build/bench.
+1. 用于运行和操作应用程序的最终用户命令 (`vyro ...`)。
+2. 用于内部检查/构建/基准测试的开发人员脚本 (`python -m scripts.dev...`)。
 
-## End-user commands
+## 最终用户命令
 
-- `vyro new` - scaffold a new project.
-- `vyro run` - run app in production-style mode.
-- `vyro dev` - run app with reload behavior.
-- `vyro doctor` - validate environment and readiness hints.
-- `vyro openapi` - generate OpenAPI from app routes.
-- `vyro compat` - compare API contracts.
-- `vyro migrate` - execute migrations.
-- `vyro drift` - detect schema drift.
-- `vyro k8s` - generate Kubernetes manifests.
-- `vyro nogil-tune` - recommend worker tuning.
-- `vyro release ...` - release automation commands.
+- `vyro new` - 搭建一个新项目。
+- `vyro run` - 在生产风格模式下运行应用程序。
+- `vyro dev` - 运行具有重新加载行为的应用程序。
+- `vyro doctor` - 验证环境和准备情况提示。
+- `vyro openapi` - 从应用程序路由生成 OpenAPI。
+- `vyro compat` - 比较 API 合约。
+- `vyro migrate` - 执行迁移。
+- `vyro drift` - 检测模式漂移。
+- `vyro k8s` - 生成 Kubernetes 清单。
+- `vyro nogil-tune` - 建议工人调整。
+- `vyro release ...` - 发布自动化命令。
 
-## Developer-only scripts
+## 仅供开发人员使用的脚本
 
-Use these for project maintenance, not end-user runtime operations:
+将它们用于项目维护，而不是最终用户运行时操作：
 
 ```bash
 python -m scripts.dev.check
@@ -32,8 +32,8 @@ python -m scripts.dev.build --sdist
 python -m scripts.dev.bench --suite all --iterations 10000 --out bench.json
 ```
 
-## Exit codes
+## 退出代码
 
-- `0`: success
-- `1`: execution/runtime/tooling failure
-- `2`: invalid user input/arguments
+- `0`：成功
+- `1`：执行/运行时/工具失败
+- `2`：无效的用户输入/参数

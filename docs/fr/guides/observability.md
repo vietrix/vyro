@@ -1,17 +1,17 @@
-# Observability
+# Observabilité
 
-## Logging
+## Journalisation
 
-Structured logs with sampling and redaction support.
+Journaux structurés avec prise en charge de l'échantillonnage et de la rédaction.
 
-## Metrics
+## Métriques
 
-Expose counters and latency distributions (`p50/p95/p99`).
+Exposez les compteurs et les distributions de latence (`p50/p95/p99`).
 
-## Tracing
+## Traçage
 
-Use trace context propagation for cross-service request tracking.
+Utilisez la propagation du contexte de trace pour le suivi des demandes interservices.
 
-## Health
+## Santé
 
-Use liveness/readiness/startup checks for orchestration systems.
+Utilisez les contrôles d’activité/préparation/démarrage pour les systèmes d’orchestration.

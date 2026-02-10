@@ -1,17 +1,17 @@
-# Middleware
+# 미들웨어
 
-Register middleware with explicit order:
+명시적인 순서로 미들웨어를 등록합니다.
 
 ```python
 app.add_middleware(my_middleware, priority=100)
 ```
 
-## Recommendations
+## 추천
 
-- Keep middleware pure and fast
-- Use explicit priorities
-- Keep IO-heavy work in runtime primitives
+- 미들웨어를 순수하고 빠르게 유지하세요.
+- 명시적인 우선순위를 사용하세요.
+- 런타임 프리미티브에서 IO가 많은 작업을 유지합니다.
 
-## Idempotency
+## 멱등성
 
-Use idempotency middleware for write endpoints to avoid duplicate side effects.
+중복된 부작용을 방지하려면 쓰기 끝점에 멱등성 미들웨어를 사용하세요.

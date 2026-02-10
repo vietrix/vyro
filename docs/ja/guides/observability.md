@@ -1,17 +1,17 @@
-# Observability
+# 可観測性
 
-## Logging
+## ロギング
 
-Structured logs with sampling and redaction support.
+サンプリングと編集をサポートする構造化ログ。
 
-## Metrics
+## メトリクス
 
-Expose counters and latency distributions (`p50/p95/p99`).
+カウンタとレイテンシ分布 (`p50/p95/p99`) を公開します。
 
-## Tracing
+## トレース
 
-Use trace context propagation for cross-service request tracking.
+サービス間のリクエスト追跡にはトレース コンテキストの伝播を使用します。
 
-## Health
+＃＃ 健康
 
-Use liveness/readiness/startup checks for orchestration systems.
+オーケストレーション システムの活性/準備/起動チェックを使用します。

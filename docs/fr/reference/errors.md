@@ -1,12 +1,12 @@
-# Error Reference
+# Référence d'erreur
 
-Common errors:
+Erreurs courantes :
 
 - `HandlerSignatureError`
 - `RouteDefinitionError`
 
-Guideline:
+Ligne directrice:
 
-- Fix handler signatures first
-- Then validate route DSL and normalization
-- Re-run tests for regression check
+- Corrigez d'abord les signatures du gestionnaire
+- Puis valider l'itinéraire DSL et la normalisation
+- Réexécuter les tests pour vérifier la régression

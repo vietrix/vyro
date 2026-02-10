@@ -1,15 +1,15 @@
-# OpenAPI and API Contracts
+# OpenAPI と API コントラクト
 
-Generate OpenAPI:
+OpenAPI を生成します。
 
 ```bash
 vyro openapi --app examples.hello_world:app --out openapi.json
 ```
 
-Compare compatibility:
+互換性を比較します:
 
 ```bash
 vyro compat --base openapi-prev.json --target openapi.json
 ```
 
-Use this in CI to prevent breaking API changes.
+API の破壊的な変更を防ぐために、これを CI で使用します。

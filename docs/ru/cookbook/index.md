@@ -1,14 +1,14 @@
-# Cookbook
+# Поваренная книга
 
-## Recipes
+## Рецепты
 
-- Multi-tenant routing
-- Background jobs and retries
-- Cache + invalidation
-- Rate limiting policies
-- Static files with ETag/compression
-- WebSocket basics
-- gRPC gateway foundations
-- Migration runner usage
+- Мультитенантная маршрутизация
+- Фоновые задания и повторные попытки
+- Кэш + аннулирование
+- Политика ограничения ставок
+- Статические файлы с ETag/сжатием.
+- Основы WebSocket
+- основы шлюза gRPC
+- Использование бегуна миграции
 
-Each recipe should be copied and adapted to your production constraints.
+Каждый рецепт следует скопировать и адаптировать к вашим производственным ограничениям.

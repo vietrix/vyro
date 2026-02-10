@@ -1,19 +1,19 @@
-# Migration Guide: App to Vyro
+# 迁移指南：应用程序到 Vyro
 
-## Breaking change
+## 重大改变
 
-Old:
+老的：
 
 ```python
 from vyro import App
 app = App()
 ```
 
-New:
+新的：
 
 ```python
 from vyro import Vyro
 app = Vyro()
 ```
 
-No `App` alias is provided. Update imports directly.
+未提供 `App` 别名。直接更新导入。

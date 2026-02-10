@@ -1,45 +1,45 @@
-# Installation
+# インストール
 
-## Requirements
+＃＃ 要件
 
 - Python 3.10+
-- pip
-- Rust toolchain (only required for source builds)
+- ピップ
+- Rust ツールチェーン (ソース ビルドにのみ必要)
 
-## Install from PyPI
+## PyPI からインストールする
 
 ```bash
 pip install vyro
 ```
 
-## Verify installation
+## インストールを確認する
 
-Primary (recommended for end users):
+プライマリ (エンド ユーザーに推奨):
 
 ```bash
 vyro --help
 ```
 
-Fallback (if your shell PATH does not expose `vyro` yet):
+フォールバック (シェル PATH がまだ `vyro` を公開していない場合):
 
 ```bash
 python -m vyro --help
 ```
 
-## Why two commands?
+## なぜ 2 つのコマンドがあるのでしょうか?
 
-- `vyro` is the official end-user CLI command.
-- `python -m vyro` runs the same CLI module directly and is useful for PATH/debug scenarios.
+- `vyro` は、公式のエンドユーザー CLI コマンドです。
+- `python -m vyro` は同じ CLI モジュールを直接実行し、PATH/デバッグ シナリオに役立ちます。
 
-## PATH troubleshooting
+## PATH のトラブルシューティング
 
-If `vyro` is not found:
+`vyro` が見つからない場合:
 
-1. Re-open terminal after install.
-2. Ensure Python Scripts directory is on PATH.
-3. Use `python -m vyro` temporarily.
+1. インストール後にターミナルを再度開きます。
+2. Python Scripts ディレクトリが PATH 上にあることを確認します。
+3. `python -m vyro` を一時的に使用します。
 
-## Developer setup
+## 開発者のセットアップ
 
 ```bash
 pip install -e .[dev]

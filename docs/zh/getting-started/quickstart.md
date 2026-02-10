@@ -1,6 +1,6 @@
-# Quickstart
+# 快速入门
 
-Create `app.py`:
+创建`app.py`：
 
 ```python
 from vyro import Vyro, Context
@@ -15,13 +15,13 @@ if __name__ == "__main__":
     app.run(port=8000, workers=1)
 ```
 
-Run:
+跑步：
 
 ```bash
 python app.py
 ```
 
-Or run through CLI:
+或者通过 CLI 运行：
 
 ```bash
 vyro run --app app:app --port 8000

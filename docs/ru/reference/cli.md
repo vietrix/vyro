@@ -1,6 +1,6 @@
-# CLI Reference
+# Справочник по интерфейсу командной строки
 
-## Main commands
+## Основные команды
 
 - `vyro run --app <module:attr>`
 - `vyro dev --app <module:attr>`
@@ -9,8 +9,8 @@
 - `vyro compat ...`
 - `vyro release ...`
 
-## Exit codes
+## Коды выхода
 
-- `0`: success
-- `1`: execution/tooling/runtime error
-- `2`: validation/usage error
+- `0`: успех
+- `1`: ошибка выполнения/инструментария/время выполнения.
+- `2`: ошибка проверки/использования.

@@ -1,45 +1,45 @@
-# Installation
+# Установка
 
-## Requirements
+## Требования
 
-- Python 3.10+
-- pip
-- Rust toolchain (only required for source builds)
+- Питон 3.10+
+- пип
+- Набор инструментов Rust (требуется только для исходных сборок)
 
-## Install from PyPI
+## Установка из PyPI
 
 ```bash
 pip install vyro
 ```
 
-## Verify installation
+## Проверьте установку
 
-Primary (recommended for end users):
+Первичный (рекомендуется для конечных пользователей):
 
 ```bash
 vyro --help
 ```
 
-Fallback (if your shell PATH does not expose `vyro` yet):
+Резервный вариант (если ваша оболочка PATH еще не предоставляет `vyro`):
 
 ```bash
 python -m vyro --help
 ```
 
-## Why two commands?
+## Почему две команды?
 
-- `vyro` is the official end-user CLI command.
-- `python -m vyro` runs the same CLI module directly and is useful for PATH/debug scenarios.
+- `vyro` — официальная команда CLI конечного пользователя.
+- `python -m vyro` напрямую запускает тот же модуль CLI и полезен для сценариев PATH/отладки.
 
-## PATH troubleshooting
+## Устранение неполадок PATH
 
-If `vyro` is not found:
+Если `vyro` не найден:
 
-1. Re-open terminal after install.
-2. Ensure Python Scripts directory is on PATH.
-3. Use `python -m vyro` temporarily.
+1. Снова откройте терминал после установки.
+2. Убедитесь, что каталог сценариев Python находится в PATH.
+3. Временно используйте `python -m vyro`.
 
-## Developer setup
+## Настройка разработчика
 
 ```bash
 pip install -e .[dev]

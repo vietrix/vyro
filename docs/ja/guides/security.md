@@ -1,17 +1,17 @@
-# Security
+＃ 安全
 
-## Built-in primitives
+## 組み込みプリミティブ
 
-- JWT guard
-- API key manager
-- CORS profiles
-- CSRF protector
-- Secrets manager
-- Audit logger
+- JWT ガード
+- APIキーマネージャー
+- CORS プロファイル
+- CSRFプロテクター
+- 秘密マネージャー
+- 監査ロガー
 
-## Best practices
+## ベストプラクティス
 
-- Rotate secrets and keys
-- Use strict CORS in production
-- Enforce authz checks for sensitive routes
-- Log security events with correlation IDs
+- シークレットとキーをローテーションする
+- 運用環境では厳密な CORS を使用する
+- 機密ルートの認証チェックを強制する
+- 相関 ID を使用してセキュリティ イベントをログに記録します

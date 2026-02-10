@@ -1,17 +1,17 @@
-# Troubleshooting
+# 문제 해결
 
 ## `Invalid --app format`
 
-Use `<module>:<attribute>`, for example `examples.hello_world:app`.
+`<module>:<attribute>`(예: `examples.hello_world:app`)를 사용합니다.
 
-## Route signature errors
+## 경로 서명 오류
 
-Ensure handlers are `async def` and first arg is `ctx`.
+핸들러가 `async def`이고 첫 번째 인수가 `ctx`인지 확인하세요.
 
-## Native build issues
+## 네이티브 빌드 문제
 
-Install Rust toolchain and rebuild with `maturin build --release`.
+Rust 툴체인을 설치하고 `maturin build --release`로 다시 빌드하세요.
 
-## Docs build errors
+## 문서 빌드 오류
 
-Run `mkdocs build --strict` and fix broken links or missing pages.
+`mkdocs build --strict`를 실행하고 끊어진 링크나 누락된 페이지를 수정하세요.

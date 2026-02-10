@@ -1,14 +1,14 @@
-# Cookbook
+# Livre de recettes
 
-## Recipes
+## Recettes
 
-- Multi-tenant routing
-- Background jobs and retries
+- Routage multi-tenant
+- Travaux et tentatives en arrière-plan
 - Cache + invalidation
-- Rate limiting policies
-- Static files with ETag/compression
-- WebSocket basics
-- gRPC gateway foundations
-- Migration runner usage
+- Politiques de limitation des tarifs
+- Fichiers statiques avec ETag/compression
+- Les bases de WebSocket
+- Fondations de la passerelle gRPC
+- Utilisation du programme d'exécution de migration
 
-Each recipe should be copied and adapted to your production constraints.
+Chaque recette doit être copiée et adaptée à vos contraintes de production.

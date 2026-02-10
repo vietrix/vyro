@@ -1,17 +1,17 @@
-# Observability
+# 관찰 가능성
 
-## Logging
+## 로깅
 
-Structured logs with sampling and redaction support.
+샘플링 및 수정을 지원하는 구조화된 로그입니다.
 
-## Metrics
+## 지표
 
-Expose counters and latency distributions (`p50/p95/p99`).
+카운터 및 대기 시간 분포(`p50/p95/p99`)를 노출합니다.
 
-## Tracing
+## 추적
 
-Use trace context propagation for cross-service request tracking.
+서비스 간 요청 추적을 위해 추적 컨텍스트 전파를 사용합니다.
 
-## Health
+## 건강
 
-Use liveness/readiness/startup checks for orchestration systems.
+오케스트레이션 시스템에 대한 활성/준비/시작 확인을 사용합니다.

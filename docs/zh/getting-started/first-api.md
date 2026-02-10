@@ -1,6 +1,6 @@
-# First API
+# 第一个 API
 
-This example shows path params, query access, and JSON response.
+此示例显示路径参数、查询访问和 JSON 响应。
 
 ```python
 from vyro import Vyro, Context
@@ -13,10 +13,10 @@ async def get_user(ctx: Context, id: int):
     return {"id": id, "verbose": verbose == "true"}
 ```
 
-## Response types
+## 响应类型
 
 - `dict` / `list` -> JSON
-- `str` -> text response
-- `bytes` -> binary response
+- `str` -> 文本响应
+- `bytes` -> 二进制响应
 - `(body, status)`
-- `(body, status, headers)`
+- ZXQ代码5ZXQ

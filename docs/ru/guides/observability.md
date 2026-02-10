@@ -1,17 +1,17 @@
-# Observability
+# Наблюдаемость
 
-## Logging
+## Ведение журнала
 
-Structured logs with sampling and redaction support.
+Структурированные журналы с поддержкой выборки и редактирования.
 
-## Metrics
+## Метрики
 
-Expose counters and latency distributions (`p50/p95/p99`).
+Выставьте счетчики и распределения задержек (`p50/p95/p99`).
 
-## Tracing
+## Трассировка
 
-Use trace context propagation for cross-service request tracking.
+Используйте распространение контекста трассировки для отслеживания межсервисных запросов.
 
-## Health
+## Здоровье
 
-Use liveness/readiness/startup checks for orchestration systems.
+Используйте проверки работоспособности/готовности/запуска для систем оркестрации.

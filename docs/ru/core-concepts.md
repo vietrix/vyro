@@ -1,17 +1,17 @@
-# Core Concepts
+# Основные понятия
 
-## Design model
+## Модель дизайна
 
-- Python declares routes and handlers
-- Rust executes networking/runtime work
-- `Context` carries request metadata
+- Python объявляет маршруты и обработчики
+- Rust выполняет сетевую работу/работу во время выполнения.
+- `Context` содержит метаданные запроса.
 
-## Handler rules
+## Правила обработчика
 
-- Must be `async def`
-- First arg must be `ctx`
-- Additional typed args are bound from route/query
+- Должно быть `async def`
+- Первый аргумент должен быть `ctx`.
+- Дополнительные типизированные аргументы привязаны к маршруту/запросу.
 
-## Runtime ownership
+## Владение средой выполнения
 
-`app.run()` starts the native runtime and worker model.
+`app.run()` запускает собственную среду выполнения и рабочую модель.

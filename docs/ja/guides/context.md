@@ -1,13 +1,13 @@
-# Context and Request/Response
+# コンテキストとリクエスト/レスポンス
 
-`Context` gives access to request metadata:
+`Context` は、リクエストのメタデータへのアクセスを許可します。
 
 - `ctx.headers`
 - `ctx.query`
 - `ctx.path_params`
-- `ctx.body_bytes()`
+- ZXQコード4ZXQ
 
-Example:
+例：
 
 ```python
 @app.post("/events")

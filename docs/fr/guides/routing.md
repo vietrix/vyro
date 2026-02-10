@@ -1,11 +1,11 @@
-# Routing
+# Routage
 
-## Path DSL
+## Chemin DSL
 
-- `/users/:id` -> named param
-- `/static/*` -> catch-all
+- `/users/:id` -> paramètre nommé
+- `/static/*` -> fourre-tout
 
-## Versioning and deprecation
+## Gestion des versions et dépréciation
 
 ```python
 @app.get("/v1/items/:id", version="v1", deprecated="use /v2")
@@ -13,6 +13,6 @@ async def get_item(ctx: Context, id: int):
     return {"id": id}
 ```
 
-## Errors
+## Erreurs
 
-Invalid signatures or ambiguous routes raise `RouteDefinitionError` / `HandlerSignatureError`.
+Les signatures invalides ou les itinéraires ambigus génèrent `RouteDefinitionError` / `HandlerSignatureError`.
