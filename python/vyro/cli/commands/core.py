@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import shutil
 import subprocess
 import sys
@@ -166,7 +167,18 @@ def version() -> None:
 
 
 @app.command("doctor")
-def doctor() -> None:
+def doctor(
+    production_readiness: bool = typer.Option(
+        True,
+        "--production-readiness/--no-production-readiness",
+        help="Run production readiness checks.",
+    ),
+    strict: bool = typer.Option(
+        False,
+        "--strict/--no-strict",
+        help="Return non-zero when readiness checks report ERROR.",
+    ),
+) -> None:
     checks = {
         "python": python_executable(),
         "rustc": shutil.which("rustc") or "",
@@ -191,6 +203,52 @@ def doctor() -> None:
         info(rust_version)
     except Exception:
         warn("Could not determine rustc version.")
+
+    if not production_readiness:
+        return
+
+    readiness_errors = 0
+    readiness_warnings = 0
+
+    env_mode = os.getenv("VYRO_ENV", "").strip().lower()
+    if env_mode == "production":
+        info("readiness: VYRO_ENV=production")
+    else:
+        warn("readiness: VYRO_ENV should be 'production' for deploy targets")
+        readiness_warnings += 1
+
+    secret_key = os.getenv("VYRO_SECRET_KEY", "")
+    if len(secret_key) >= 16:
+        info("readiness: VYRO_SECRET_KEY is configured")
+    else:
+        error("readiness: VYRO_SECRET_KEY must be set and at least 16 chars")
+        readiness_errors += 1
+
+    workers_raw = os.getenv("VYRO_WORKERS", "")
+    if workers_raw:
+        try:
+            workers = int(workers_raw)
+            if workers >= 1:
+                info(f"readiness: VYRO_WORKERS={workers}")
+            else:
+                warn("readiness: VYRO_WORKERS should be >= 1")
+                readiness_warnings += 1
+        except ValueError:
+            warn("readiness: VYRO_WORKERS should be an integer")
+            readiness_warnings += 1
+    else:
+        warn("readiness: VYRO_WORKERS is not set")
+        readiness_warnings += 1
+
+    if Path(".github/workflows/release.yml").exists():
+        info("readiness: release workflow detected")
+    else:
+        warn("readiness: .github/workflows/release.yml not found")
+        readiness_warnings += 1
+
+    info(f"readiness-summary: errors={readiness_errors} warnings={readiness_warnings}")
+    if strict and readiness_errors > 0:
+        raise typer.Exit(code=1)
 
 
 @app.command("openapi")

@@ -4,6 +4,7 @@ from pathlib import Path
 from typer.testing import CliRunner
 
 from vyro.cli.main import app
+from vyro.cli.commands import core as core_cmd
 
 
 def test_cli_help() -> None:
@@ -74,3 +75,51 @@ def test_cli_drift_reports_missing_schema(tmp_path) -> None:  # type: ignore[no-
     record = json.loads(result.stdout.strip())
     assert record["level"] == "INFO"
     assert "Schema drift check passed." in record["message"]
+
+
+def test_cli_doctor_strict_fails_when_secret_missing(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    runner = CliRunner()
+    monkeypatch.setattr(core_cmd.shutil, "which", lambda _: "/usr/bin/fake")
+    monkeypatch.setattr(
+        core_cmd.subprocess,
+        "run",
+        lambda *args, **kwargs: type("R", (), {"stdout": "rustc 1.80.0"})(),
+    )
+
+    result = runner.invoke(
+        app,
+        ["doctor", "--strict"],
+        env={
+            "VYRO_ENV": "production",
+            "VYRO_WORKERS": "4",
+            "VYRO_SECRET_KEY": "",
+            "VYRO_LOG_SAMPLE_INFO": "1",
+            "VYRO_LOG_SAMPLE_WARN": "1",
+            "VYRO_LOG_SAMPLE_ERROR": "1",
+        },
+    )
+    assert result.exit_code == 1
+
+
+def test_cli_doctor_non_strict_emits_readiness_summary(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    runner = CliRunner()
+    monkeypatch.setattr(core_cmd.shutil, "which", lambda _: "/usr/bin/fake")
+    monkeypatch.setattr(
+        core_cmd.subprocess,
+        "run",
+        lambda *args, **kwargs: type("R", (), {"stdout": "rustc 1.80.0"})(),
+    )
+
+    result = runner.invoke(
+        app,
+        ["doctor", "--no-strict"],
+        env={
+            "VYRO_ENV": "production",
+            "VYRO_SECRET_KEY": "x" * 24,
+            "VYRO_WORKERS": "2",
+            "VYRO_LOG_SAMPLE_INFO": "1",
+            "VYRO_LOG_SAMPLE_WARN": "1",
+            "VYRO_LOG_SAMPLE_ERROR": "1",
+        },
+    )
+    assert result.exit_code == 0
