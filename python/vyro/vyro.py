@@ -6,6 +6,7 @@ from .middleware import Middleware
 from .middleware.registry import MiddlewareRegistry
 from .routing.registry import RouterRegistry
 from .runtime.backpressure import BackpressureController
+from .runtime.bulkhead import OutboundBulkhead
 from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.concurrency import RouteConcurrencyLimiter
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
@@ -26,6 +27,7 @@ class Vyro:
         self._rate_limiter = TokenBucketRateLimiter(rate_per_sec=1000.0, burst=2000)
         self._multi_rate_limiter = MultiKeyRateLimiter(rate_per_sec=500.0, burst=1000)
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
+        self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
         self._timeout_budget = TimeoutBudget(timeout_sec=30.0)
 
@@ -91,6 +93,9 @@ class Vyro:
 
     def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
         self._outbound_circuit_breaker = breaker
+
+    def set_outbound_bulkhead(self, bulkhead: OutboundBulkhead) -> None:
+        self._outbound_bulkhead = bulkhead
 
     def set_retry_policy(self, policy: RetryPolicy) -> None:
         self._retry_policy = policy

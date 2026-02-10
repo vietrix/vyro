@@ -1,4 +1,5 @@
 from .backpressure import BackpressureController
+from .bulkhead import OutboundBulkhead
 from .circuit_breaker import OutboundCircuitBreaker
 from .concurrency import RouteConcurrencyLimiter
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
@@ -10,6 +11,7 @@ from .timeout_budget import TimeoutBudget
 __all__ = [
     "BackpressureController",
     "MultiKeyRateLimiter",
+    "OutboundBulkhead",
     "OutboundCircuitBreaker",
     "RouteConcurrencyLimiter",
     "RetryPolicy",

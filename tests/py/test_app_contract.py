@@ -3,6 +3,7 @@ import pytest
 from vyro import Vyro
 from vyro.errors import HandlerSignatureError
 from vyro.runtime.backpressure import BackpressureController
+from vyro.runtime.bulkhead import OutboundBulkhead
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
@@ -87,6 +88,13 @@ def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:
     breaker = OutboundCircuitBreaker(failure_threshold=2, recovery_timeout_sec=1.5)
     app.set_outbound_circuit_breaker(breaker)
     assert app._outbound_circuit_breaker.failure_threshold == 2  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_outbound_bulkhead() -> None:
+    app = Vyro()
+    bulkhead = OutboundBulkhead(default_limit=4)
+    app.set_outbound_bulkhead(bulkhead)
+    assert app._outbound_bulkhead.default_limit == 4  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_retry_policy() -> None:

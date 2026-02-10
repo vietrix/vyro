@@ -12,6 +12,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Global token-bucket rate limiting primitives.
 - Multi-key rate-limiting primitives (ip/user/token tuple support).
 - Outbound circuit-breaker primitives for unstable upstreams.
+- Outbound bulkhead isolation primitives per dependency.
 - Retry policy primitives with exponential backoff and jitter.
 - Timeout budget primitives for cross-call deadline propagation.
 
