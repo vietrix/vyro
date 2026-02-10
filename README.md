@@ -19,6 +19,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Priority-aware middleware ordering primitives.
 - Route-group conditional middleware registration.
 - Automatic correlation-id injection on request context.
+- Structured JSON logging primitives for CLI/runtime output.
 
 ## Quickstart
 

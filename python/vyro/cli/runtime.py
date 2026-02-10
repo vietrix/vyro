@@ -8,19 +8,20 @@ from typing import Any
 
 import typer
 
+from vyro.observability.logging import emit_log
 from vyro.vyro import Vyro
 
 
 def info(message: str) -> None:
-    typer.echo(f"INFO: {message}")
+    emit_log("INFO", message)
 
 
 def warn(message: str) -> None:
-    typer.echo(f"WARN: {message}")
+    emit_log("WARN", message)
 
 
 def error(message: str) -> None:
-    typer.echo(f"ERROR: {message}", err=True)
+    emit_log("ERROR", message, err=True)
 
 
 def run_command(command: list[str], *, cwd: Path | None = None) -> None:
