@@ -40,7 +40,7 @@ class InternalEventBus:
         if not handlers:
             return 0
 
-        event = InternalEvent[Any](
+        event = InternalEvent(
             name=event_name,
             payload=payload,
             trace_id=trace_id,
