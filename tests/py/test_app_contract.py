@@ -14,6 +14,7 @@ from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.compression import ResponseCompressor
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.cors import CORSProfile
+from vyro.runtime.cron import CronScheduler
 from vyro.runtime.csrf import CSRFProtector
 from vyro.runtime.db_pool import DBConnectionPoolManager
 from vyro.runtime.etag import ETagManager
@@ -199,6 +200,13 @@ def test_vyro_accepts_custom_job_runtime() -> None:
     jobs = JobRuntime()
     app.set_job_runtime(jobs)
     assert app._jobs is jobs  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_cron_scheduler() -> None:
+    app = Vyro()
+    scheduler = CronScheduler()
+    app.set_cron_scheduler(scheduler)
+    assert app._cron is scheduler  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_http2_stream_manager() -> None:

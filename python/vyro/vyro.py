@@ -18,6 +18,7 @@ from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.compression import ResponseCompressor
 from .runtime.concurrency import RouteConcurrencyLimiter
 from .runtime.cors import CORSProfile
+from .runtime.cron import CronScheduler
 from .runtime.csrf import CSRFProtector
 from .runtime.db_pool import DBConnectionPoolManager
 from .runtime.etag import ETagManager
@@ -66,6 +67,7 @@ class Vyro:
         self._etag = ETagManager()
         self._jwt = JWTAuthGuard(secret=b"vyro-dev-secret")
         self._jobs = JobRuntime()
+        self._cron = CronScheduler()
         self._http2_streams = Http2StreamManager()
         self._grpc_gateway = GrpcGateway()
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
@@ -186,6 +188,9 @@ class Vyro:
 
     def set_job_runtime(self, jobs: JobRuntime) -> None:
         self._jobs = jobs
+
+    def set_cron_scheduler(self, scheduler: CronScheduler) -> None:
+        self._cron = scheduler
 
     def set_http2_stream_manager(self, manager: Http2StreamManager) -> None:
         self._http2_streams = manager

@@ -9,6 +9,7 @@ from .circuit_breaker import OutboundCircuitBreaker
 from .compression import CompressionProfile, ResponseCompressor
 from .concurrency import RouteConcurrencyLimiter
 from .cors import CORSProfile, CORSProfileName
+from .cron import CronJob, CronScheduler
 from .csrf import CSRFProtector
 from .db_pool import DBConnectionPool, DBConnectionPoolManager
 from .etag import ETagEvaluation, ETagManager
@@ -56,6 +57,8 @@ __all__ = [
     "ResponseCompressor",
     "CORSProfile",
     "CORSProfileName",
+    "CronJob",
+    "CronScheduler",
     "CSRFProtector",
     "DBConnectionPool",
     "DBConnectionPoolManager",

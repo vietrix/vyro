@@ -43,6 +43,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - ETag generation and conditional-request primitives.
 - JWT auth guard primitives (issue/verify/authorize).
 - Background jobs runtime primitives.
+- Cron scheduler primitives.
 - HTTP/2 stream helper primitives.
 - gRPC gateway mapping/transcoding foundation primitives.
 - Streaming multipart upload collector primitives.
