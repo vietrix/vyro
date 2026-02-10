@@ -35,6 +35,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Native async outbound HTTP client primitive.
 - HTTP/2 stream helper primitives.
 - gRPC gateway mapping/transcoding foundation primitives.
+- Streaming multipart upload collector primitives.
 - Outbound circuit-breaker primitive for upstream dependency protection.
 - Outbound bulkhead primitive to isolate dependency pools.
 - Retry policy primitive with exponential backoff and jitter.

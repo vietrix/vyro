@@ -9,6 +9,7 @@ from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.grpc_gateway import GrpcGateway
 from vyro.runtime.http_client import AsyncHttpClient
 from vyro.runtime.http2 import Http2StreamManager
+from vyro.runtime.multipart_upload import MultipartUploadStream
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.retry import RetryPolicy
 from vyro.runtime.shutdown import GracefulShutdownPolicy
@@ -125,6 +126,13 @@ def test_vyro_accepts_custom_grpc_gateway() -> None:
     gateway = GrpcGateway()
     app.set_grpc_gateway(gateway)
     assert app._grpc_gateway is gateway  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_multipart_upload_stream() -> None:
+    app = Vyro()
+    stream = MultipartUploadStream(boundary=b"abc")
+    app.set_multipart_upload(stream)
+    assert app._multipart_upload is stream  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:

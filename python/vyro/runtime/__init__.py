@@ -5,6 +5,7 @@ from .concurrency import RouteConcurrencyLimiter
 from .grpc_gateway import GrpcGateway, GrpcRoute
 from .http_client import AsyncHttpClient, HttpResponse
 from .http2 import Http2Stream, Http2StreamManager
+from .multipart_upload import MultipartUploadStream
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .retry import RetryPolicy
 from .server import run_native_server
@@ -19,6 +20,7 @@ __all__ = [
     "HttpResponse",
     "Http2Stream",
     "Http2StreamManager",
+    "MultipartUploadStream",
     "GrpcGateway",
     "GrpcRoute",
     "OutboundBulkhead",
