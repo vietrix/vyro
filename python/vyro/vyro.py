@@ -13,6 +13,7 @@ from .runtime.grpc_gateway import GrpcGateway
 from .runtime.http_client import AsyncHttpClient
 from .runtime.http2 import Http2StreamManager
 from .runtime.multipart_upload import MultipartUploadStream
+from .runtime.multipart_parser import MultipartParser
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.retry import RetryPolicy
 from .runtime.shutdown import GracefulShutdownPolicy
@@ -35,6 +36,7 @@ class Vyro:
         self._http2_streams = Http2StreamManager()
         self._grpc_gateway = GrpcGateway()
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
+        self._multipart_parser = MultipartParser()
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
@@ -119,6 +121,9 @@ class Vyro:
 
     def set_multipart_upload(self, stream: MultipartUploadStream) -> None:
         self._multipart_upload = stream
+
+    def set_multipart_parser(self, parser: MultipartParser) -> None:
+        self._multipart_parser = parser
 
     def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
         self._outbound_circuit_breaker = breaker
