@@ -5,6 +5,7 @@ from vyro.errors import HandlerSignatureError
 from vyro.runtime.backpressure import BackpressureController
 from vyro.runtime.bulkhead import OutboundBulkhead
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
+from vyro.runtime.compression import ResponseCompressor
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.etag import ETagManager
 from vyro.runtime.grpc_gateway import GrpcGateway
@@ -159,6 +160,13 @@ def test_vyro_accepts_custom_static_file_service(tmp_path) -> None:  # type: ign
     service = StaticFileService(root=static_root)
     app.set_static_files(service)
     assert app._static_files is service  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_response_compressor() -> None:
+    app = Vyro()
+    compressor = ResponseCompressor(min_size=1024)
+    app.set_response_compressor(compressor)
+    assert app._compression.min_size == 1024  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:

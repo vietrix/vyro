@@ -1,6 +1,7 @@
 from .backpressure import BackpressureController
 from .bulkhead import OutboundBulkhead
 from .circuit_breaker import OutboundCircuitBreaker
+from .compression import CompressionProfile, ResponseCompressor
 from .concurrency import RouteConcurrencyLimiter
 from .etag import ETagEvaluation, ETagManager
 from .grpc_gateway import GrpcGateway, GrpcRoute
@@ -22,6 +23,8 @@ __all__ = [
     "AsyncHttpClient",
     "ETagEvaluation",
     "ETagManager",
+    "CompressionProfile",
+    "ResponseCompressor",
     "HttpResponse",
     "Http2Stream",
     "Http2StreamManager",

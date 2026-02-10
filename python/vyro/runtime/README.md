@@ -18,6 +18,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Streaming multipart upload collector primitives.
 - High-performance multipart parser primitives.
 - Static file serving primitives with safe path resolution.
+- Response compression primitives with configurable profiles.
 - Outbound circuit-breaker primitives for unstable upstreams.
 - Outbound bulkhead isolation primitives per dependency.
 - Retry policy primitives with exponential backoff and jitter.
