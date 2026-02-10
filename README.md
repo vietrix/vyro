@@ -169,6 +169,8 @@ You can also run it as a module:
 python -m vyro --help
 ```
 
+`vyro` is the primary end-user command. Use `python -m vyro` only as a fallback when shell PATH does not expose `vyro` yet.
+
 Developer automation lives in `scripts/dev`:
 
 ```bash
