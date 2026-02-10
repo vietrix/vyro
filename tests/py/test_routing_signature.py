@@ -1,4 +1,8 @@
 import inspect
+from datetime import date, datetime
+from decimal import Decimal
+from typing import Optional
+from uuid import UUID
 
 import pytest
 
@@ -38,3 +42,35 @@ def test_bind_request_kwargs_missing_required_param() -> None:
     params = list(inspect.signature(handler).parameters.values())
     with pytest.raises(HandlerSignatureError, match="Missing request parameter 'id'"):
         bind_request_kwargs("handler", params, {}, {}, {})
+
+
+def test_bind_request_kwargs_advanced_scalar_coercion() -> None:
+    def handler(
+        ctx,
+        uid: UUID,
+        created_at: datetime,
+        due: date,
+        price: Decimal,
+        retries: Optional[int],
+    ):  # type: ignore[no-untyped-def]
+        return uid, created_at, due, price, retries
+
+    params = list(inspect.signature(handler).parameters.values())
+    kwargs = bind_request_kwargs(
+        "handler",
+        params,
+        {},
+        {
+            "uid": "0f8fad5b-d9cb-469f-a165-70867728950e",
+            "created_at": "2026-02-10T11:22:33",
+            "due": "2026-02-15",
+            "price": "19.99",
+            "retries": "3",
+        },
+        {},
+    )
+    assert isinstance(kwargs["uid"], UUID)
+    assert isinstance(kwargs["created_at"], datetime)
+    assert isinstance(kwargs["due"], date)
+    assert isinstance(kwargs["price"], Decimal)
+    assert kwargs["retries"] == 3

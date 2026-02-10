@@ -1,12 +1,24 @@
 from __future__ import annotations
 
+from datetime import date, datetime
+from decimal import Decimal
 import inspect
-from typing import Any
+from typing import Any, get_args, get_origin
+from uuid import UUID
 
 from vyro.errors import HandlerSignatureError
 
 
 def convert_request_value(value: str, annotation: Any) -> Any:
+    if annotation is Any:
+        return value
+
+    origin = get_origin(annotation)
+    if origin is not None:
+        args = [arg for arg in get_args(annotation) if arg is not type(None)]  # noqa: E721
+        if len(args) == 1:
+            return convert_request_value(value, args[0])
+
     if annotation is inspect._empty or annotation is str:
         return value
     if annotation is int:
@@ -20,6 +32,14 @@ def convert_request_value(value: str, annotation: Any) -> Any:
         if normalized in {"0", "false", "no", "off"}:
             return False
         raise ValueError(f"Cannot parse bool from '{value}'")
+    if annotation is UUID:
+        return UUID(value)
+    if annotation is datetime:
+        return datetime.fromisoformat(value)
+    if annotation is date:
+        return date.fromisoformat(value)
+    if annotation is Decimal:
+        return Decimal(value)
     return value
 
 
