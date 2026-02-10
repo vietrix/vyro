@@ -7,6 +7,7 @@ from pathlib import Path
 
 import typer
 
+from vyro.openapi_compat import compare_openapi, load_openapi_document
 from vyro.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
 from vyro.routing.lint import lint_project
 from vyro.cli.runtime import (
@@ -174,3 +175,21 @@ def openapi(
     doc = build_openapi_document(routes, OpenAPIMeta(title=title, version=version))
     write_openapi_document(out, doc)
     info(f"Wrote OpenAPI document to '{out}'.")
+
+
+@app.command("compat")
+def compat(
+    base: Path = typer.Option(..., "--base", help="Base OpenAPI document path."),
+    target: Path = typer.Option(..., "--target", help="Target OpenAPI document path."),
+) -> None:
+    base_doc = load_openapi_document(base)
+    target_doc = load_openapi_document(target)
+    issues = compare_openapi(base_doc, target_doc)
+    if issues:
+        for issue in issues:
+            typer.echo(
+                f"ERROR: {issue.method.upper()} {issue.path} - {issue.message}",
+                err=True,
+            )
+        raise typer.Exit(code=1)
+    info("OpenAPI compatibility check passed.")

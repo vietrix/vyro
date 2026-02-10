@@ -76,6 +76,7 @@ vyro --help
 vyro doctor
 vyro run --app examples.hello_world:app --port 8000
 vyro openapi --app examples.hello_world:app --out openapi.json
+vyro compat --base openapi-prev.json --target openapi.json
 vyro release notes --tag v0.1.0 --out release_notes.md
 ```
 
