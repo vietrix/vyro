@@ -9,6 +9,7 @@ from .runtime.backpressure import BackpressureController
 from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.concurrency import RouteConcurrencyLimiter
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
+from .runtime.retry import RetryPolicy
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
 from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_WORKERS
@@ -24,6 +25,7 @@ class Vyro:
         self._rate_limiter = TokenBucketRateLimiter(rate_per_sec=1000.0, burst=2000)
         self._multi_rate_limiter = MultiKeyRateLimiter(rate_per_sec=500.0, burst=1000)
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
+        self._retry_policy = RetryPolicy()
 
     def get(
         self,
@@ -87,6 +89,9 @@ class Vyro:
 
     def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
         self._outbound_circuit_breaker = breaker
+
+    def set_retry_policy(self, policy: RetryPolicy) -> None:
+        self._retry_policy = policy
 
     def run(
         self,

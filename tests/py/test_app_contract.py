@@ -6,6 +6,7 @@ from vyro.runtime.backpressure import BackpressureController
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
+from vyro.runtime.retry import RetryPolicy
 from vyro.runtime.shutdown import GracefulShutdownPolicy
 
 
@@ -85,3 +86,10 @@ def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:
     breaker = OutboundCircuitBreaker(failure_threshold=2, recovery_timeout_sec=1.5)
     app.set_outbound_circuit_breaker(breaker)
     assert app._outbound_circuit_breaker.failure_threshold == 2  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_retry_policy() -> None:
+    app = Vyro()
+    policy = RetryPolicy(max_attempts=5, base_delay_sec=0.2)
+    app.set_retry_policy(policy)
+    assert app._retry_policy.max_attempts == 5  # noqa: SLF001
