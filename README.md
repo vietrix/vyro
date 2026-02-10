@@ -27,6 +27,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Built-in latency tracker with p50/p95/p99 quantiles.
 - Per-route throughput counters for method/path traffic visibility.
 - Health probe primitives for liveness/readiness/startup checks.
+- Graceful shutdown policy primitives with timeout/drain controls.
 
 ## Quickstart
 

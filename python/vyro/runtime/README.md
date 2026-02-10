@@ -6,6 +6,7 @@ Bootstrap helpers for invoking native runtime from Python.
 ## Owns
 - Default host/port/worker wiring.
 - Native `start_server` call boundary.
+- Graceful shutdown policy primitives.
 
 ## Entry Points
 - `run_native_server`
