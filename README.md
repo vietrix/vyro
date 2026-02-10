@@ -13,7 +13,83 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Rust-native runtime for high throughput and low overhead.
 - Pythonic routing and handler authoring.
 - Async-first handler model (`async def` only).
+- RBAC/ABAC authorization core primitives.
+- API key manager and rotation hook primitives.
+- Security audit log event primitives.
+- Memory/Redis cache backend primitives.
+- Cache invalidation hook primitives.
+- Response cache TTL policy primitives.
+- Canary routing control primitives.
+- Blue-green rollout helper primitives.
+- Safe runtime config hot-reload primitives.
+- Idempotency-key middleware primitives.
 - Structured release automation (tag -> changelog -> PyPI -> GitHub Release).
+- Native file-path response streaming (return `pathlib.Path` from handler).
+- OpenAPI 3.1 + JSON schema generation from route handlers.
+- Priority-aware middleware ordering primitives.
+- Route-group conditional middleware registration.
+- Automatic correlation-id injection on request context.
+- Structured JSON logging primitives for CLI/runtime output.
+- Production-readiness doctor checks with strict mode for CI gates.
+- API contract lint integration via `python -m scripts.dev.check`.
+- Benchmark smoke via `python -m scripts.dev.bench`.
+- CI benchmark regression gate with baseline comparison.
+- `vyro new` architecture templates (`minimal`, `service`, `hexagonal`).
+- Monorepo workspace support via `vyro workspace init|status`.
+- Configurable log sampling policy (`VYRO_LOG_SAMPLE_INFO/WARN/ERROR`).
+- Sensitive field redaction in logs (`VYRO_LOG_REDACT_KEYS`).
+- OpenTelemetry-friendly trace span exporter with `traceparent` propagation.
+- Prometheus metrics registry primitives (`vyro_requests_total` baseline).
+- Built-in latency tracker with p50/p95/p99 quantiles.
+- Per-route throughput counters for method/path traffic visibility.
+- Health probe primitives for liveness/readiness/startup checks.
+- Graceful shutdown policy primitives with timeout/drain controls.
+- Runtime backpressure controller for inflight request limits.
+- Per-route concurrency limiter for hotspot endpoint control.
+- Global token-bucket rate limiter with burst support.
+- Multi-key rate limiter for compound identities (IP/user/token).
+- Native async outbound HTTP client primitive.
+- ETag generation and conditional-request primitives.
+- JWT auth guard primitives (issue/verify/authorize).
+- Background jobs runtime primitives.
+- Cron scheduler primitives.
+- HTTP/2 stream helper primitives.
+- gRPC gateway mapping/transcoding foundation primitives.
+- Streaming multipart upload collector primitives.
+- High-performance multipart parser primitives.
+- Migration runner primitives and `vyro migrate` CLI.
+- Content negotiation primitives for `Accept` header matching.
+- OAuth2/OIDC helper primitives.
+- Static file serving primitives with safe path resolution.
+- Response compression primitives with speed/balanced/size profiles.
+- CORS policy profile primitives (`strict`, `standard`, `permissive`).
+- CSRF token issue/verify primitives.
+- DB connection pool manager primitives.
+- Dead-letter queue and retry primitives.
+- Task trace correlation primitives for background jobs.
+- Typed internal event bus primitives.
+- CQRS scaffolding primitives (command/query bus).
+- Transactional outbox pattern helper primitives.
+- Saga orchestration primitives.
+- Multi-tenant isolation model primitives.
+- Tenant-aware routing and config primitives.
+- Feature flag engine primitives for progressive rollout.
+- ABI-stable plugin system primitives.
+- Extension marketplace manifest primitives.
+- Service discovery adapter primitives for multi-service runtime.
+- Kubernetes manifest generator primitives.
+- No-GIL worker tuning primitives.
+- Secrets provider abstraction primitives.
+- Async SQL adapter primitives.
+- Query timeout and slow query log primitives.
+- Schema drift detector primitives.
+- Transaction scope decorator primitives.
+- Outbound circuit-breaker primitive for upstream dependency protection.
+- Outbound bulkhead primitive to isolate dependency pools.
+- Retry policy primitive with exponential backoff and jitter.
+- Timeout budget primitive for end-to-end deadline propagation.
+- First-class SSE response primitive for server-sent events.
+- WebSocket route registry and `@app.websocket(...)` decorator.
 
 ## Quickstart
 
@@ -35,13 +111,21 @@ python examples/hello_world.py
 ## Minimal example
 
 ```python
-from vyro import App, Context
+from vyro import Context, Vyro
 
-app = App()
+app = Vyro()
 
 @app.get("/")
 async def hello(ctx: Context):
     return {"message": "hello from vyro"}
+
+@app.get("/users/:id", version="1")
+async def get_user(ctx: Context, id: int):
+    return {"id": id}
+
+@app.get("/legacy", deprecated="use /v2/users/:id")
+async def legacy(ctx: Context):
+    return {"legacy": True}
 
 if __name__ == "__main__":
     app.run(port=8000, workers=2)
@@ -57,9 +141,62 @@ python -m pytest tests/py tests/integration -q
 maturin build --release
 ```
 
+## CLI
+
+Vyro ships with an official CLI:
+
+```bash
+vyro --help
+vyro doctor
+vyro doctor --strict
+vyro new my_service --template service
+vyro new my_hex_app --template hexagonal
+vyro workspace init platform --apps api,worker --libs common,events
+vyro workspace status --root platform
+vyro nogil-tune --workload balanced --cpu-count 8 --out nogil_profile.json
+vyro k8s --name vyro-api --image ghcr.io/vietrix/vyro:latest --out k8s.yaml
+vyro run --app examples.hello_world:app --port 8000
+vyro openapi --app examples.hello_world:app --out openapi.json
+vyro compat --base openapi-prev.json --target openapi.json
+vyro release notes --tag v0.1.0 --out release_notes.md
+vyro release changelog --tag v0.1.0 --changelog CHANGELOG.md --out release_notes.md
+vyro release assistant --tag v0.1.0 --dist-dir dist --execute
+```
+
+You can also run it as a module:
+
+```bash
+python -m vyro --help
+```
+
+`vyro` is the primary end-user command. Use `python -m vyro` only as a fallback when shell PATH does not expose `vyro` yet.
+
+Developer automation lives in `scripts/dev`:
+
+```bash
+python -m scripts.dev.check
+python -m scripts.dev.test
+python -m scripts.dev.build --sdist
+python -m scripts.dev.bench --suite all --iterations 10000 --out bench.json
+```
+
+## Migration (`App` -> `Vyro`)
+
+```python
+# before
+from vyro import App
+app = App()
+
+# after
+from vyro import Vyro
+app = Vyro()
+```
+
 ## Project structure
 
-- `python/vyro/`: user-facing Python APIs.
+- `python/vyro/app`: composition root (`Vyro`) and wiring.
+- `python/vyro/api`: OpenAPI/JSON schema/compat contracts.
+- `python/vyro/runtime`: runtime primitives grouped by domain (`resilience`, `security`, `data`, `async_ops`, `edge`, `platform`).
 - `rust/src/`: native runtime and bridge.
 - `tests/`: Python, Rust, and integration tests.
 - `.github/workflows/`: CI and release automation.

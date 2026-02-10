@@ -1,0 +1,23 @@
+{
+  "suite": "all",
+  "results": {
+    "routing": {
+      "iterations": 10000,
+      "duration_sec": 0.01,
+      "ops_per_sec": 1000000.0,
+      "us_per_op": 1.0
+    },
+    "json": {
+      "iterations": 10000,
+      "duration_sec": 0.05,
+      "ops_per_sec": 200000.0,
+      "us_per_op": 5.0
+    },
+    "latency": {
+      "iterations": 10000,
+      "duration_sec": 0.01,
+      "ops_per_sec": 1000000.0,
+      "us_per_op": 1.0
+    }
+  }
+}

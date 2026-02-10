@@ -1,6 +1,6 @@
-from vyro import App, Context
+from vyro import Context, Vyro
 
-app = App()
+app = Vyro()
 
 
 @app.get("/users/:id")

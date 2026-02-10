@@ -13,6 +13,6 @@ pub fn request_to_py_context(py: Python<'_>, req: &IncomingRequest) -> PyResult<
     payload.set_item(CONTEXT_HEADERS_KEY, &req.headers)?;
     payload.set_item(CONTEXT_QUERY_KEY, &req.query)?;
     payload.set_item(CONTEXT_PATH_PARAMS_KEY, &req.path_params)?;
-    payload.set_item(CONTEXT_BODY_KEY, PyBytes::new(py, &req.body))?;
+    payload.set_item(CONTEXT_BODY_KEY, PyBytes::new(py, req.body.as_ref()))?;
     Ok(payload.into_any().unbind())
 }

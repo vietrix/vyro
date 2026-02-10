@@ -4,6 +4,8 @@ from typing import Any
 
 
 class Middleware:
+    priority: int = 100
+
     async def before_request(self, ctx: Any) -> None:
         return None
 

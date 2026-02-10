@@ -1,28 +1,32 @@
 use std::collections::HashMap;
+use std::convert::Infallible;
 use std::net::SocketAddr;
 use std::sync::Arc;
 
 use bytes::Bytes;
+use futures_util::StreamExt;
 use http::header::{HeaderValue, CONTENT_TYPE};
 use http::{Request, Response, StatusCode};
-use http_body_util::{BodyExt, Full};
-use hyper::body::Incoming;
+use http_body_util::combinators::BoxBody;
+use http_body_util::{BodyExt, Full, StreamBody};
+use hyper::body::{Frame, Incoming};
 use hyper::service::service_fn;
 use hyper_util::rt::{TokioExecutor, TokioIo};
 use hyper_util::server::conn::auto::Builder;
 use tokio::net::TcpListener;
+use tokio_util::io::ReaderStream;
 
 use crate::bridge::callback::call_python_handler;
 use crate::errors::core_error::CoreError;
 use crate::http::headers::{header_name, header_value};
 use crate::http::query::parse_query;
 use crate::http::request::IncomingRequest;
-use crate::http::response::OutgoingResponse;
+use crate::http::response::{OutgoingResponse, ResponseBody};
 use crate::http::status::{internal_error_status, method_not_allowed_status, not_found_status};
 use crate::routing::method_table::RouteRegistry;
 use crate::serialization::content_type::TEXT_PLAIN_UTF8;
 
-type Body = Full<Bytes>;
+type Body = BoxBody<Bytes, std::io::Error>;
 
 pub async fn serve(host: String, port: u16, registry: RouteRegistry) -> Result<(), CoreError> {
     let addr: SocketAddr = format!("{host}:{port}")
@@ -80,12 +84,7 @@ async fn process_request(
     };
 
     let (parts, body) = req.into_parts();
-    let body_bytes = body
-        .collect()
-        .await
-        .map_err(CoreError::from)?
-        .to_bytes()
-        .to_vec();
+    let body_bytes = body.collect().await.map_err(CoreError::from)?.to_bytes();
     let headers = parts
         .headers
         .iter()
@@ -116,19 +115,35 @@ fn to_hyper_response(out: OutgoingResponse) -> Result<Response<Body>, CoreError>
     for (k, v) in out.headers {
         builder = builder.header(header_name(&k)?, header_value(&v)?);
     }
+    let body = match out.body {
+        ResponseBody::Bytes(body) => full_body(body),
+        ResponseBody::File(path) => {
+            let file = std::fs::File::open(&path).map_err(CoreError::from)?;
+            let file = tokio::fs::File::from_std(file);
+            let stream = ReaderStream::new(file)
+                .map(|item: Result<Bytes, std::io::Error>| item.map(Frame::data));
+            BodyExt::boxed(StreamBody::new(stream))
+        }
+    };
     builder
-        .body(Full::new(Bytes::from(out.body)))
+        .body(body)
         .map_err(|e| CoreError::ResponseBuild(format!("failed to build response: {e}")))
 }
 
 fn simple_response(status: StatusCode, body: Vec<u8>, content_type: &str) -> Response<Body> {
-    let mut resp = Response::new(Full::new(Bytes::from(body)));
+    let mut resp = Response::new(full_body(body));
     *resp.status_mut() = status;
     resp.headers_mut().insert(
         CONTENT_TYPE,
         HeaderValue::from_str(content_type).unwrap_or(HeaderValue::from_static("text/plain")),
     );
     resp
+}
+
+fn full_body(body: Vec<u8>) -> Body {
+    Full::new(Bytes::from(body))
+        .map_err(|never: Infallible| match never {})
+        .boxed()
 }
 
 fn internal_error_response(err: CoreError) -> Response<Body> {

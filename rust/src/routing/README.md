@@ -5,7 +5,7 @@ Route storage and request path lookup for native engine.
 
 ## Owns
 - Route definition structs.
-- Method-based route table.
+- Method-partitioned radix route table (normalized by HTTP method).
 - Path parameter extraction output.
 
 ## Entry Points

@@ -11,6 +11,10 @@ Release-note, changelog, and tag-version tooling for CI.
 ## Entry Points
 - `python -m scripts.release.release notes --tag v1.2.3 --out release_notes.md`
 - `python -m scripts.release.release notes --tag v1.2.3-rc.1 --out release_notes.md --update-changelog CHANGELOG.md`
+- `python -m scripts.release.release changelog --tag v1.2.3 --changelog CHANGELOG.md --out release_notes.md`
+- `python -m scripts.release.release changelog --changelog CHANGELOG.md` (auto-read tag from `GITHUB_REF_NAME`)
+- `PYTHONPATH=python python -m vyro release assistant --tag v1.2.3 --dist-dir dist --dry-run`
+- `PYTHONPATH=python python -m vyro release assistant --tag v1.2.3 --dist-dir dist --execute`
 
 ## Not Here
 - Package build and upload steps (handled in workflow files).
