@@ -8,6 +8,7 @@ from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.compression import ResponseCompressor
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.cors import CORSProfile
+from vyro.runtime.csrf import CSRFProtector
 from vyro.runtime.etag import ETagManager
 from vyro.runtime.grpc_gateway import GrpcGateway
 from vyro.runtime.http_client import AsyncHttpClient
@@ -183,6 +184,13 @@ def test_vyro_accepts_custom_cors_profile() -> None:
     profile = CORSProfile.preset("permissive")
     app.set_cors_profile(profile)
     assert app._cors.name == "permissive"  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_csrf_protector() -> None:
+    app = Vyro()
+    protector = CSRFProtector(secret=b"test-secret")
+    app.set_csrf_protector(protector)
+    assert app._csrf is protector  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:

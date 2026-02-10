@@ -12,6 +12,7 @@ from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.compression import ResponseCompressor
 from .runtime.concurrency import RouteConcurrencyLimiter
 from .runtime.cors import CORSProfile
+from .runtime.csrf import CSRFProtector
 from .runtime.etag import ETagManager
 from .runtime.grpc_gateway import GrpcGateway
 from .runtime.http_client import AsyncHttpClient
@@ -48,6 +49,7 @@ class Vyro:
         self._static_files = StaticFileService(root=Path(DEFAULT_STATIC_ROOT))
         self._compression = ResponseCompressor()
         self._cors = CORSProfile.preset("standard")
+        self._csrf = CSRFProtector.with_random_secret()
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
@@ -150,6 +152,9 @@ class Vyro:
 
     def set_cors_profile(self, profile: CORSProfile) -> None:
         self._cors = profile
+
+    def set_csrf_protector(self, protector: CSRFProtector) -> None:
+        self._csrf = protector
 
     def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
         self._outbound_circuit_breaker = breaker

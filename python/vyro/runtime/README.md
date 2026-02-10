@@ -21,6 +21,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Static file serving primitives with safe path resolution.
 - Response compression primitives with configurable profiles.
 - CORS policy profile primitives (`strict`, `standard`, `permissive`).
+- CSRF token issue/verify primitives.
 - Outbound circuit-breaker primitives for unstable upstreams.
 - Outbound bulkhead isolation primitives per dependency.
 - Retry policy primitives with exponential backoff and jitter.
