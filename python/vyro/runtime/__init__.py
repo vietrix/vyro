@@ -5,6 +5,7 @@ from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .retry import RetryPolicy
 from .server import run_native_server
 from .shutdown import GracefulShutdownPolicy
+from .timeout_budget import TimeoutBudget
 
 __all__ = [
     "BackpressureController",
@@ -12,6 +13,7 @@ __all__ = [
     "OutboundCircuitBreaker",
     "RouteConcurrencyLimiter",
     "RetryPolicy",
+    "TimeoutBudget",
     "TokenBucketRateLimiter",
     "run_native_server",
     "GracefulShutdownPolicy",

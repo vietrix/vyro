@@ -8,6 +8,7 @@ from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.retry import RetryPolicy
 from vyro.runtime.shutdown import GracefulShutdownPolicy
+from vyro.runtime.timeout_budget import TimeoutBudget
 
 
 def test_sync_handler_is_rejected() -> None:
@@ -93,3 +94,10 @@ def test_vyro_accepts_custom_retry_policy() -> None:
     policy = RetryPolicy(max_attempts=5, base_delay_sec=0.2)
     app.set_retry_policy(policy)
     assert app._retry_policy.max_attempts == 5  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_timeout_budget() -> None:
+    app = Vyro()
+    budget = TimeoutBudget(timeout_sec=2.5)
+    app.set_timeout_budget(budget)
+    assert app._timeout_budget.timeout_sec == pytest.approx(2.5)  # noqa: SLF001

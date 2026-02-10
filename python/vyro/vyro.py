@@ -12,6 +12,7 @@ from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.retry import RetryPolicy
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
+from .runtime.timeout_budget import TimeoutBudget
 from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_WORKERS
 
 
@@ -26,6 +27,7 @@ class Vyro:
         self._multi_rate_limiter = MultiKeyRateLimiter(rate_per_sec=500.0, burst=1000)
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._retry_policy = RetryPolicy()
+        self._timeout_budget = TimeoutBudget(timeout_sec=30.0)
 
     def get(
         self,
@@ -92,6 +94,9 @@ class Vyro:
 
     def set_retry_policy(self, policy: RetryPolicy) -> None:
         self._retry_policy = policy
+
+    def set_timeout_budget(self, budget: TimeoutBudget) -> None:
+        self._timeout_budget = budget
 
     def run(
         self,
