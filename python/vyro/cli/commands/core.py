@@ -32,40 +32,28 @@ app = typer.Typer(help="Core development and runtime commands.")
 @app.command("new")
 def new_project(
     name: str = typer.Argument(..., help="Project directory name."),
+    template: str = typer.Option(
+        "minimal",
+        "--template",
+        help="Project template: minimal|service|hexagonal",
+    ),
     force: bool = typer.Option(False, "--force", help="Overwrite existing app.py if present."),
 ) -> None:
     project_dir = Path(name)
     project_dir.mkdir(parents=True, exist_ok=True)
+    package_name = _to_package_name(name)
 
-    app_py = project_dir / "app.py"
-    if app_py.exists() and not force:
-        typer.echo("ERROR: app.py already exists. Use --force to overwrite.", err=True)
+    if template == "minimal":
+        _scaffold_minimal(project_dir, force=force)
+    elif template == "service":
+        _scaffold_service(project_dir, package_name=package_name, force=force)
+    elif template == "hexagonal":
+        _scaffold_hexagonal(project_dir, package_name=package_name, force=force)
+    else:
+        typer.echo("ERROR: --template must be one of minimal|service|hexagonal", err=True)
         raise typer.Exit(code=2)
 
-    app_py.write_text(
-        "\n".join(
-            [
-                "from vyro import Vyro, Context",
-                "",
-                "app = Vyro()",
-                "",
-                '@app.get("/")',
-                "async def hello(ctx: Context):",
-                '    return {"message": "hello from vyro"}',
-                "",
-                'if __name__ == "__main__":',
-                "    app.run(port=8000, workers=1)",
-                "",
-            ]
-        ),
-        encoding="utf-8",
-    )
-
-    readme = project_dir / "README.md"
-    if not readme.exists():
-        readme.write_text("# New Vyro Project\n", encoding="utf-8")
-
-    info(f"Created scaffold in '{project_dir}'.")
+    info(f"Created '{template}' scaffold in '{project_dir}'.")
 
 
 @app.command("run")
@@ -422,3 +410,182 @@ def _bench_latency(iterations: int) -> float:
     mean_ns = statistics.fmean(samples) if samples else 0.0
     total_sec = (mean_ns * iterations) / 1_000_000_000
     return total_sec
+
+
+def _to_package_name(raw: str) -> str:
+    cleaned = raw.strip().replace("-", "_").replace(" ", "_")
+    if not cleaned:
+        return "app"
+    if cleaned[0].isdigit():
+        cleaned = f"app_{cleaned}"
+    return "".join(ch for ch in cleaned if ch.isalnum() or ch == "_")
+
+
+def _scaffold_minimal(project_dir: Path, *, force: bool) -> None:
+    app_py = project_dir / "app.py"
+    if app_py.exists() and not force:
+        typer.echo("ERROR: app.py already exists. Use --force to overwrite.", err=True)
+        raise typer.Exit(code=2)
+
+    app_py.write_text(
+        "\n".join(
+            [
+                "from vyro import Vyro, Context",
+                "",
+                "app = Vyro()",
+                "",
+                '@app.get("/")',
+                "async def hello(ctx: Context):",
+                '    return {"message": "hello from vyro"}',
+                "",
+                'if __name__ == "__main__":',
+                "    app.run(port=8000, workers=1)",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+    _ensure_readme(project_dir, "Minimal Vyro Project")
+
+
+def _scaffold_service(project_dir: Path, *, package_name: str, force: bool) -> None:
+    app_py = project_dir / "app.py"
+    if app_py.exists() and not force:
+        typer.echo("ERROR: app.py already exists. Use --force to overwrite.", err=True)
+        raise typer.Exit(code=2)
+
+    package_dir = project_dir / package_name
+    api_dir = package_dir / "api"
+    domain_dir = package_dir / "domain"
+    infra_dir = package_dir / "infra"
+    tests_dir = project_dir / "tests"
+    for path in (package_dir, api_dir, domain_dir, infra_dir, tests_dir):
+        path.mkdir(parents=True, exist_ok=True)
+
+    (package_dir / "__init__.py").write_text("", encoding="utf-8")
+    (api_dir / "__init__.py").write_text("", encoding="utf-8")
+    (domain_dir / "__init__.py").write_text("", encoding="utf-8")
+    (infra_dir / "__init__.py").write_text("", encoding="utf-8")
+
+    app_py.write_text(
+        "\n".join(
+            [
+                "from vyro import Vyro",
+                f"from {package_name}.api.routes import register_routes",
+                "",
+                "app = Vyro()",
+                "register_routes(app)",
+                "",
+                'if __name__ == "__main__":',
+                "    app.run(port=8000, workers=2)",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    (api_dir / "routes.py").write_text(
+        "\n".join(
+            [
+                "from vyro import Context, Vyro",
+                "",
+                "def register_routes(app: Vyro) -> None:",
+                '    @app.get("/health")',
+                "    async def health(ctx: Context):",
+                '        return {"status": "ok"}',
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    (domain_dir / "services.py").write_text(
+        "\n".join(
+            [
+                "class HealthService:",
+                "    def status(self) -> str:",
+                '        return "ok"',
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    (infra_dir / "settings.py").write_text(
+        "\n".join(
+            [
+                "HOST = '127.0.0.1'",
+                "PORT = 8000",
+                "WORKERS = 2",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    (tests_dir / "test_health.py").write_text(
+        "\n".join(
+            [
+                "def test_health_placeholder() -> None:",
+                "    assert True",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    _ensure_readme(project_dir, "Service Template")
+
+
+def _scaffold_hexagonal(project_dir: Path, *, package_name: str, force: bool) -> None:
+    app_py = project_dir / "app.py"
+    if app_py.exists() and not force:
+        typer.echo("ERROR: app.py already exists. Use --force to overwrite.", err=True)
+        raise typer.Exit(code=2)
+
+    src_dir = project_dir / "src" / package_name
+    app_dir = src_dir / "application"
+    domain_dir = src_dir / "domain"
+    ports_dir = src_dir / "ports"
+    adapters_dir = src_dir / "adapters"
+    for path in (src_dir, app_dir, domain_dir, ports_dir, adapters_dir):
+        path.mkdir(parents=True, exist_ok=True)
+        (path / "__init__.py").write_text("", encoding="utf-8")
+
+    app_py.write_text(
+        "\n".join(
+            [
+                "from vyro import Vyro, Context",
+                "",
+                "app = Vyro()",
+                "",
+                '@app.get("/health")',
+                "async def health(ctx: Context):",
+                '    return {"status": "ok", "architecture": "hexagonal"}',
+                "",
+                'if __name__ == "__main__":',
+                "    app.run(port=8000, workers=2)",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    _ensure_readme(project_dir, "Hexagonal Template")
+
+
+def _ensure_readme(project_dir: Path, title: str) -> None:
+    readme = project_dir / "README.md"
+    if readme.exists():
+        return
+    readme.write_text(
+        "\n".join(
+            [
+                f"# {title}",
+                "",
+                "Generated by `vyro new`.",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )

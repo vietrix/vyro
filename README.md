@@ -34,6 +34,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - API contract lint integration in `vyro check` (OpenAPI compatibility gate).
 - Built-in `vyro bench` command for routing/json/latency smoke benchmarking.
 - CI benchmark regression gate with baseline comparison.
+- `vyro new` architecture templates (`minimal`, `service`, `hexagonal`).
 - Configurable log sampling policy (`VYRO_LOG_SAMPLE_INFO/WARN/ERROR`).
 - Sensitive field redaction in logs (`VYRO_LOG_REDACT_KEYS`).
 - OpenTelemetry-friendly trace span exporter with `traceparent` propagation.
@@ -146,6 +147,8 @@ vyro doctor
 vyro doctor --strict
 vyro check --app examples.hello_world:app --contract-base openapi.contract.json
 vyro bench --suite all --iterations 10000 --out bench.json
+vyro new my_service --template service
+vyro new my_hex_app --template hexagonal
 vyro run --app examples.hello_world:app --port 8000
 vyro openapi --app examples.hello_world:app --out openapi.json
 vyro compat --base openapi-prev.json --target openapi.json

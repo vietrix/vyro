@@ -201,3 +201,33 @@ def test_cli_bench_writes_result_file(tmp_path) -> None:  # type: ignore[no-unty
     payload = json.loads(out_file.read_text(encoding="utf-8"))
     assert payload["suite"] == "routing"
     assert "routing" in payload["results"]
+
+
+def test_cli_new_service_template_scaffold() -> None:
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        result = runner.invoke(app, ["new", "inventory_service", "--template", "service"])
+        assert result.exit_code == 0
+        assert Path("inventory_service/app.py").exists()
+        assert Path("inventory_service/inventory_service/api/routes.py").exists()
+        assert Path("inventory_service/inventory_service/domain/services.py").exists()
+        assert Path("inventory_service/tests/test_health.py").exists()
+
+
+def test_cli_new_hexagonal_template_scaffold() -> None:
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        result = runner.invoke(app, ["new", "billing", "--template", "hexagonal"])
+        assert result.exit_code == 0
+        assert Path("billing/app.py").exists()
+        assert Path("billing/src/billing/application/__init__.py").exists()
+        assert Path("billing/src/billing/domain/__init__.py").exists()
+        assert Path("billing/src/billing/ports/__init__.py").exists()
+        assert Path("billing/src/billing/adapters/__init__.py").exists()
+
+
+def test_cli_new_rejects_unknown_template() -> None:
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        result = runner.invoke(app, ["new", "demo", "--template", "unknown"])
+        assert result.exit_code == 2
