@@ -29,6 +29,7 @@ from vyro.runtime.shutdown import GracefulShutdownPolicy
 from vyro.runtime.sql import SQLiteAsyncAdapter
 from vyro.runtime.static_files import StaticFileService
 from vyro.runtime.timeout_budget import TimeoutBudget
+from vyro.runtime.transaction import TransactionScope
 
 
 def test_sync_handler_is_rejected() -> None:
@@ -283,3 +284,10 @@ def test_vyro_accepts_custom_timeout_budget() -> None:
     budget = TimeoutBudget(timeout_sec=2.5)
     app.set_timeout_budget(budget)
     assert app._timeout_budget.timeout_sec == pytest.approx(2.5)  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_transaction_scope() -> None:
+    app = Vyro()
+    scope = TransactionScope()
+    app.set_transaction_scope(scope)
+    assert app._transaction is scope  # noqa: SLF001

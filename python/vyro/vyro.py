@@ -34,6 +34,7 @@ from .runtime.server import run_native_server
 from .runtime.sql import AsyncSQLAdapter, SQLiteAsyncAdapter
 from .runtime.static_files import StaticFileService
 from .runtime.timeout_budget import TimeoutBudget
+from .runtime.transaction import TransactionScope
 from .runtime.websocket import WebSocketRouteRegistry
 from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_STATIC_ROOT, DEFAULT_WORKERS
 
@@ -70,6 +71,7 @@ class Vyro:
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
         self._timeout_budget = TimeoutBudget(timeout_sec=30.0)
+        self._transaction = TransactionScope()
         self._websocket = WebSocketRouteRegistry()
 
     def get(
@@ -207,6 +209,9 @@ class Vyro:
 
     def set_timeout_budget(self, budget: TimeoutBudget) -> None:
         self._timeout_budget = budget
+
+    def set_transaction_scope(self, scope: TransactionScope) -> None:
+        self._transaction = scope
 
     def run(
         self,

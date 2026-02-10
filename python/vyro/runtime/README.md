@@ -30,6 +30,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - DB connection pool manager primitives.
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
+- Transaction scope decorator primitives.
 - Outbound circuit-breaker primitives for unstable upstreams.
 - Outbound bulkhead isolation primitives per dependency.
 - Retry policy primitives with exponential backoff and jitter.

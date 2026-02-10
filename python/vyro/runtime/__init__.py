@@ -26,6 +26,7 @@ from .shutdown import GracefulShutdownPolicy
 from .sql import AsyncSQLAdapter, SQLiteAsyncAdapter
 from .static_files import StaticFileService
 from .timeout_budget import TimeoutBudget
+from .transaction import TransactionScope
 from .websocket import WebSocketRouteRegistry
 
 __all__ = [
@@ -73,6 +74,7 @@ __all__ = [
     "SQLiteAsyncAdapter",
     "StaticFileService",
     "TimeoutBudget",
+    "TransactionScope",
     "TokenBucketRateLimiter",
     "WebSocketRouteRegistry",
     "run_native_server",
