@@ -47,6 +47,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Tenant-aware routing and config primitives.
 - Feature flag engine primitives for progressive rollout.
 - ABI-stable plugin system primitives.
+- Extension marketplace manifest primitives.
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
 - Query timeout and slow query log primitives.

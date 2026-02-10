@@ -28,6 +28,7 @@ from .jobs import JobRuntime
 from .multipart_upload import MultipartUploadStream
 from .multipart_parser import MultipartParser, MultipartSection
 from .migrations import MigrationResult, MigrationRunner
+from .marketplace import ExtensionManifest, ExtensionMarketplaceManifest, ManifestError
 from .negotiation import ContentNegotiator, NegotiationResult
 from .oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OIDCClaims, OAuth2Config, OAuth2OIDCHelper
 from .outbox import InMemoryOutboxStore, OutboxMessage, OutboxPatternHelper, OutboxStore
@@ -104,6 +105,9 @@ __all__ = [
     "MultipartSection",
     "MigrationResult",
     "MigrationRunner",
+    "ManifestError",
+    "ExtensionManifest",
+    "ExtensionMarketplaceManifest",
     "ContentNegotiator",
     "NegotiationResult",
     "OAuth2Config",

@@ -37,6 +37,7 @@ from .runtime.jobs import JobRuntime
 from .runtime.multipart_upload import MultipartUploadStream
 from .runtime.multipart_parser import MultipartParser
 from .runtime.migrations import MigrationRunner
+from .runtime.marketplace import ExtensionMarketplaceManifest
 from .runtime.negotiation import ContentNegotiator
 from .runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from .runtime.outbox import OutboxPatternHelper
@@ -89,6 +90,7 @@ class Vyro:
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
         self._multipart_parser = MultipartParser()
         self._migrations = MigrationRunner(database=Path("app.db"), migrations_dir=Path("migrations"))
+        self._marketplace = ExtensionMarketplaceManifest()
         self._hot_reload = SafeRuntimeConfigReloader()
         self._negotiator = ContentNegotiator()
         self._oauth2 = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
@@ -276,6 +278,9 @@ class Vyro:
 
     def set_migration_runner(self, runner: MigrationRunner) -> None:
         self._migrations = runner
+
+    def set_extension_marketplace(self, marketplace: ExtensionMarketplaceManifest) -> None:
+        self._marketplace = marketplace
 
     def set_runtime_config_reloader(self, reloader: SafeRuntimeConfigReloader) -> None:
         self._hot_reload = reloader

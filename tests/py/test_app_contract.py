@@ -32,6 +32,7 @@ from vyro.runtime.jwt_auth import JWTAuthGuard
 from vyro.runtime.jobs import JobRuntime
 from vyro.runtime.multipart_parser import MultipartParser
 from vyro.runtime.multipart_upload import MultipartUploadStream
+from vyro.runtime.marketplace import ExtensionMarketplaceManifest
 from vyro.runtime.migrations import MigrationRunner
 from vyro.runtime.negotiation import ContentNegotiator
 from vyro.runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
@@ -282,6 +283,13 @@ def test_vyro_accepts_custom_migration_runner(tmp_path) -> None:  # type: ignore
     runner = MigrationRunner(database=tmp_path / "app.db", migrations_dir=tmp_path / "migrations")
     app.set_migration_runner(runner)
     assert app._migrations is runner  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_extension_marketplace() -> None:
+    app = Vyro()
+    marketplace = ExtensionMarketplaceManifest()
+    app.set_extension_marketplace(marketplace)
+    assert app._marketplace is marketplace  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_runtime_config_reloader() -> None:
