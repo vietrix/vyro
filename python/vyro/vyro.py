@@ -16,6 +16,7 @@ from .runtime.compression import ResponseCompressor
 from .runtime.concurrency import RouteConcurrencyLimiter
 from .runtime.cors import CORSProfile
 from .runtime.csrf import CSRFProtector
+from .runtime.db_pool import DBConnectionPoolManager
 from .runtime.etag import ETagManager
 from .runtime.grpc_gateway import GrpcGateway
 from .runtime.http_client import AsyncHttpClient
@@ -63,6 +64,7 @@ class Vyro:
         self._compression = ResponseCompressor()
         self._cors = CORSProfile.preset("standard")
         self._csrf = CSRFProtector.with_random_secret()
+        self._db_pools = DBConnectionPoolManager()
         self._secrets = SecretsManager()
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._outbound_bulkhead = OutboundBulkhead()
@@ -187,6 +189,9 @@ class Vyro:
 
     def set_csrf_protector(self, protector: CSRFProtector) -> None:
         self._csrf = protector
+
+    def set_db_pool_manager(self, manager: DBConnectionPoolManager) -> None:
+        self._db_pools = manager
 
     def set_secrets_manager(self, manager: SecretsManager) -> None:
         self._secrets = manager

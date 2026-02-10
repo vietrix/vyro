@@ -12,6 +12,7 @@ from vyro.runtime.compression import ResponseCompressor
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.cors import CORSProfile
 from vyro.runtime.csrf import CSRFProtector
+from vyro.runtime.db_pool import DBConnectionPoolManager
 from vyro.runtime.etag import ETagManager
 from vyro.runtime.grpc_gateway import GrpcGateway
 from vyro.runtime.http_client import AsyncHttpClient
@@ -240,6 +241,13 @@ def test_vyro_accepts_custom_csrf_protector() -> None:
     protector = CSRFProtector(secret=b"test-secret")
     app.set_csrf_protector(protector)
     assert app._csrf is protector  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_db_pool_manager() -> None:
+    app = Vyro()
+    manager = DBConnectionPoolManager()
+    app.set_db_pool_manager(manager)
+    assert app._db_pools is manager  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_secrets_manager() -> None:

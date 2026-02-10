@@ -8,6 +8,7 @@ from .compression import CompressionProfile, ResponseCompressor
 from .concurrency import RouteConcurrencyLimiter
 from .cors import CORSProfile, CORSProfileName
 from .csrf import CSRFProtector
+from .db_pool import DBConnectionPool, DBConnectionPoolManager
 from .etag import ETagEvaluation, ETagManager
 from .grpc_gateway import GrpcGateway, GrpcRoute
 from .http_client import AsyncHttpClient, HttpResponse
@@ -43,6 +44,8 @@ __all__ = [
     "CORSProfile",
     "CORSProfileName",
     "CSRFProtector",
+    "DBConnectionPool",
+    "DBConnectionPoolManager",
     "JWTAuthGuard",
     "HttpResponse",
     "Http2Stream",
