@@ -2,6 +2,7 @@ import pytest
 
 from vyro import Vyro
 from vyro.errors import HandlerSignatureError
+from vyro.middleware.idempotency import IdempotencyKeyMiddleware
 from vyro.runtime.backpressure import BackpressureController
 from vyro.runtime.authorization import AuthorizationCore
 from vyro.runtime.api_keys import APIKeyManager
@@ -99,6 +100,13 @@ def test_vyro_accepts_custom_shutdown_policy() -> None:
     app.set_shutdown_policy(policy)
     assert app._shutdown_policy.timeout_seconds == 12  # noqa: SLF001
     assert app._shutdown_policy.drain_inflight is False  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_idempotency_middleware() -> None:
+    app = Vyro()
+    middleware = IdempotencyKeyMiddleware()
+    app.set_idempotency_middleware(middleware)
+    assert app._idempotency is middleware  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_authorization_core() -> None:

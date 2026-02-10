@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from .middleware import Middleware
+from .middleware.idempotency import IdempotencyKeyMiddleware
 from .middleware.registry import MiddlewareRegistry
 from .routing.registry import RouterRegistry
 from .runtime.backpressure import BackpressureController
@@ -49,6 +50,7 @@ class Vyro:
     def __init__(self) -> None:
         self._router = RouterRegistry()
         self._middlewares = MiddlewareRegistry()
+        self._idempotency = IdempotencyKeyMiddleware()
         self._authz = AuthorizationCore()
         self._api_keys = APIKeyManager()
         self._audit = SecurityAuditLogger()
@@ -140,6 +142,9 @@ class Vyro:
 
     def set_shutdown_policy(self, policy: GracefulShutdownPolicy) -> None:
         self._shutdown_policy = policy
+
+    def set_idempotency_middleware(self, middleware: IdempotencyKeyMiddleware) -> None:
+        self._idempotency = middleware
 
     def set_authorization_core(self, core: AuthorizationCore) -> None:
         self._authz = core
