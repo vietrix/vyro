@@ -5,7 +5,7 @@ Middleware contracts and ordering pipeline for request/response hooks.
 
 ## Owns
 - Base middleware interface.
-- Registry and execution chain.
+- Registry and optimized execution chain (precompiled hooks).
 
 ## Entry Points
 - `Middleware`
