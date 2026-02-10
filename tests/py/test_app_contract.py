@@ -5,6 +5,7 @@ from vyro.errors import HandlerSignatureError
 from vyro.runtime.backpressure import BackpressureController
 from vyro.runtime.authorization import AuthorizationCore
 from vyro.runtime.api_keys import APIKeyManager
+from vyro.runtime.audit import SecurityAuditLogger
 from vyro.runtime.bulkhead import OutboundBulkhead
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.compression import ResponseCompressor
@@ -103,6 +104,13 @@ def test_vyro_accepts_custom_api_key_manager() -> None:
     manager = APIKeyManager()
     app.set_api_key_manager(manager)
     assert app._api_keys is manager  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_security_audit_logger() -> None:
+    app = Vyro()
+    logger = SecurityAuditLogger()
+    app.set_security_audit_logger(logger)
+    assert app._audit is logger  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_backpressure_controller() -> None:

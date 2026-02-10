@@ -9,6 +9,7 @@ from .routing.registry import RouterRegistry
 from .runtime.backpressure import BackpressureController
 from .runtime.authorization import AuthorizationCore
 from .runtime.api_keys import APIKeyManager
+from .runtime.audit import SecurityAuditLogger
 from .runtime.bulkhead import OutboundBulkhead
 from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.compression import ResponseCompressor
@@ -41,6 +42,7 @@ class Vyro:
         self._middlewares = MiddlewareRegistry()
         self._authz = AuthorizationCore()
         self._api_keys = APIKeyManager()
+        self._audit = SecurityAuditLogger()
         self._shutdown_policy = GracefulShutdownPolicy()
         self._backpressure = BackpressureController()
         self._concurrency = RouteConcurrencyLimiter()
@@ -126,6 +128,9 @@ class Vyro:
 
     def set_api_key_manager(self, manager: APIKeyManager) -> None:
         self._api_keys = manager
+
+    def set_security_audit_logger(self, logger: SecurityAuditLogger) -> None:
+        self._audit = logger
 
     def set_backpressure(self, controller: BackpressureController) -> None:
         self._backpressure = controller

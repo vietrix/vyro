@@ -8,6 +8,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Native `start_server` call boundary.
 - RBAC/ABAC authorization core primitives.
 - API key manager and rotation hook primitives.
+- Security audit log event primitives.
 - Graceful shutdown policy primitives.
 - Backpressure controller primitives.
 - Per-route concurrency limiter primitives.

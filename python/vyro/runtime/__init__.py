@@ -1,6 +1,7 @@
 from .backpressure import BackpressureController
 from .authorization import AuthorizationCore
 from .api_keys import APIKeyManager, APIKeyRecord
+from .audit import AuditEvent, SecurityAuditLogger
 from .bulkhead import OutboundBulkhead
 from .circuit_breaker import OutboundCircuitBreaker
 from .compression import CompressionProfile, ResponseCompressor
@@ -30,6 +31,8 @@ __all__ = [
     "AuthorizationCore",
     "APIKeyManager",
     "APIKeyRecord",
+    "AuditEvent",
+    "SecurityAuditLogger",
     "MultiKeyRateLimiter",
     "AsyncHttpClient",
     "ETagEvaluation",
