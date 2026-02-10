@@ -5,6 +5,7 @@ import asyncio
 import pytest
 
 from vyro.runtime.jobs import JobRuntime
+from vyro.runtime.task_trace import current_task_trace
 
 
 def test_job_runtime_register_enqueue_and_run_once() -> None:
@@ -51,3 +52,39 @@ def test_job_runtime_raises_for_unknown_handler() -> None:
             await runtime.run_once()
 
     asyncio.run(run())
+
+
+def test_job_runtime_injects_trace_context() -> None:
+    runtime = JobRuntime()
+    seen: list[tuple[dict[str, int], str | None]] = []
+
+    async def handler(payload):  # type: ignore[no-untyped-def]
+        ctx = current_task_trace()
+        seen.append((payload, ctx.trace_id if ctx is not None else None))
+
+    async def run() -> None:
+        runtime.register("trace", handler)
+        await runtime.enqueue("trace", {"id": 1})
+        await runtime.run_once()
+
+    asyncio.run(run())
+    assert seen[0][0] == {"id": 1}
+    assert seen[0][1] is not None
+
+
+def test_job_runtime_uses_provided_trace_id() -> None:
+    runtime = JobRuntime()
+    seen: list[str | None] = []
+
+    async def handler(payload):  # type: ignore[no-untyped-def]
+        del payload
+        ctx = current_task_trace()
+        seen.append(ctx.trace_id if ctx is not None else None)
+
+    async def run() -> None:
+        runtime.register("trace", handler)
+        await runtime.enqueue("trace", {"id": 1}, trace_id="trace-abc")
+        await runtime.run_once()
+
+    asyncio.run(run())
+    assert seen == ["trace-abc"]

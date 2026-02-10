@@ -57,6 +57,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - CSRF token issue/verify primitives.
 - DB connection pool manager primitives.
 - Dead-letter queue and retry primitives.
+- Task trace correlation primitives for background jobs.
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
 - Query timeout and slow query log primitives.
