@@ -14,8 +14,16 @@ class RouterRegistry:
         self._routes: list[RouteRecord] = []
         self._compiled: list[NativeRoute] | None = None
 
-    def add_route(self, method: str, path: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+    def add_route(
+        self,
+        method: str,
+        path: str,
+        *,
+        version: str | None = None,
+    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         normalized_path = normalize_path(path)
+        version_prefix = _normalize_version(version) if version is not None else None
+        routed_path = f"{version_prefix}{normalized_path}" if version_prefix else normalized_path
         upper_method = method.upper()
 
         def decorator(fn: Callable[..., Any]) -> Callable[..., Any]:
@@ -25,9 +33,10 @@ class RouterRegistry:
                 RouteRecord(
                     method=upper_method,
                     original_path=path,
-                    normalized_path=normalized_path,
+                    normalized_path=routed_path,
                     dispatch=dispatch,
                     handler=fn,
+                    version=version_prefix,
                 )
             )
             self._compiled = None
@@ -45,3 +54,12 @@ class RouterRegistry:
 
     def export_native(self) -> list[NativeRoute]:
         return self.compile()
+
+
+def _normalize_version(version: str) -> str:
+    value = version.strip().lower()
+    if not value:
+        raise ValueError("version cannot be empty")
+    if value.startswith("v"):
+        return f"/{value}"
+    return f"/v{value}"

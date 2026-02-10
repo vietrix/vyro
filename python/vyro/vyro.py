@@ -14,17 +14,37 @@ class Vyro:
         self._router = RouterRegistry()
         self._middlewares = MiddlewareRegistry()
 
-    def get(self, path: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("GET", path)
+    def get(
+        self,
+        path: str,
+        *,
+        version: str | None = None,
+    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+        return self._router.add_route("GET", path, version=version)
 
-    def post(self, path: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("POST", path)
+    def post(
+        self,
+        path: str,
+        *,
+        version: str | None = None,
+    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+        return self._router.add_route("POST", path, version=version)
 
-    def put(self, path: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("PUT", path)
+    def put(
+        self,
+        path: str,
+        *,
+        version: str | None = None,
+    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+        return self._router.add_route("PUT", path, version=version)
 
-    def delete(self, path: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("DELETE", path)
+    def delete(
+        self,
+        path: str,
+        *,
+        version: str | None = None,
+    ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
+        return self._router.add_route("DELETE", path, version=version)
 
     def add_middleware(self, mw: Middleware) -> None:
         self._middlewares.add(mw)

@@ -45,6 +45,10 @@ app = Vyro()
 async def hello(ctx: Context):
     return {"message": "hello from vyro"}
 
+@app.get("/users/:id", version="1")
+async def get_user(ctx: Context, id: int):
+    return {"id": id}
+
 if __name__ == "__main__":
     app.run(port=8000, workers=2)
 ```

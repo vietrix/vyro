@@ -15,3 +15,4 @@ class RouteRecord:
     normalized_path: str
     dispatch: Handler
     handler: Callable[..., Any]
+    version: str | None = None
