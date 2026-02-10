@@ -30,6 +30,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Graceful shutdown policy primitives with timeout/drain controls.
 - Runtime backpressure controller for inflight request limits.
 - Per-route concurrency limiter for hotspot endpoint control.
+- Global token-bucket rate limiter with burst support.
 
 ## Quickstart
 

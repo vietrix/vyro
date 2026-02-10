@@ -4,6 +4,7 @@ from vyro import Vyro
 from vyro.errors import HandlerSignatureError
 from vyro.runtime.backpressure import BackpressureController
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
+from vyro.runtime.rate_limit import TokenBucketRateLimiter
 from vyro.runtime.shutdown import GracefulShutdownPolicy
 
 
@@ -62,3 +63,10 @@ def test_vyro_accepts_custom_concurrency_limiter() -> None:
     limiter = RouteConcurrencyLimiter(default_limit=12)
     app.set_concurrency_limiter(limiter)
     assert app._concurrency.default_limit == 12  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_rate_limiter() -> None:
+    app = Vyro()
+    limiter = TokenBucketRateLimiter(rate_per_sec=5.0, burst=10)
+    app.set_rate_limiter(limiter)
+    assert app._rate_limiter.burst == 10  # noqa: SLF001

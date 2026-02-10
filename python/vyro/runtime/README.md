@@ -9,6 +9,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Graceful shutdown policy primitives.
 - Backpressure controller primitives.
 - Per-route concurrency limiter primitives.
+- Global token-bucket rate limiting primitives.
 
 ## Entry Points
 - `run_native_server`

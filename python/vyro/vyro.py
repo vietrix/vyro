@@ -7,6 +7,7 @@ from .middleware.registry import MiddlewareRegistry
 from .routing.registry import RouterRegistry
 from .runtime.backpressure import BackpressureController
 from .runtime.concurrency import RouteConcurrencyLimiter
+from .runtime.rate_limit import TokenBucketRateLimiter
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
 from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_WORKERS
@@ -19,6 +20,7 @@ class Vyro:
         self._shutdown_policy = GracefulShutdownPolicy()
         self._backpressure = BackpressureController()
         self._concurrency = RouteConcurrencyLimiter()
+        self._rate_limiter = TokenBucketRateLimiter(rate_per_sec=1000.0, burst=2000)
 
     def get(
         self,
@@ -73,6 +75,9 @@ class Vyro:
 
     def set_concurrency_limiter(self, limiter: RouteConcurrencyLimiter) -> None:
         self._concurrency = limiter
+
+    def set_rate_limiter(self, limiter: TokenBucketRateLimiter) -> None:
+        self._rate_limiter = limiter
 
     def run(
         self,
