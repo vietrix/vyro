@@ -19,6 +19,7 @@ from .runtime.compression import ResponseCompressor
 from .runtime.concurrency import RouteConcurrencyLimiter
 from .runtime.cors import CORSProfile
 from .runtime.cron import CronScheduler
+from .runtime.cqrs import CommandBus, QueryBus
 from .runtime.csrf import CSRFProtector
 from .runtime.db_pool import DBConnectionPoolManager
 from .runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
@@ -70,6 +71,8 @@ class Vyro:
         self._jwt = JWTAuthGuard(secret=b"vyro-dev-secret")
         self._jobs = JobRuntime()
         self._cron = CronScheduler()
+        self._command_bus = CommandBus()
+        self._query_bus = QueryBus()
         self._http2_streams = Http2StreamManager()
         self._grpc_gateway = GrpcGateway()
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
@@ -196,6 +199,12 @@ class Vyro:
 
     def set_cron_scheduler(self, scheduler: CronScheduler) -> None:
         self._cron = scheduler
+
+    def set_command_bus(self, command_bus: CommandBus) -> None:
+        self._command_bus = command_bus
+
+    def set_query_bus(self, query_bus: QueryBus) -> None:
+        self._query_bus = query_bus
 
     def set_http2_stream_manager(self, manager: Http2StreamManager) -> None:
         self._http2_streams = manager

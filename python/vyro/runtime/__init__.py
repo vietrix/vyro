@@ -10,6 +10,7 @@ from .compression import CompressionProfile, ResponseCompressor
 from .concurrency import RouteConcurrencyLimiter
 from .cors import CORSProfile, CORSProfileName
 from .cron import CronJob, CronScheduler
+from .cqrs import CQRSError, CommandBus, DuplicateHandlerError, QueryBus, UnknownHandlerError
 from .csrf import CSRFProtector
 from .db_pool import DBConnectionPool, DBConnectionPoolManager
 from .dead_letter import DeadLetterEntry, DeadLetterQueue, JobRetryExecutor
@@ -62,6 +63,11 @@ __all__ = [
     "CORSProfileName",
     "CronJob",
     "CronScheduler",
+    "CQRSError",
+    "CommandBus",
+    "DuplicateHandlerError",
+    "QueryBus",
+    "UnknownHandlerError",
     "CSRFProtector",
     "DBConnectionPool",
     "DBConnectionPoolManager",

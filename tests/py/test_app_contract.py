@@ -15,6 +15,7 @@ from vyro.runtime.compression import ResponseCompressor
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
 from vyro.runtime.cors import CORSProfile
 from vyro.runtime.cron import CronScheduler
+from vyro.runtime.cqrs import CommandBus, QueryBus
 from vyro.runtime.csrf import CSRFProtector
 from vyro.runtime.db_pool import DBConnectionPoolManager
 from vyro.runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
@@ -209,6 +210,20 @@ def test_vyro_accepts_custom_cron_scheduler() -> None:
     scheduler = CronScheduler()
     app.set_cron_scheduler(scheduler)
     assert app._cron is scheduler  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_command_bus() -> None:
+    app = Vyro()
+    command_bus = CommandBus()
+    app.set_command_bus(command_bus)
+    assert app._command_bus is command_bus  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_query_bus() -> None:
+    app = Vyro()
+    query_bus = QueryBus()
+    app.set_query_bus(query_bus)
+    assert app._query_bus is query_bus  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_http2_stream_manager() -> None:
