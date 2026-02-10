@@ -24,6 +24,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Sensitive field redaction in logs (`VYRO_LOG_REDACT_KEYS`).
 - OpenTelemetry-friendly trace span exporter with `traceparent` propagation.
 - Prometheus metrics registry primitives (`vyro_requests_total` baseline).
+- Built-in latency tracker with p50/p95/p99 quantiles.
 
 ## Quickstart
 
