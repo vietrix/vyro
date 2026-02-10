@@ -1,7 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from time import monotonic
+from typing import Hashable
 
 
 @dataclass(slots=True)
@@ -31,3 +32,29 @@ class TokenBucketRateLimiter:
     @property
     def tokens(self) -> float:
         return self._tokens
+
+
+@dataclass(slots=True)
+class MultiKeyRateLimiter:
+    rate_per_sec: float
+    burst: int
+    _buckets: dict[tuple[Hashable, ...], TokenBucketRateLimiter] = field(default_factory=dict)
+
+    def allow(self, *keys: Hashable, cost: float = 1.0) -> bool:
+        if not keys:
+            raise ValueError("at least one key is required")
+        bucket = self._bucket_for(keys)
+        return bucket.allow(cost=cost)
+
+    def tokens(self, *keys: Hashable) -> float:
+        if not keys:
+            raise ValueError("at least one key is required")
+        bucket = self._bucket_for(keys)
+        return bucket.tokens
+
+    def _bucket_for(self, keys: tuple[Hashable, ...]) -> TokenBucketRateLimiter:
+        bucket = self._buckets.get(keys)
+        if bucket is None:
+            bucket = TokenBucketRateLimiter(rate_per_sec=self.rate_per_sec, burst=self.burst)
+            self._buckets[keys] = bucket
+        return bucket
