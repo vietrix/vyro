@@ -48,6 +48,7 @@ from .runtime.sql import AsyncSQLAdapter, SQLiteAsyncAdapter
 from .runtime.sql_policy import QueryExecutionPolicy
 from .runtime.static_files import StaticFileService
 from .runtime.tenant import TenantIsolationModel
+from .runtime.tenant_routing import TenantRoutingConfig
 from .runtime.timeout_budget import TimeoutBudget
 from .runtime.transaction import TransactionScope
 from .runtime.websocket import WebSocketRouteRegistry
@@ -102,6 +103,7 @@ class Vyro:
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
         self._tenant_isolation = TenantIsolationModel()
+        self._tenant_routing = TenantRoutingConfig()
         self._timeout_budget = TimeoutBudget(timeout_sec=30.0)
         self._transaction = TransactionScope()
         self._websocket = WebSocketRouteRegistry()
@@ -112,8 +114,16 @@ class Vyro:
         *,
         version: str | None = None,
         deprecated: bool | str = False,
+        tenant: str | None = None,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("GET", path, version=version, deprecated=deprecated)
+        routed_path, resolved_tenant = self._tenant_routing.apply(path, tenant)
+        return self._router.add_route(
+            "GET",
+            routed_path,
+            version=version,
+            deprecated=deprecated,
+            tenant=resolved_tenant,
+        )
 
     def post(
         self,
@@ -121,8 +131,16 @@ class Vyro:
         *,
         version: str | None = None,
         deprecated: bool | str = False,
+        tenant: str | None = None,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("POST", path, version=version, deprecated=deprecated)
+        routed_path, resolved_tenant = self._tenant_routing.apply(path, tenant)
+        return self._router.add_route(
+            "POST",
+            routed_path,
+            version=version,
+            deprecated=deprecated,
+            tenant=resolved_tenant,
+        )
 
     def put(
         self,
@@ -130,8 +148,16 @@ class Vyro:
         *,
         version: str | None = None,
         deprecated: bool | str = False,
+        tenant: str | None = None,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("PUT", path, version=version, deprecated=deprecated)
+        routed_path, resolved_tenant = self._tenant_routing.apply(path, tenant)
+        return self._router.add_route(
+            "PUT",
+            routed_path,
+            version=version,
+            deprecated=deprecated,
+            tenant=resolved_tenant,
+        )
 
     def delete(
         self,
@@ -139,8 +165,16 @@ class Vyro:
         *,
         version: str | None = None,
         deprecated: bool | str = False,
+        tenant: str | None = None,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("DELETE", path, version=version, deprecated=deprecated)
+        routed_path, resolved_tenant = self._tenant_routing.apply(path, tenant)
+        return self._router.add_route(
+            "DELETE",
+            routed_path,
+            version=version,
+            deprecated=deprecated,
+            tenant=resolved_tenant,
+        )
 
     def websocket(self, path: str) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         def decorator(handler: Callable[..., Any]) -> Callable[..., Any]:
@@ -290,6 +324,9 @@ class Vyro:
 
     def set_tenant_isolation(self, isolation: TenantIsolationModel) -> None:
         self._tenant_isolation = isolation
+
+    def set_tenant_routing_config(self, config: TenantRoutingConfig) -> None:
+        self._tenant_routing = config
 
     def set_timeout_budget(self, budget: TimeoutBudget) -> None:
         self._timeout_budget = budget

@@ -39,6 +39,7 @@ from .sql import AsyncSQLAdapter, SQLiteAsyncAdapter
 from .sql_policy import PolicySQLAdapter, QueryExecutionPolicy
 from .static_files import StaticFileService
 from .tenant import TenantIsolationError, TenantIsolationModel, TenantProfile
+from .tenant_routing import TenantRouteBinding, TenantRoutingConfig
 from .timeout_budget import TimeoutBudget
 from .task_trace import TaskTraceContext, create_trace_id, current_task_trace
 from .transaction import TransactionScope
@@ -127,6 +128,8 @@ __all__ = [
     "TenantIsolationError",
     "TenantIsolationModel",
     "TenantProfile",
+    "TenantRouteBinding",
+    "TenantRoutingConfig",
     "TimeoutBudget",
     "TaskTraceContext",
     "create_trace_id",

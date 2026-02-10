@@ -21,6 +21,7 @@ class RouterRegistry:
         *,
         version: str | None = None,
         deprecated: bool | str = False,
+        tenant: str | None = None,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         normalized_path = normalize_path(path)
         version_prefix = _normalize_version(version) if version is not None else None
@@ -39,6 +40,7 @@ class RouterRegistry:
                     handler=fn,
                     version=version_prefix,
                     deprecated=_normalize_deprecation(deprecated),
+                    tenant=tenant,
                 )
             )
             self._compiled = None

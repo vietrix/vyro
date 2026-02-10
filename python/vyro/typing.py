@@ -17,3 +17,4 @@ class RouteRecord:
     handler: Callable[..., Any]
     version: str | None = None
     deprecated: str | None = None
+    tenant: str | None = None

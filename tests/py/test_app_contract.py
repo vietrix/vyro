@@ -43,6 +43,7 @@ from vyro.runtime.schema_drift import SchemaDriftDetector
 from vyro.runtime.sql_policy import QueryExecutionPolicy
 from vyro.runtime.static_files import StaticFileService
 from vyro.runtime.tenant import TenantIsolationModel
+from vyro.runtime.tenant_routing import TenantRoutingConfig
 from vyro.runtime.timeout_budget import TimeoutBudget
 from vyro.runtime.transaction import TransactionScope
 
@@ -411,6 +412,13 @@ def test_vyro_accepts_custom_tenant_isolation() -> None:
     isolation = TenantIsolationModel()
     app.set_tenant_isolation(isolation)
     assert app._tenant_isolation is isolation  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_tenant_routing_config() -> None:
+    app = Vyro()
+    config = TenantRoutingConfig(prefix_template="/orgs/{tenant_id}")
+    app.set_tenant_routing_config(config)
+    assert app._tenant_routing is config  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_timeout_budget() -> None:
