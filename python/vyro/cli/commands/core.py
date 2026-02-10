@@ -7,6 +7,7 @@ from pathlib import Path
 
 import typer
 
+from vyro.routing.lint import lint_project
 from vyro.cli.runtime import (
     get_version_string,
     info,
@@ -103,6 +104,12 @@ def check() -> None:
     run_command(["cargo", "fmt", "--all", "--", "--check"])
     run_command(["cargo", "clippy", "--all-targets", "--", "-D", "warnings"])
     run_command([python_executable(), "-m", "compileall", "-q", "python", "tests", "examples"])
+    issues = lint_project(Path("."))
+    if issues:
+        for issue in issues:
+            typer.echo(f"ERROR: {issue.path}:{issue.line} {issue.message}", err=True)
+        raise typer.Exit(code=1)
+    info("Route signature lint passed.")
 
 
 @app.command("test")

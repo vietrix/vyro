@@ -75,6 +75,8 @@ You can also run it as a module:
 python -m vyro --help
 ```
 
+`vyro check` includes static route signature linting (`async def` + first arg `ctx`).
+
 ## Migration (`App` -> `Vyro`)
 
 ```python
