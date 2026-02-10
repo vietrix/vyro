@@ -12,6 +12,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Global token-bucket rate limiting primitives.
 - Multi-key rate-limiting primitives (ip/user/token tuple support).
 - Native async outbound HTTP client primitives.
+- ETag generation and conditional-request primitives.
 - HTTP/2 stream helper primitives.
 - gRPC gateway mapping/transcoding foundation primitives.
 - Streaming multipart upload collector primitives.

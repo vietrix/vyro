@@ -6,6 +6,7 @@ from vyro.runtime.backpressure import BackpressureController
 from vyro.runtime.bulkhead import OutboundBulkhead
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
+from vyro.runtime.etag import ETagManager
 from vyro.runtime.grpc_gateway import GrpcGateway
 from vyro.runtime.http_client import AsyncHttpClient
 from vyro.runtime.http2 import Http2StreamManager
@@ -114,6 +115,13 @@ def test_vyro_accepts_custom_http_client() -> None:
     client = AsyncHttpClient()
     app.set_http_client(client)
     assert app._http_client is client  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_etag_manager() -> None:
+    app = Vyro()
+    manager = ETagManager()
+    app.set_etag_manager(manager)
+    assert app._etag is manager  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_http2_stream_manager() -> None:

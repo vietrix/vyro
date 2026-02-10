@@ -10,6 +10,7 @@ from .runtime.backpressure import BackpressureController
 from .runtime.bulkhead import OutboundBulkhead
 from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.concurrency import RouteConcurrencyLimiter
+from .runtime.etag import ETagManager
 from .runtime.grpc_gateway import GrpcGateway
 from .runtime.http_client import AsyncHttpClient
 from .runtime.http2 import Http2StreamManager
@@ -35,6 +36,7 @@ class Vyro:
         self._rate_limiter = TokenBucketRateLimiter(rate_per_sec=1000.0, burst=2000)
         self._multi_rate_limiter = MultiKeyRateLimiter(rate_per_sec=500.0, burst=1000)
         self._http_client = AsyncHttpClient()
+        self._etag = ETagManager()
         self._http2_streams = Http2StreamManager()
         self._grpc_gateway = GrpcGateway()
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
@@ -115,6 +117,9 @@ class Vyro:
 
     def set_http_client(self, client: AsyncHttpClient) -> None:
         self._http_client = client
+
+    def set_etag_manager(self, manager: ETagManager) -> None:
+        self._etag = manager
 
     def set_http2_stream_manager(self, manager: Http2StreamManager) -> None:
         self._http2_streams = manager
