@@ -25,6 +25,7 @@ from .runtime.grpc_gateway import GrpcGateway
 from .runtime.http_client import AsyncHttpClient
 from .runtime.http2 import Http2StreamManager
 from .runtime.jwt_auth import JWTAuthGuard
+from .runtime.jobs import JobRuntime
 from .runtime.multipart_upload import MultipartUploadStream
 from .runtime.multipart_parser import MultipartParser
 from .runtime.migrations import MigrationRunner
@@ -64,6 +65,7 @@ class Vyro:
         self._http_client = AsyncHttpClient()
         self._etag = ETagManager()
         self._jwt = JWTAuthGuard(secret=b"vyro-dev-secret")
+        self._jobs = JobRuntime()
         self._http2_streams = Http2StreamManager()
         self._grpc_gateway = GrpcGateway()
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
@@ -181,6 +183,9 @@ class Vyro:
 
     def set_jwt_auth_guard(self, guard: JWTAuthGuard) -> None:
         self._jwt = guard
+
+    def set_job_runtime(self, jobs: JobRuntime) -> None:
+        self._jobs = jobs
 
     def set_http2_stream_manager(self, manager: Http2StreamManager) -> None:
         self._http2_streams = manager

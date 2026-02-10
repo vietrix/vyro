@@ -16,6 +16,7 @@ from .grpc_gateway import GrpcGateway, GrpcRoute
 from .http_client import AsyncHttpClient, HttpResponse
 from .http2 import Http2Stream, Http2StreamManager
 from .jwt_auth import JWTAuthGuard
+from .jobs import JobRuntime
 from .multipart_upload import MultipartUploadStream
 from .multipart_parser import MultipartParser, MultipartSection
 from .migrations import MigrationResult, MigrationRunner
@@ -59,6 +60,7 @@ __all__ = [
     "DBConnectionPool",
     "DBConnectionPoolManager",
     "JWTAuthGuard",
+    "JobRuntime",
     "HttpResponse",
     "Http2Stream",
     "Http2StreamManager",

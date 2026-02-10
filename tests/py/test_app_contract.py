@@ -21,6 +21,7 @@ from vyro.runtime.grpc_gateway import GrpcGateway
 from vyro.runtime.http_client import AsyncHttpClient
 from vyro.runtime.http2 import Http2StreamManager
 from vyro.runtime.jwt_auth import JWTAuthGuard
+from vyro.runtime.jobs import JobRuntime
 from vyro.runtime.multipart_parser import MultipartParser
 from vyro.runtime.multipart_upload import MultipartUploadStream
 from vyro.runtime.migrations import MigrationRunner
@@ -191,6 +192,13 @@ def test_vyro_accepts_custom_jwt_auth_guard() -> None:
     guard = JWTAuthGuard(secret=b"secret")
     app.set_jwt_auth_guard(guard)
     assert app._jwt is guard  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_job_runtime() -> None:
+    app = Vyro()
+    jobs = JobRuntime()
+    app.set_job_runtime(jobs)
+    assert app._jobs is jobs  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_http2_stream_manager() -> None:
