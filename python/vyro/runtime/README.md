@@ -11,6 +11,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Per-route concurrency limiter primitives.
 - Global token-bucket rate limiting primitives.
 - Multi-key rate-limiting primitives (ip/user/token tuple support).
+- Outbound circuit-breaker primitives for unstable upstreams.
 
 ## Entry Points
 - `run_native_server`

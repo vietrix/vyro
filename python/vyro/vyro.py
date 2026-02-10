@@ -6,6 +6,7 @@ from .middleware import Middleware
 from .middleware.registry import MiddlewareRegistry
 from .routing.registry import RouterRegistry
 from .runtime.backpressure import BackpressureController
+from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.concurrency import RouteConcurrencyLimiter
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.shutdown import GracefulShutdownPolicy
@@ -22,6 +23,7 @@ class Vyro:
         self._concurrency = RouteConcurrencyLimiter()
         self._rate_limiter = TokenBucketRateLimiter(rate_per_sec=1000.0, burst=2000)
         self._multi_rate_limiter = MultiKeyRateLimiter(rate_per_sec=500.0, burst=1000)
+        self._outbound_circuit_breaker = OutboundCircuitBreaker()
 
     def get(
         self,
@@ -82,6 +84,9 @@ class Vyro:
 
     def set_multi_rate_limiter(self, limiter: MultiKeyRateLimiter) -> None:
         self._multi_rate_limiter = limiter
+
+    def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
+        self._outbound_circuit_breaker = breaker
 
     def run(
         self,
