@@ -9,7 +9,7 @@ from .runtime.server import run_native_server
 from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_WORKERS
 
 
-class App:
+class Vyro:
     def __init__(self) -> None:
         self._router = RouterRegistry()
         self._middlewares = MiddlewareRegistry()

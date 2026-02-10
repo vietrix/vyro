@@ -41,6 +41,10 @@ jobs:
         run: maturin build --release
       - name: Install wheel
         run: pip install --force-reinstall target/wheels/*.whl
+      - name: CLI smoke test
+        run: |
+          vyro --help
+          vyro doctor
       - name: Python tests
         run: pytest tests/py tests/integration -q
 

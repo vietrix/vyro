@@ -1,7 +1,7 @@
-from vyro import App, Context
+from vyro import Context, Vyro
 from vyro.middleware import Middleware
 
-app = App()
+app = Vyro()
 
 
 class LoggingMiddleware(Middleware):

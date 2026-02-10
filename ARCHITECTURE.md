@@ -9,8 +9,8 @@ vyro separates developer-facing Python APIs from the Rust execution engine.
 - Release Automation: Python scripts for changelog and release notes.
 
 ## Request Flow
-1. User registers routes with `App`.
-2. `App.run()` exports route table to Rust.
+1. User registers routes with `Vyro`.
+2. `Vyro.run()` exports route table to Rust.
 3. Rust server matches request with `matchit`.
 4. Rust calls Python async handler.
 5. Rust maps handler output back to HTTP response.

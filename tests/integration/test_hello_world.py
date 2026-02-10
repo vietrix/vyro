@@ -1,8 +1,8 @@
-from vyro import App, Context
+from vyro import Context, Vyro
 
 
 def test_app_exposes_expected_api() -> None:
-    app = App()
+    app = Vyro()
 
     @app.get("/")
     async def hello(ctx: Context):

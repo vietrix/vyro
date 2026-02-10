@@ -9,7 +9,7 @@ Developer-facing API layer for vyro.
 - Thin bridge invocation to native Rust module.
 
 ## Entry Points
-- `vyro.App`
+- `vyro.Vyro`
 - `vyro.Context`
 
 ## Not Here

@@ -1,4 +1,4 @@
-from .app import App
+from .vyro import Vyro
 from .http.context import Context
 
-__all__ = ["App", "Context"]
+__all__ = ["Vyro", "Context"]

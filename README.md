@@ -35,9 +35,9 @@ python examples/hello_world.py
 ## Minimal example
 
 ```python
-from vyro import App, Context
+from vyro import Context, Vyro
 
-app = App()
+app = Vyro()
 
 @app.get("/")
 async def hello(ctx: Context):
@@ -55,6 +55,35 @@ Run all core checks locally:
 cargo test
 python -m pytest tests/py tests/integration -q
 maturin build --release
+```
+
+## CLI
+
+Vyro ships with an official CLI:
+
+```bash
+vyro --help
+vyro doctor
+vyro run --app examples.hello_world:app --port 8000
+vyro release notes --tag v0.1.0 --out release_notes.md
+```
+
+You can also run it as a module:
+
+```bash
+python -m vyro --help
+```
+
+## Migration (`App` -> `Vyro`)
+
+```python
+# before
+from vyro import App
+app = App()
+
+# after
+from vyro import Vyro
+app = Vyro()
 ```
 
 ## Project structure
