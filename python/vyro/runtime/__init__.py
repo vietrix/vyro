@@ -16,6 +16,13 @@ from .cqrs import CQRSError, CommandBus, DuplicateHandlerError, QueryBus, Unknow
 from .csrf import CSRFProtector
 from .db_pool import DBConnectionPool, DBConnectionPoolManager
 from .dead_letter import DeadLetterEntry, DeadLetterQueue, JobRetryExecutor
+from .discovery import (
+    DiscoveryAdapter,
+    EnvDiscoveryAdapter,
+    ServiceDiscoveryRegistry,
+    ServiceEndpoint,
+    StaticDiscoveryAdapter,
+)
 from .etag import ETagEvaluation, ETagManager
 from .event_bus import InternalEvent, InternalEventBus
 from .feature_flags import FeatureFlagEngine, FeatureFlagRule
@@ -88,6 +95,11 @@ __all__ = [
     "DeadLetterEntry",
     "DeadLetterQueue",
     "JobRetryExecutor",
+    "DiscoveryAdapter",
+    "ServiceEndpoint",
+    "StaticDiscoveryAdapter",
+    "EnvDiscoveryAdapter",
+    "ServiceDiscoveryRegistry",
     "InternalEvent",
     "InternalEventBus",
     "FeatureFlagEngine",

@@ -25,6 +25,7 @@ from .runtime.cqrs import CommandBus, QueryBus
 from .runtime.csrf import CSRFProtector
 from .runtime.db_pool import DBConnectionPoolManager
 from .runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
+from .runtime.discovery import ServiceDiscoveryRegistry
 from .runtime.etag import ETagManager
 from .runtime.event_bus import InternalEventBus
 from .runtime.feature_flags import FeatureFlagEngine
@@ -106,6 +107,7 @@ class Vyro:
         self._db_pools = DBConnectionPoolManager()
         self._dead_letter_queue = DeadLetterQueue()
         self._job_retry = JobRetryExecutor(dead_letter_queue=self._dead_letter_queue)
+        self._discovery = ServiceDiscoveryRegistry()
         self._event_bus = InternalEventBus()
         self._feature_flags = FeatureFlagEngine()
         self._secrets = SecretsManager()
@@ -327,6 +329,9 @@ class Vyro:
 
     def set_job_retry_executor(self, executor: JobRetryExecutor) -> None:
         self._job_retry = executor
+
+    def set_service_discovery(self, discovery: ServiceDiscoveryRegistry) -> None:
+        self._discovery = discovery
 
     def set_event_bus(self, bus: InternalEventBus) -> None:
         self._event_bus = bus

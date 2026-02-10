@@ -21,6 +21,7 @@ from vyro.runtime.cqrs import CommandBus, QueryBus
 from vyro.runtime.csrf import CSRFProtector
 from vyro.runtime.db_pool import DBConnectionPoolManager
 from vyro.runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
+from vyro.runtime.discovery import ServiceDiscoveryRegistry
 from vyro.runtime.etag import ETagManager
 from vyro.runtime.event_bus import InternalEventBus
 from vyro.runtime.feature_flags import FeatureFlagEngine
@@ -397,6 +398,13 @@ def test_vyro_accepts_custom_job_retry_executor() -> None:
     executor = JobRetryExecutor(max_retries=1)
     app.set_job_retry_executor(executor)
     assert app._job_retry is executor  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_service_discovery() -> None:
+    app = Vyro()
+    discovery = ServiceDiscoveryRegistry()
+    app.set_service_discovery(discovery)
+    assert app._discovery is discovery  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_event_bus() -> None:

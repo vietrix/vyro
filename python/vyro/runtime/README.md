@@ -48,6 +48,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Feature flag engine primitives for progressive rollout.
 - ABI-stable plugin system primitives.
 - Extension marketplace manifest primitives.
+- Service discovery adapter primitives for multi-service runtime.
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
 - Query timeout and slow query log primitives.
