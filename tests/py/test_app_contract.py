@@ -17,6 +17,7 @@ from vyro.runtime.jwt_auth import JWTAuthGuard
 from vyro.runtime.multipart_parser import MultipartParser
 from vyro.runtime.multipart_upload import MultipartUploadStream
 from vyro.runtime.negotiation import ContentNegotiator
+from vyro.runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.retry import RetryPolicy
 from vyro.runtime.shutdown import GracefulShutdownPolicy
@@ -169,6 +170,13 @@ def test_vyro_accepts_custom_content_negotiator() -> None:
     negotiator = ContentNegotiator()
     app.set_content_negotiator(negotiator)
     assert app._negotiator is negotiator  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_oauth2_oidc_helper() -> None:
+    app = Vyro()
+    helper = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
+    app.set_oauth2_oidc_helper(helper)
+    assert app._oauth2 is helper  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_static_file_service(tmp_path) -> None:  # type: ignore[no-untyped-def]

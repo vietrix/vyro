@@ -19,6 +19,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Streaming multipart upload collector primitives.
 - High-performance multipart parser primitives.
 - Content negotiation primitives for `Accept`/media-type matching.
+- OAuth2/OIDC helper primitives.
 - Static file serving primitives with safe path resolution.
 - Response compression primitives with configurable profiles.
 - CORS policy profile primitives (`strict`, `standard`, `permissive`).

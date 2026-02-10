@@ -13,6 +13,7 @@ from .jwt_auth import JWTAuthGuard
 from .multipart_upload import MultipartUploadStream
 from .multipart_parser import MultipartParser, MultipartSection
 from .negotiation import ContentNegotiator, NegotiationResult
+from .oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OIDCClaims, OAuth2Config, OAuth2OIDCHelper
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .retry import RetryPolicy
 from .server import run_native_server
@@ -41,6 +42,10 @@ __all__ = [
     "MultipartSection",
     "ContentNegotiator",
     "NegotiationResult",
+    "OAuth2Config",
+    "OIDCClaims",
+    "OAuth2OIDCHelper",
+    "OAUTH2_DEFAULT_CONFIG",
     "GrpcGateway",
     "GrpcRoute",
     "OutboundBulkhead",
