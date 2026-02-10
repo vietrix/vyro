@@ -70,3 +70,29 @@ def test_context_uses_incoming_correlation_id() -> None:
         }
     )
     assert ctx.correlation_id == "abc-123"
+
+
+def test_context_injects_traceparent_when_missing() -> None:
+    ctx = Context.from_native(
+        {
+            "headers": {"x-correlation-id": "abc-123"},
+            "query": {},
+            "path_params": {},
+            "body": b"",
+        }
+    )
+    assert "traceparent" in ctx.headers
+    assert ctx.traceparent.startswith("00-")
+
+
+def test_context_uses_incoming_traceparent() -> None:
+    value = "00-4bf92f3577b34da6a3ce929d0e0e4736-00f067aa0ba902b7-01"
+    ctx = Context.from_native(
+        {
+            "headers": {"traceparent": value},
+            "query": {},
+            "path_params": {},
+            "body": b"",
+        }
+    )
+    assert ctx.traceparent == value
