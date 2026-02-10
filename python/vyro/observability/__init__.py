@@ -1,3 +1,3 @@
-from .logging import emit_log, make_log_record
+from .logging import SamplingPolicy, emit_log, make_log_record, should_emit
 
-__all__ = ["emit_log", "make_log_record"]
+__all__ = ["SamplingPolicy", "emit_log", "make_log_record", "should_emit"]

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib
+import os
 import subprocess
 import sys
 from pathlib import Path
@@ -8,20 +9,38 @@ from typing import Any
 
 import typer
 
-from vyro.observability.logging import emit_log
+from vyro.observability.logging import SamplingPolicy, emit_log
 from vyro.vyro import Vyro
 
 
+def _read_rate(env_name: str, default: float) -> float:
+    raw = os.getenv(env_name)
+    if raw is None:
+        return default
+    try:
+        value = float(raw)
+    except ValueError:
+        return default
+    return min(1.0, max(0.0, value))
+
+
+LOG_SAMPLING_POLICY = SamplingPolicy(
+    info_rate=_read_rate("VYRO_LOG_SAMPLE_INFO", 1.0),
+    warn_rate=_read_rate("VYRO_LOG_SAMPLE_WARN", 1.0),
+    error_rate=_read_rate("VYRO_LOG_SAMPLE_ERROR", 1.0),
+)
+
+
 def info(message: str) -> None:
-    emit_log("INFO", message)
+    emit_log("INFO", message, sampling_policy=LOG_SAMPLING_POLICY)
 
 
 def warn(message: str) -> None:
-    emit_log("WARN", message)
+    emit_log("WARN", message, sampling_policy=LOG_SAMPLING_POLICY)
 
 
 def error(message: str) -> None:
-    emit_log("ERROR", message, err=True)
+    emit_log("ERROR", message, err=True, sampling_policy=LOG_SAMPLING_POLICY)
 
 
 def run_command(command: list[str], *, cwd: Path | None = None) -> None:

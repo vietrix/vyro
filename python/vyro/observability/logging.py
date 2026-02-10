@@ -1,10 +1,29 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from datetime import datetime, timezone
+import hashlib
 import json
 from typing import Any
 
 import typer
+
+
+@dataclass(slots=True, frozen=True)
+class SamplingPolicy:
+    info_rate: float = 1.0
+    warn_rate: float = 1.0
+    error_rate: float = 1.0
+
+    def rate_for(self, level: str) -> float:
+        normalized = level.upper()
+        if normalized == "INFO":
+            return self.info_rate
+        if normalized == "WARN":
+            return self.warn_rate
+        if normalized == "ERROR":
+            return self.error_rate
+        return 1.0
 
 
 def make_log_record(level: str, message: str, **fields: Any) -> dict[str, Any]:
@@ -19,5 +38,28 @@ def make_log_record(level: str, message: str, **fields: Any) -> dict[str, Any]:
     return record
 
 
-def emit_log(level: str, message: str, *, err: bool = False, **fields: Any) -> None:
+def should_emit(level: str, sample_key: str, policy: SamplingPolicy) -> bool:
+    rate = policy.rate_for(level)
+    if rate <= 0:
+        return False
+    if rate >= 1:
+        return True
+    digest = hashlib.sha1(sample_key.encode("utf-8")).digest()
+    value = int.from_bytes(digest[:8], byteorder="big", signed=False) / float(2**64 - 1)
+    return value < rate
+
+
+def emit_log(
+    level: str,
+    message: str,
+    *,
+    err: bool = False,
+    sampling_policy: SamplingPolicy | None = None,
+    sample_key: str | None = None,
+    **fields: Any,
+) -> None:
+    policy = sampling_policy or SamplingPolicy()
+    key = sample_key or message
+    if not should_emit(level, key, policy):
+        return
     typer.echo(json.dumps(make_log_record(level, message, **fields), ensure_ascii=False), err=err)
