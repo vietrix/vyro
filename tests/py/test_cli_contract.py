@@ -20,6 +20,16 @@ def test_cli_release_help_includes_changelog_command() -> None:
     result = runner.invoke(app, ["release", "--help"])
     assert result.exit_code == 0
     assert "changelog" in result.stdout
+    assert "assistant" in result.stdout
+
+
+def test_cli_release_assistant_invokes_script(monkeypatch) -> None:  # type: ignore[no-untyped-def]
+    runner = CliRunner()
+    from scripts.release import assistant as assistant_module
+
+    monkeypatch.setattr(assistant_module, "cmd_assistant", lambda _args: 0)
+    result = runner.invoke(app, ["release", "assistant", "--no-publish-pypi", "--no-publish-github"])
+    assert result.exit_code == 0
 
 
 def test_cli_version() -> None:
