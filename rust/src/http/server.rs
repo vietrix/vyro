@@ -80,12 +80,7 @@ async fn process_request(
     };
 
     let (parts, body) = req.into_parts();
-    let body_bytes = body
-        .collect()
-        .await
-        .map_err(CoreError::from)?
-        .to_bytes()
-        .to_vec();
+    let body_bytes = body.collect().await.map_err(CoreError::from)?.to_bytes();
     let headers = parts
         .headers
         .iter()
