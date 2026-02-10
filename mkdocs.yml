@@ -8,6 +8,10 @@ edit_uri: edit/main/docs/
 theme:
   name: material
   language: en
+  palette:
+    scheme: slate
+    primary: black
+    accent: teal
   features:
     - navigation.tabs
     - navigation.sections
@@ -18,6 +22,10 @@ theme:
     - content.tabs.link
   icon:
     repo: fontawesome/brands/github
+
+extra:
+  generator: false
+  copyright: Copyright © 2026 Vyro by Vietrix
 
 plugins:
   - search
