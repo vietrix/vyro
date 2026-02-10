@@ -22,6 +22,7 @@ from vyro.runtime.negotiation import ContentNegotiator
 from vyro.runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.retry import RetryPolicy
+from vyro.runtime.secrets import SecretsManager
 from vyro.runtime.shutdown import GracefulShutdownPolicy
 from vyro.runtime.static_files import StaticFileService
 from vyro.runtime.timeout_budget import TimeoutBudget
@@ -223,6 +224,13 @@ def test_vyro_accepts_custom_csrf_protector() -> None:
     protector = CSRFProtector(secret=b"test-secret")
     app.set_csrf_protector(protector)
     assert app._csrf is protector  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_secrets_manager() -> None:
+    app = Vyro()
+    manager = SecretsManager()
+    app.set_secrets_manager(manager)
+    assert app._secrets is manager  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:
