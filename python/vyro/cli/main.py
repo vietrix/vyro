@@ -4,10 +4,12 @@ import typer
 
 from vyro.cli.commands.core import app as core_app
 from vyro.cli.commands.release import app as release_app
+from vyro.cli.commands.workspace import app as workspace_app
 
 app = typer.Typer(help="Vyro command line interface.")
 app.add_typer(core_app)
 app.add_typer(release_app, name="release")
+app.add_typer(workspace_app, name="workspace")
 
 
 def main() -> None:

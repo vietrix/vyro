@@ -13,6 +13,7 @@ def test_cli_help() -> None:
     assert result.exit_code == 0
     assert "Vyro command line interface." in result.stdout
     assert "release" in result.stdout
+    assert "workspace" in result.stdout
 
 
 def test_cli_release_help_includes_changelog_command() -> None:
@@ -30,6 +31,28 @@ def test_cli_release_assistant_invokes_script(monkeypatch) -> None:  # type: ign
     monkeypatch.setattr(assistant_module, "cmd_assistant", lambda _args: 0)
     result = runner.invoke(app, ["release", "assistant", "--no-publish-pypi", "--no-publish-github"])
     assert result.exit_code == 0
+
+
+def test_cli_workspace_init_creates_monorepo_layout() -> None:
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        result = runner.invoke(
+            app,
+            ["workspace", "init", "platform", "--apps", "api,worker", "--libs", "common,events"],
+        )
+        assert result.exit_code == 0
+        assert Path("platform/vyro.workspace.toml").exists()
+        assert Path("platform/apps/api/app.py").exists()
+        assert Path("platform/apps/worker/app.py").exists()
+        assert Path("platform/libs/common/__init__.py").exists()
+        assert Path("platform/libs/events/__init__.py").exists()
+
+
+def test_cli_workspace_status_strict_fails_without_workspace_file() -> None:
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        result = runner.invoke(app, ["workspace", "status", "--strict"])
+        assert result.exit_code == 1
 
 
 def test_cli_version() -> None:
