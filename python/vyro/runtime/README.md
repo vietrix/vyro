@@ -6,6 +6,7 @@ Bootstrap helpers for invoking native runtime from Python.
 ## Owns
 - Default host/port/worker wiring.
 - Native `start_server` call boundary.
+- RBAC/ABAC authorization core primitives.
 - Graceful shutdown policy primitives.
 - Backpressure controller primitives.
 - Per-route concurrency limiter primitives.

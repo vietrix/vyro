@@ -3,6 +3,7 @@ import pytest
 from vyro import Vyro
 from vyro.errors import HandlerSignatureError
 from vyro.runtime.backpressure import BackpressureController
+from vyro.runtime.authorization import AuthorizationCore
 from vyro.runtime.bulkhead import OutboundBulkhead
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.compression import ResponseCompressor
@@ -86,6 +87,13 @@ def test_vyro_accepts_custom_shutdown_policy() -> None:
     app.set_shutdown_policy(policy)
     assert app._shutdown_policy.timeout_seconds == 12  # noqa: SLF001
     assert app._shutdown_policy.drain_inflight is False  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_authorization_core() -> None:
+    app = Vyro()
+    core = AuthorizationCore()
+    app.set_authorization_core(core)
+    assert app._authz is core  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_backpressure_controller() -> None:
