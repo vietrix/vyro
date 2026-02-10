@@ -6,7 +6,7 @@ from typing import Any
 from vyro.errors import HandlerSignatureError
 
 
-def convert_path_value(value: str, annotation: Any) -> Any:
+def convert_request_value(value: str, annotation: Any) -> Any:
     if annotation is inspect._empty or annotation is str:
         return value
     if annotation is int:
@@ -23,18 +23,32 @@ def convert_path_value(value: str, annotation: Any) -> Any:
     return value
 
 
-def bind_path_kwargs(
+def bind_request_kwargs(
     handler_name: str,
     params: list[inspect.Parameter],
     path_params: dict[str, str],
+    query_params: dict[str, str],
+    headers: dict[str, str],
 ) -> dict[str, Any]:
+    normalized_headers = {k.lower(): v for k, v in headers.items()}
     kwargs: dict[str, Any] = {}
     for param in params[1:]:
-        if param.name not in path_params:
+        raw_value: str | None = None
+
+        if param.name in path_params:
+            raw_value = path_params[param.name]
+        elif param.name in query_params:
+            raw_value = query_params[param.name]
+        else:
+            header_key = param.name.replace("_", "-").lower()
+            raw_value = normalized_headers.get(header_key)
+
+        if raw_value is None:
             if param.default is inspect._empty:
                 raise HandlerSignatureError(
-                    f"Missing path parameter '{param.name}' for handler '{handler_name}'"
+                    f"Missing request parameter '{param.name}' for handler '{handler_name}'"
                 )
             continue
-        kwargs[param.name] = convert_path_value(path_params[param.name], param.annotation)
+
+        kwargs[param.name] = convert_request_value(raw_value, param.annotation)
     return kwargs
