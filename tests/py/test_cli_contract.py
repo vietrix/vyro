@@ -165,65 +165,20 @@ def test_cli_doctor_non_strict_emits_readiness_summary(monkeypatch) -> None:  # 
     assert result.exit_code == 0
 
 
-def test_cli_check_strict_contract_fails_when_base_missing(monkeypatch, tmp_path) -> None:  # type: ignore[no-untyped-def]
+def test_cli_help_hides_dev_toolchain_commands() -> None:
     runner = CliRunner()
-    monkeypatch.setattr(core_cmd, "run_command", lambda *_args, **_kwargs: None)
-    monkeypatch.setattr(core_cmd, "lint_project", lambda _path: [])
-
-    missing_base = tmp_path / "missing-openapi.json"
-    result = runner.invoke(
-        app,
-        [
-            "check",
-            "--app",
-            "examples.hello_world:app",
-            "--contract-base",
-            str(missing_base),
-            "--strict-contract",
-        ],
-    )
-    assert result.exit_code == 1
-
-
-def test_cli_check_no_strict_contract_allows_missing_base(monkeypatch, tmp_path) -> None:  # type: ignore[no-untyped-def]
-    runner = CliRunner()
-    monkeypatch.setattr(core_cmd, "run_command", lambda *_args, **_kwargs: None)
-    monkeypatch.setattr(core_cmd, "lint_project", lambda _path: [])
-
-    missing_base = tmp_path / "missing-openapi.json"
-    result = runner.invoke(
-        app,
-        [
-            "check",
-            "--app",
-            "examples.hello_world:app",
-            "--contract-base",
-            str(missing_base),
-            "--no-strict-contract",
-        ],
-    )
+    result = runner.invoke(app, ["--help"])
     assert result.exit_code == 0
+    assert " check " not in result.stdout
+    assert " test " not in result.stdout
+    assert " build " not in result.stdout
+    assert " bench " not in result.stdout
 
 
-def test_cli_bench_writes_result_file(tmp_path) -> None:  # type: ignore[no-untyped-def]
+def test_cli_check_command_is_not_available() -> None:
     runner = CliRunner()
-    out_file = tmp_path / "bench.json"
-    result = runner.invoke(
-        app,
-        [
-            "bench",
-            "--suite",
-            "routing",
-            "--iterations",
-            "100",
-            "--out",
-            str(out_file),
-        ],
-    )
-    assert result.exit_code == 0
-    payload = json.loads(out_file.read_text(encoding="utf-8"))
-    assert payload["suite"] == "routing"
-    assert "routing" in payload["results"]
+    result = runner.invoke(app, ["check"])
+    assert result.exit_code != 0
 
 
 def test_cli_k8s_generates_manifest(tmp_path) -> None:  # type: ignore[no-untyped-def]

@@ -3,32 +3,29 @@ from __future__ import annotations
 import json
 import os
 import shutil
-import statistics
 import subprocess
 import sys
-import time
 from pathlib import Path
 
 import typer
 
 from vyro.openapi_compat import compare_openapi, load_openapi_document
 from vyro.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
-from vyro.routing.lint import lint_project
 from vyro.runtime.kubernetes import KubernetesAppConfig, KubernetesManifestGenerator
 from vyro.runtime.migrations import MigrationRunner
 from vyro.runtime.nogil import NoGILWorkerTuner
 from vyro.runtime.schema_drift import SchemaDriftDetector
 from vyro.cli.runtime import (
+    error,
     get_version_string,
     info,
     load_vyro_app,
     python_executable,
     require_module,
-    run_command,
     warn,
 )
 
-app = typer.Typer(help="Core development and runtime commands.")
+app = typer.Typer(help="Core runtime commands for application users.")
 
 
 @app.command("new")
@@ -95,109 +92,6 @@ def dev_server(
         target=run_server,
         kwargs={"app_target": app_target, "host": host, "port": port, "workers": workers},
     )
-
-
-@app.command("check")
-def check(
-    app_target: str | None = typer.Option(
-        None,
-        "--app",
-        help="Application target in format <module>:<attribute> for API contract lint.",
-    ),
-    contract_base: Path = typer.Option(
-        Path("openapi.contract.json"),
-        "--contract-base",
-        help="Baseline OpenAPI contract document path.",
-    ),
-    strict_contract: bool = typer.Option(
-        True,
-        "--strict-contract/--no-strict-contract",
-        help="Fail when contract base is missing or compatibility issues are found.",
-    ),
-) -> None:
-    run_command(["cargo", "fmt", "--all", "--", "--check"])
-    run_command(["cargo", "clippy", "--all-targets", "--", "-D", "warnings"])
-    run_command([python_executable(), "-m", "compileall", "-q", "python", "tests", "examples"])
-    issues = lint_project(Path("."))
-    if issues:
-        for issue in issues:
-            typer.echo(f"ERROR: {issue.path}:{issue.line} {issue.message}", err=True)
-        raise typer.Exit(code=1)
-    info("Route signature lint passed.")
-    _run_api_contract_lint(
-        app_target=app_target,
-        contract_base=contract_base,
-        strict_contract=strict_contract,
-    )
-
-
-@app.command("test")
-def test() -> None:
-    run_command(["cargo", "test"])
-    run_command([python_executable(), "-m", "pytest", "tests/py", "tests/integration", "-q"])
-
-
-@app.command("build")
-def build(
-    sdist: bool = typer.Option(False, "--sdist", help="Build source distribution alongside wheels."),
-) -> None:
-    command = ["maturin", "build", "--release"]
-    if sdist:
-        command.append("--sdist")
-    run_command(command)
-
-
-@app.command("bench")
-def bench(
-    suite: str = typer.Option(
-        "all",
-        "--suite",
-        help="Benchmark suite: routing|json|latency|all",
-    ),
-    iterations: int = typer.Option(10000, "--iterations", help="Iterations per benchmark."),
-    out: Path | None = typer.Option(None, "--out", help="Optional JSON output file."),
-) -> None:
-    if iterations < 1:
-        typer.echo("ERROR: --iterations must be >= 1", err=True)
-        raise typer.Exit(code=2)
-
-    selected = suite.strip().lower()
-    allowed = {"routing", "json", "latency", "all"}
-    if selected not in allowed:
-        typer.echo("ERROR: --suite must be one of routing|json|latency|all", err=True)
-        raise typer.Exit(code=2)
-
-    benches = []
-    if selected in {"routing", "all"}:
-        benches.append(("routing", _bench_routing))
-    if selected in {"json", "all"}:
-        benches.append(("json", _bench_json))
-    if selected in {"latency", "all"}:
-        benches.append(("latency", _bench_latency))
-
-    results: dict[str, dict[str, float | int]] = {}
-    for name, fn in benches:
-        duration_sec = fn(iterations)
-        ops_per_sec = iterations / duration_sec if duration_sec > 0 else float("inf")
-        us_per_op = (duration_sec * 1_000_000) / iterations
-        results[name] = {
-            "iterations": iterations,
-            "duration_sec": round(duration_sec, 6),
-            "ops_per_sec": round(ops_per_sec, 2),
-            "us_per_op": round(us_per_op, 3),
-        }
-        info(
-            f"bench[{name}] iterations={iterations} duration={duration_sec:.6f}s "
-            f"ops_per_sec={ops_per_sec:.2f} us_per_op={us_per_op:.3f}"
-        )
-
-    if out is not None:
-        payload = {
-            "suite": selected,
-            "results": results,
-        }
-        out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
-        info(f"Benchmark result written to '{out}'.")
 
 
 @app.command("k8s")
@@ -401,70 +295,6 @@ def compat(
             )
         raise typer.Exit(code=1)
     info("OpenAPI compatibility check passed.")
-
-
-def _run_api_contract_lint(
-    *,
-    app_target: str | None,
-    contract_base: Path,
-    strict_contract: bool,
-) -> None:
-    if app_target is None:
-        info("API contract lint skipped (missing --app).")
-        return
-
-    if not contract_base.exists():
-        message = f"API contract base file not found: {contract_base}"
-        if strict_contract:
-            typer.echo(f"ERROR: {message}", err=True)
-            raise typer.Exit(code=1)
-        warn(f"{message}. Skipping compatibility check.")
-        return
-
-    vyro_app = load_vyro_app(app_target)
-    routes = vyro_app._router.records()  # noqa: SLF001
-    current_doc = build_openapi_document(routes, OpenAPIMeta(title="Vyro API", version="current"))
-    base_doc = load_openapi_document(contract_base)
-    compat_issues = compare_openapi(base_doc, current_doc)
-    if compat_issues:
-        for issue in compat_issues:
-            typer.echo(
-                f"ERROR: API contract break {issue.method.upper()} {issue.path} - {issue.message}",
-                err=True,
-            )
-        raise typer.Exit(code=1)
-    info("API contract lint passed.")
-
-
-def _bench_routing(iterations: int) -> float:
-    from vyro.routing.normalize import normalize_path
-
-    samples = ["/users/:id", "/static/*", "/v1/orders/:order_id/items/:item_id", "/health"]
-    start = time.perf_counter()
-    for i in range(iterations):
-        normalize_path(samples[i % len(samples)])
-    return time.perf_counter() - start
-
-
-def _bench_json(iterations: int) -> float:
-    payload = {"id": 1, "name": "vyro", "tags": ["rust", "python", "api"], "nested": {"ok": True}}
-    start = time.perf_counter()
-    for _ in range(iterations):
-        encoded = json.dumps(payload, separators=(",", ":"))
-        json.loads(encoded)
-    return time.perf_counter() - start
-
-
-def _bench_latency(iterations: int) -> float:
-    samples: list[float] = []
-    for i in range(iterations):
-        t0 = time.perf_counter_ns()
-        _ = (i * 3) ^ (i >> 1)
-        t1 = time.perf_counter_ns()
-        samples.append(float(t1 - t0))
-    mean_ns = statistics.fmean(samples) if samples else 0.0
-    total_sec = (mean_ns * iterations) / 1_000_000_000
-    return total_sec
 
 
 def _parse_env_pairs(raw: str) -> dict[str, str]:

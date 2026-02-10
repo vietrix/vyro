@@ -67,7 +67,7 @@ jobs:
           python-version: "3.12"
       - name: Benchmark smoke
         run: |
-          PYTHONPATH=python python -m vyro bench --suite all --iterations 5000 --out benchmark.current.json
+          PYTHONPATH=python python -m scripts.dev.bench --suite all --iterations 5000 --out benchmark.current.json
       - name: Benchmark regression gate
         run: |
           PYTHONPATH=python python -m scripts.ci.bench_regression \
