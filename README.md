@@ -31,6 +31,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Automatic correlation-id injection on request context.
 - Structured JSON logging primitives for CLI/runtime output.
 - Production-readiness doctor checks with strict mode for CI gates.
+- API contract lint integration in `vyro check` (OpenAPI compatibility gate).
 - Configurable log sampling policy (`VYRO_LOG_SAMPLE_INFO/WARN/ERROR`).
 - Sensitive field redaction in logs (`VYRO_LOG_REDACT_KEYS`).
 - OpenTelemetry-friendly trace span exporter with `traceparent` propagation.
@@ -141,6 +142,7 @@ Vyro ships with an official CLI:
 vyro --help
 vyro doctor
 vyro doctor --strict
+vyro check --app examples.hello_world:app --contract-base openapi.contract.json
 vyro run --app examples.hello_world:app --port 8000
 vyro openapi --app examples.hello_world:app --out openapi.json
 vyro compat --base openapi-prev.json --target openapi.json

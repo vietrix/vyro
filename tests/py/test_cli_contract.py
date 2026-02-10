@@ -123,3 +123,43 @@ def test_cli_doctor_non_strict_emits_readiness_summary(monkeypatch) -> None:  # 
         },
     )
     assert result.exit_code == 0
+
+
+def test_cli_check_strict_contract_fails_when_base_missing(monkeypatch, tmp_path) -> None:  # type: ignore[no-untyped-def]
+    runner = CliRunner()
+    monkeypatch.setattr(core_cmd, "run_command", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(core_cmd, "lint_project", lambda _path: [])
+
+    missing_base = tmp_path / "missing-openapi.json"
+    result = runner.invoke(
+        app,
+        [
+            "check",
+            "--app",
+            "examples.hello_world:app",
+            "--contract-base",
+            str(missing_base),
+            "--strict-contract",
+        ],
+    )
+    assert result.exit_code == 1
+
+
+def test_cli_check_no_strict_contract_allows_missing_base(monkeypatch, tmp_path) -> None:  # type: ignore[no-untyped-def]
+    runner = CliRunner()
+    monkeypatch.setattr(core_cmd, "run_command", lambda *_args, **_kwargs: None)
+    monkeypatch.setattr(core_cmd, "lint_project", lambda _path: [])
+
+    missing_base = tmp_path / "missing-openapi.json"
+    result = runner.invoke(
+        app,
+        [
+            "check",
+            "--app",
+            "examples.hello_world:app",
+            "--contract-base",
+            str(missing_base),
+            "--no-strict-contract",
+        ],
+    )
+    assert result.exit_code == 0

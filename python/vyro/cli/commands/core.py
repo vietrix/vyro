@@ -105,7 +105,23 @@ def dev_server(
 
 
 @app.command("check")
-def check() -> None:
+def check(
+    app_target: str | None = typer.Option(
+        None,
+        "--app",
+        help="Application target in format <module>:<attribute> for API contract lint.",
+    ),
+    contract_base: Path = typer.Option(
+        Path("openapi.contract.json"),
+        "--contract-base",
+        help="Baseline OpenAPI contract document path.",
+    ),
+    strict_contract: bool = typer.Option(
+        True,
+        "--strict-contract/--no-strict-contract",
+        help="Fail when contract base is missing or compatibility issues are found.",
+    ),
+) -> None:
     run_command(["cargo", "fmt", "--all", "--", "--check"])
     run_command(["cargo", "clippy", "--all-targets", "--", "-D", "warnings"])
     run_command([python_executable(), "-m", "compileall", "-q", "python", "tests", "examples"])
@@ -115,6 +131,11 @@ def check() -> None:
             typer.echo(f"ERROR: {issue.path}:{issue.line} {issue.message}", err=True)
         raise typer.Exit(code=1)
     info("Route signature lint passed.")
+    _run_api_contract_lint(
+        app_target=app_target,
+        contract_base=contract_base,
+        strict_contract=strict_contract,
+    )
 
 
 @app.command("test")
@@ -281,3 +302,36 @@ def compat(
             )
         raise typer.Exit(code=1)
     info("OpenAPI compatibility check passed.")
+
+
+def _run_api_contract_lint(
+    *,
+    app_target: str | None,
+    contract_base: Path,
+    strict_contract: bool,
+) -> None:
+    if app_target is None:
+        info("API contract lint skipped (missing --app).")
+        return
+
+    if not contract_base.exists():
+        message = f"API contract base file not found: {contract_base}"
+        if strict_contract:
+            typer.echo(f"ERROR: {message}", err=True)
+            raise typer.Exit(code=1)
+        warn(f"{message}. Skipping compatibility check.")
+        return
+
+    vyro_app = load_vyro_app(app_target)
+    routes = vyro_app._router.records()  # noqa: SLF001
+    current_doc = build_openapi_document(routes, OpenAPIMeta(title="Vyro API", version="current"))
+    base_doc = load_openapi_document(contract_base)
+    compat_issues = compare_openapi(base_doc, current_doc)
+    if compat_issues:
+        for issue in compat_issues:
+            typer.echo(
+                f"ERROR: API contract break {issue.method.upper()} {issue.path} - {issue.message}",
+                err=True,
+            )
+        raise typer.Exit(code=1)
+    info("API contract lint passed.")
