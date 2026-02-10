@@ -49,7 +49,7 @@ jobs:
           vyro doctor
 
       - name: Python tests
-        run: pytest tests/py tests/integration -q
+        run: PYTHONPATH=.:python pytest tests/py tests/integration -q
 
   prepare-release:
     runs-on: ubuntu-latest

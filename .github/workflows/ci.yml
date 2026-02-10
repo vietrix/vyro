@@ -46,7 +46,7 @@ jobs:
           vyro --help
           vyro doctor
       - name: Python tests
-        run: pytest tests/py tests/integration -q
+        run: PYTHONPATH=.:python pytest tests/py tests/integration -q
 
   build-wheel:
     runs-on: ubuntu-latest
