@@ -1233,6 +1233,7 @@ version = "0.1.0"
 dependencies = [
  "bytes",
  "criterion",
+ "futures-util",
  "http",
  "http-body-util",
  "hyper",
@@ -1244,6 +1245,7 @@ dependencies = [
  "serde_json",
  "simd-json",
  "tokio",
+ "tokio-util",
  "url",
 ]
 
