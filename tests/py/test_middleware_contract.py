@@ -85,3 +85,30 @@ def test_middleware_registry_explicit_priority_overrides_class_default() -> None
     reg.add(b, priority=90)
     ordered = reg.items()
     assert ordered == [a, b]
+
+
+def test_middleware_registry_filters_by_route_group() -> None:
+    class _Global(Middleware):
+        pass
+
+    class _Api(Middleware):
+        pass
+
+    class _Admin(Middleware):
+        pass
+
+    reg = MiddlewareRegistry()
+    global_mw = _Global()
+    api_mw = _Api()
+    admin_mw = _Admin()
+    reg.add(global_mw)
+    reg.add(api_mw, group="/api")
+    reg.add(admin_mw, group="admin")
+
+    api_items = reg.items_for_path("/api/users")
+    admin_items = reg.items_for_path("/admin/dashboard")
+    other_items = reg.items_for_path("/healthz")
+
+    assert api_items == [global_mw, api_mw]
+    assert admin_items == [global_mw, admin_mw]
+    assert other_items == [global_mw]

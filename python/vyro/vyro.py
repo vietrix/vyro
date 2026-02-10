@@ -50,8 +50,14 @@ class Vyro:
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         return self._router.add_route("DELETE", path, version=version, deprecated=deprecated)
 
-    def add_middleware(self, mw: Middleware, *, priority: int | None = None) -> None:
-        self._middlewares.add(mw, priority=priority)
+    def add_middleware(
+        self,
+        mw: Middleware,
+        *,
+        priority: int | None = None,
+        group: str | None = None,
+    ) -> None:
+        self._middlewares.add(mw, priority=priority, group=group)
 
     def run(
         self,
