@@ -39,5 +39,8 @@ class RouterRegistry:
             self._compiled = compile_routes(self._routes)
         return list(self._compiled)
 
+    def records(self) -> list[RouteRecord]:
+        return list(self._routes)
+
     def export_native(self) -> list[NativeRoute]:
         return self.compile()

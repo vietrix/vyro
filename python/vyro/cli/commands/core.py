@@ -7,6 +7,7 @@ from pathlib import Path
 
 import typer
 
+from vyro.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
 from vyro.routing.lint import lint_project
 from vyro.cli.runtime import (
     get_version_string,
@@ -159,3 +160,17 @@ def doctor() -> None:
         info(rust_version)
     except Exception:
         warn("Could not determine rustc version.")
+
+
+@app.command("openapi")
+def openapi(
+    app_target: str = typer.Option(..., "--app", help="Application target in format <module>:<attribute>."),
+    out: Path = typer.Option(Path("openapi.json"), "--out", help="Output OpenAPI document path."),
+    title: str = typer.Option("Vyro API", "--title"),
+    version: str = typer.Option("0.1.0", "--version"),
+) -> None:
+    vyro_app = load_vyro_app(app_target)
+    routes = vyro_app._router.records()  # noqa: SLF001
+    doc = build_openapi_document(routes, OpenAPIMeta(title=title, version=version))
+    write_openapi_document(out, doc)
+    info(f"Wrote OpenAPI document to '{out}'.")
