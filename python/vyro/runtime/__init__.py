@@ -24,6 +24,7 @@ from .secrets import EnvSecretsProvider, InMemorySecretsProvider, SecretsManager
 from .server import run_native_server
 from .shutdown import GracefulShutdownPolicy
 from .sql import AsyncSQLAdapter, SQLiteAsyncAdapter
+from .sql_policy import PolicySQLAdapter, QueryExecutionPolicy
 from .static_files import StaticFileService
 from .timeout_budget import TimeoutBudget
 from .transaction import TransactionScope
@@ -71,6 +72,8 @@ __all__ = [
     "SecretsManager",
     "SecretsProvider",
     "AsyncSQLAdapter",
+    "PolicySQLAdapter",
+    "QueryExecutionPolicy",
     "SQLiteAsyncAdapter",
     "StaticFileService",
     "TimeoutBudget",

@@ -32,6 +32,7 @@ from .runtime.secrets import SecretsManager
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
 from .runtime.sql import AsyncSQLAdapter, SQLiteAsyncAdapter
+from .runtime.sql_policy import QueryExecutionPolicy
 from .runtime.static_files import StaticFileService
 from .runtime.timeout_budget import TimeoutBudget
 from .runtime.transaction import TransactionScope
@@ -62,6 +63,7 @@ class Vyro:
         self._oauth2 = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
         self._static_files = StaticFileService(root=Path(DEFAULT_STATIC_ROOT))
         self._sql: AsyncSQLAdapter = SQLiteAsyncAdapter(database=Path(":memory:"))
+        self._sql_policy = QueryExecutionPolicy()
         self._compression = ResponseCompressor()
         self._cors = CORSProfile.preset("standard")
         self._csrf = CSRFProtector.with_random_secret()
@@ -182,6 +184,9 @@ class Vyro:
 
     def set_sql_adapter(self, adapter: AsyncSQLAdapter) -> None:
         self._sql = adapter
+
+    def set_sql_policy(self, policy: QueryExecutionPolicy) -> None:
+        self._sql_policy = policy
 
     def set_response_compressor(self, compressor: ResponseCompressor) -> None:
         self._compression = compressor
