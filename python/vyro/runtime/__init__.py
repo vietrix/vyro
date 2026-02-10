@@ -3,6 +3,7 @@ from .authorization import AuthorizationCore
 from .api_keys import APIKeyManager, APIKeyRecord
 from .audit import AuditEvent, SecurityAuditLogger
 from .cache import CacheBackend, MemoryCacheBackend, RedisCacheBackend
+from .cache_invalidation import CacheInvalidationHooks, InvalidationHook
 from .bulkhead import OutboundBulkhead
 from .circuit_breaker import OutboundCircuitBreaker
 from .compression import CompressionProfile, ResponseCompressor
@@ -43,6 +44,8 @@ __all__ = [
     "CacheBackend",
     "MemoryCacheBackend",
     "RedisCacheBackend",
+    "CacheInvalidationHooks",
+    "InvalidationHook",
     "MultiKeyRateLimiter",
     "AsyncHttpClient",
     "ETagEvaluation",

@@ -10,6 +10,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - API key manager and rotation hook primitives.
 - Security audit log event primitives.
 - Memory/Redis cache backend primitives.
+- Cache invalidation hook primitives.
 - Graceful shutdown policy primitives.
 - Backpressure controller primitives.
 - Per-route concurrency limiter primitives.

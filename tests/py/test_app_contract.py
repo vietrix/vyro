@@ -7,6 +7,7 @@ from vyro.runtime.authorization import AuthorizationCore
 from vyro.runtime.api_keys import APIKeyManager
 from vyro.runtime.audit import SecurityAuditLogger
 from vyro.runtime.cache import MemoryCacheBackend
+from vyro.runtime.cache_invalidation import CacheInvalidationHooks
 from vyro.runtime.bulkhead import OutboundBulkhead
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.compression import ResponseCompressor
@@ -125,6 +126,13 @@ def test_vyro_accepts_custom_cache_backend() -> None:
     backend = MemoryCacheBackend()
     app.set_cache_backend(backend)
     assert app._cache is backend  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_cache_invalidation_hooks() -> None:
+    app = Vyro()
+    hooks = CacheInvalidationHooks()
+    app.set_cache_invalidation_hooks(hooks)
+    assert app._cache_invalidation is hooks  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_backpressure_controller() -> None:

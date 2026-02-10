@@ -11,6 +11,7 @@ from .runtime.authorization import AuthorizationCore
 from .runtime.api_keys import APIKeyManager
 from .runtime.audit import SecurityAuditLogger
 from .runtime.cache import CacheBackend, MemoryCacheBackend
+from .runtime.cache_invalidation import CacheInvalidationHooks
 from .runtime.bulkhead import OutboundBulkhead
 from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.compression import ResponseCompressor
@@ -51,6 +52,7 @@ class Vyro:
         self._api_keys = APIKeyManager()
         self._audit = SecurityAuditLogger()
         self._cache: CacheBackend = MemoryCacheBackend()
+        self._cache_invalidation = CacheInvalidationHooks()
         self._shutdown_policy = GracefulShutdownPolicy()
         self._backpressure = BackpressureController()
         self._concurrency = RouteConcurrencyLimiter()
@@ -148,6 +150,9 @@ class Vyro:
 
     def set_cache_backend(self, backend: CacheBackend) -> None:
         self._cache = backend
+
+    def set_cache_invalidation_hooks(self, hooks: CacheInvalidationHooks) -> None:
+        self._cache_invalidation = hooks
 
     def set_backpressure(self, controller: BackpressureController) -> None:
         self._backpressure = controller
