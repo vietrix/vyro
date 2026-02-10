@@ -20,6 +20,7 @@ from vyro.runtime.http2 import Http2StreamManager
 from vyro.runtime.jwt_auth import JWTAuthGuard
 from vyro.runtime.multipart_parser import MultipartParser
 from vyro.runtime.multipart_upload import MultipartUploadStream
+from vyro.runtime.migrations import MigrationRunner
 from vyro.runtime.negotiation import ContentNegotiator
 from vyro.runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
@@ -192,6 +193,13 @@ def test_vyro_accepts_custom_multipart_parser() -> None:
     parser = MultipartParser()
     app.set_multipart_parser(parser)
     assert app._multipart_parser is parser  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_migration_runner(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    app = Vyro()
+    runner = MigrationRunner(database=tmp_path / "app.db", migrations_dir=tmp_path / "migrations")
+    app.set_migration_runner(runner)
+    assert app._migrations is runner  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_content_negotiator() -> None:

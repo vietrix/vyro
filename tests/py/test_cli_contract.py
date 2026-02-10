@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 
 from typer.testing import CliRunner
 
@@ -26,3 +27,29 @@ def test_cli_run_requires_valid_app_target() -> None:
     runner = CliRunner()
     result = runner.invoke(app, ["run", "--app", "invalid-target"])
     assert result.exit_code == 2
+
+
+def test_cli_migrate_dry_run() -> None:
+    runner = CliRunner()
+    with runner.isolated_filesystem():
+        migrations = Path("migrations")
+        migrations.mkdir()
+        (migrations / "001_init.sql").write_text(
+            "CREATE TABLE x (id INTEGER PRIMARY KEY);",
+            encoding="utf-8",
+        )
+        result = runner.invoke(
+            app,
+            [
+                "migrate",
+                "--db",
+                "app.db",
+                "--dir",
+                "migrations",
+                "--dry-run",
+            ],
+        )
+        assert result.exit_code == 0
+        record = json.loads(result.stdout.strip())
+        assert record["level"] == "INFO"
+        assert "Migration dry-run completed." in record["message"]

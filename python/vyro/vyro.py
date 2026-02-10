@@ -24,6 +24,7 @@ from .runtime.http2 import Http2StreamManager
 from .runtime.jwt_auth import JWTAuthGuard
 from .runtime.multipart_upload import MultipartUploadStream
 from .runtime.multipart_parser import MultipartParser
+from .runtime.migrations import MigrationRunner
 from .runtime.negotiation import ContentNegotiator
 from .runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
@@ -59,6 +60,7 @@ class Vyro:
         self._grpc_gateway = GrpcGateway()
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
         self._multipart_parser = MultipartParser()
+        self._migrations = MigrationRunner(database=Path("app.db"), migrations_dir=Path("migrations"))
         self._negotiator = ContentNegotiator()
         self._oauth2 = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
         self._static_files = StaticFileService(root=Path(DEFAULT_STATIC_ROOT))
@@ -172,6 +174,9 @@ class Vyro:
 
     def set_multipart_parser(self, parser: MultipartParser) -> None:
         self._multipart_parser = parser
+
+    def set_migration_runner(self, runner: MigrationRunner) -> None:
+        self._migrations = runner
 
     def set_content_negotiator(self, negotiator: ContentNegotiator) -> None:
         self._negotiator = negotiator

@@ -10,6 +10,7 @@ import typer
 from vyro.openapi_compat import compare_openapi, load_openapi_document
 from vyro.openapi import OpenAPIMeta, build_openapi_document, write_openapi_document
 from vyro.routing.lint import lint_project
+from vyro.runtime.migrations import MigrationRunner
 from vyro.cli.runtime import (
     get_version_string,
     info,
@@ -128,6 +129,20 @@ def build(
     if sdist:
         command.append("--sdist")
     run_command(command)
+
+
+@app.command("migrate")
+def migrate(
+    db: Path = typer.Option(Path("app.db"), "--db", help="SQLite database path."),
+    dir: Path = typer.Option(Path("migrations"), "--dir", help="Directory containing *.sql migrations."),
+    dry_run: bool = typer.Option(False, "--dry-run", help="Show pending migrations without applying."),
+) -> None:
+    runner = MigrationRunner(database=db, migrations_dir=dir)
+    result = runner.run(dry_run=dry_run)
+    mode = "dry-run" if dry_run else "apply"
+    info(
+        f"Migration {mode} completed. applied={len(result.applied)} skipped={len(result.skipped)}"
+    )
 
 
 @app.command("version")

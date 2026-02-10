@@ -16,6 +16,7 @@ from .http2 import Http2Stream, Http2StreamManager
 from .jwt_auth import JWTAuthGuard
 from .multipart_upload import MultipartUploadStream
 from .multipart_parser import MultipartParser, MultipartSection
+from .migrations import MigrationResult, MigrationRunner
 from .negotiation import ContentNegotiator, NegotiationResult
 from .oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OIDCClaims, OAuth2Config, OAuth2OIDCHelper
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
@@ -55,6 +56,8 @@ __all__ = [
     "MultipartUploadStream",
     "MultipartParser",
     "MultipartSection",
+    "MigrationResult",
+    "MigrationRunner",
     "ContentNegotiator",
     "NegotiationResult",
     "OAuth2Config",
