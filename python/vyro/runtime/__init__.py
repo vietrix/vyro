@@ -3,6 +3,7 @@ from .bulkhead import OutboundBulkhead
 from .circuit_breaker import OutboundCircuitBreaker
 from .compression import CompressionProfile, ResponseCompressor
 from .concurrency import RouteConcurrencyLimiter
+from .cors import CORSProfile, CORSProfileName
 from .etag import ETagEvaluation, ETagManager
 from .grpc_gateway import GrpcGateway, GrpcRoute
 from .http_client import AsyncHttpClient, HttpResponse
@@ -26,6 +27,8 @@ __all__ = [
     "ETagManager",
     "CompressionProfile",
     "ResponseCompressor",
+    "CORSProfile",
+    "CORSProfileName",
     "HttpResponse",
     "Http2Stream",
     "Http2StreamManager",

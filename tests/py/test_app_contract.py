@@ -7,6 +7,7 @@ from vyro.runtime.bulkhead import OutboundBulkhead
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.compression import ResponseCompressor
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
+from vyro.runtime.cors import CORSProfile
 from vyro.runtime.etag import ETagManager
 from vyro.runtime.grpc_gateway import GrpcGateway
 from vyro.runtime.http_client import AsyncHttpClient
@@ -175,6 +176,13 @@ def test_vyro_accepts_custom_response_compressor() -> None:
     compressor = ResponseCompressor(min_size=1024)
     app.set_response_compressor(compressor)
     assert app._compression.min_size == 1024  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_cors_profile() -> None:
+    app = Vyro()
+    profile = CORSProfile.preset("permissive")
+    app.set_cors_profile(profile)
+    assert app._cors.name == "permissive"  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:
