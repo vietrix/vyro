@@ -16,6 +16,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - gRPC gateway mapping/transcoding foundation primitives.
 - Streaming multipart upload collector primitives.
 - High-performance multipart parser primitives.
+- Static file serving primitives with safe path resolution.
 - Outbound circuit-breaker primitives for unstable upstreams.
 - Outbound bulkhead isolation primitives per dependency.
 - Retry policy primitives with exponential backoff and jitter.

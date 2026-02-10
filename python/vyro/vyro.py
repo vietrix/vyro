@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any, Callable
 
 from .middleware import Middleware
@@ -18,9 +19,10 @@ from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.retry import RetryPolicy
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
+from .runtime.static_files import StaticFileService
 from .runtime.timeout_budget import TimeoutBudget
 from .runtime.websocket import WebSocketRouteRegistry
-from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_WORKERS
+from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_STATIC_ROOT, DEFAULT_WORKERS
 
 
 class Vyro:
@@ -37,6 +39,7 @@ class Vyro:
         self._grpc_gateway = GrpcGateway()
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
         self._multipart_parser = MultipartParser()
+        self._static_files = StaticFileService(root=Path(DEFAULT_STATIC_ROOT))
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
@@ -124,6 +127,9 @@ class Vyro:
 
     def set_multipart_parser(self, parser: MultipartParser) -> None:
         self._multipart_parser = parser
+
+    def set_static_files(self, service: StaticFileService) -> None:
+        self._static_files = service
 
     def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
         self._outbound_circuit_breaker = breaker

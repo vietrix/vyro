@@ -14,6 +14,7 @@ from vyro.runtime.multipart_upload import MultipartUploadStream
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.retry import RetryPolicy
 from vyro.runtime.shutdown import GracefulShutdownPolicy
+from vyro.runtime.static_files import StaticFileService
 from vyro.runtime.timeout_budget import TimeoutBudget
 
 
@@ -141,6 +142,15 @@ def test_vyro_accepts_custom_multipart_parser() -> None:
     parser = MultipartParser()
     app.set_multipart_parser(parser)
     assert app._multipart_parser is parser  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_static_file_service(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    app = Vyro()
+    static_root = tmp_path / "public"
+    static_root.mkdir()
+    service = StaticFileService(root=static_root)
+    app.set_static_files(service)
+    assert app._static_files is service  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:

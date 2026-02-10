@@ -11,6 +11,7 @@ from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .retry import RetryPolicy
 from .server import run_native_server
 from .shutdown import GracefulShutdownPolicy
+from .static_files import StaticFileService
 from .timeout_budget import TimeoutBudget
 from .websocket import WebSocketRouteRegistry
 
@@ -30,6 +31,7 @@ __all__ = [
     "OutboundCircuitBreaker",
     "RouteConcurrencyLimiter",
     "RetryPolicy",
+    "StaticFileService",
     "TimeoutBudget",
     "TokenBucketRateLimiter",
     "WebSocketRouteRegistry",
