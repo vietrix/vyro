@@ -45,3 +45,28 @@ def test_context_extensions_are_mutable() -> None:
     ctx.set_extension("trace_id", "abc123")
     assert ctx.get_extension("trace_id") == "abc123"
     assert ctx.extensions["trace_id"] == "abc123"
+
+
+def test_context_injects_correlation_id_when_missing() -> None:
+    ctx = Context.from_native(
+        {
+            "headers": {"user-agent": "pytest"},
+            "query": {},
+            "path_params": {},
+            "body": b"",
+        }
+    )
+    assert "x-correlation-id" in ctx.headers
+    assert ctx.correlation_id == ctx.headers["x-correlation-id"]
+
+
+def test_context_uses_incoming_correlation_id() -> None:
+    ctx = Context.from_native(
+        {
+            "headers": {"x-correlation-id": "abc-123"},
+            "query": {},
+            "path_params": {},
+            "body": b"",
+        }
+    )
+    assert ctx.correlation_id == "abc-123"

@@ -4,6 +4,10 @@ import json
 from dataclasses import dataclass
 from types import MappingProxyType
 from typing import Any, Mapping
+from uuid import uuid4
+
+
+CORRELATION_ID_HEADER = "x-correlation-id"
 
 
 @dataclass(slots=True)
@@ -16,8 +20,10 @@ class Context:
 
     @classmethod
     def from_native(cls, payload: dict[str, Any]) -> "Context":
+        headers = {k.lower(): v for k, v in dict(payload.get("headers", {})).items()}
+        headers.setdefault(CORRELATION_ID_HEADER, uuid4().hex)
         return cls(
-            headers=MappingProxyType(dict(payload.get("headers", {}))),
+            headers=MappingProxyType(headers),
             query=MappingProxyType(dict(payload.get("query", {}))),
             path_params=MappingProxyType(dict(payload.get("path_params", {}))),
             _body=payload.get("body", b""),
@@ -41,3 +47,7 @@ class Context:
     @property
     def extensions(self) -> Mapping[str, Any]:
         return MappingProxyType(self._extensions)
+
+    @property
+    def correlation_id(self) -> str:
+        return str(self.headers[CORRELATION_ID_HEADER])
