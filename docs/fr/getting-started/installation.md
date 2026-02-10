@@ -1,45 +1,45 @@
 # Installation
 
-## Requirements
+## Prérequis
 
 - Python 3.10+
 - pip
-- Rust toolchain (only required for source builds)
+- Toolchain Rust (requis uniquement pour une compilation depuis les sources)
 
-## Install from PyPI
+## Installer depuis PyPI
 
 ```bash
 pip install vyro
 ```
 
-## Verify installation
+## Vérifier l'installation
 
-Primary (recommended for end users):
+Commande principale (recommandée pour les utilisateurs finaux) :
 
 ```bash
 vyro --help
 ```
 
-Fallback (if your shell PATH does not expose `vyro` yet):
+Solution de secours (si votre variable PATH n'expose pas encore `vyro`) :
 
 ```bash
 python -m vyro --help
 ```
 
-## Why two commands?
+## Pourquoi deux commandes ?
 
-- `vyro` is the official end-user CLI command.
-- `python -m vyro` runs the same CLI module directly and is useful for PATH/debug scenarios.
+- `vyro` est la commande CLI officielle pour l'utilisateur final.
+- `python -m vyro` exécute directement le même module CLI ; utile pour diagnostiquer un problème de PATH.
 
-## PATH troubleshooting
+## Dépannage PATH
 
-If `vyro` is not found:
+Si `vyro` est introuvable :
 
-1. Re-open terminal after install.
-2. Ensure Python Scripts directory is on PATH.
-3. Use `python -m vyro` temporarily.
+1. Rouvrez votre terminal après l'installation.
+2. Vérifiez que le dossier `Scripts` de Python est présent dans votre PATH.
+3. Utilisez temporairement `python -m vyro`.
 
-## Developer setup
+## Environnement développeur
 
 ```bash
 pip install -e .[dev]
