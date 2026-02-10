@@ -12,6 +12,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Memory/Redis cache backend primitives.
 - Cache invalidation hook primitives.
 - Response cache TTL policy primitives.
+- Canary routing control primitives.
 - Graceful shutdown policy primitives.
 - Backpressure controller primitives.
 - Per-route concurrency limiter primitives.

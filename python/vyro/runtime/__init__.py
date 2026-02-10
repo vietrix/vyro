@@ -5,6 +5,7 @@ from .audit import AuditEvent, SecurityAuditLogger
 from .cache import CacheBackend, MemoryCacheBackend, RedisCacheBackend
 from .cache_invalidation import CacheInvalidationHooks, InvalidationHook
 from .bulkhead import OutboundBulkhead
+from .canary import CanaryRoutingControls, CanaryRule
 from .circuit_breaker import OutboundCircuitBreaker
 from .compression import CompressionProfile, ResponseCompressor
 from .concurrency import RouteConcurrencyLimiter
@@ -58,6 +59,8 @@ __all__ = [
     "RedisCacheBackend",
     "CacheInvalidationHooks",
     "InvalidationHook",
+    "CanaryRoutingControls",
+    "CanaryRule",
     "MultiKeyRateLimiter",
     "AsyncHttpClient",
     "ETagEvaluation",

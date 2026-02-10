@@ -14,6 +14,7 @@ from .runtime.audit import SecurityAuditLogger
 from .runtime.cache import CacheBackend, MemoryCacheBackend
 from .runtime.cache_invalidation import CacheInvalidationHooks
 from .runtime.bulkhead import OutboundBulkhead
+from .runtime.canary import CanaryRoutingControls
 from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.compression import ResponseCompressor
 from .runtime.concurrency import RouteConcurrencyLimiter
@@ -66,6 +67,7 @@ class Vyro:
         self._audit = SecurityAuditLogger()
         self._cache: CacheBackend = MemoryCacheBackend()
         self._cache_invalidation = CacheInvalidationHooks()
+        self._canary = CanaryRoutingControls()
         self._shutdown_policy = GracefulShutdownPolicy()
         self._backpressure = BackpressureController()
         self._concurrency = RouteConcurrencyLimiter()
@@ -214,6 +216,9 @@ class Vyro:
 
     def set_cache_invalidation_hooks(self, hooks: CacheInvalidationHooks) -> None:
         self._cache_invalidation = hooks
+
+    def set_canary_routing(self, controls: CanaryRoutingControls) -> None:
+        self._canary = controls
 
     def set_backpressure(self, controller: BackpressureController) -> None:
         self._backpressure = controller

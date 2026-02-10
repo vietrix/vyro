@@ -10,6 +10,7 @@ from vyro.runtime.audit import SecurityAuditLogger
 from vyro.runtime.cache import MemoryCacheBackend
 from vyro.runtime.cache_invalidation import CacheInvalidationHooks
 from vyro.runtime.bulkhead import OutboundBulkhead
+from vyro.runtime.canary import CanaryRoutingControls
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
 from vyro.runtime.compression import ResponseCompressor
 from vyro.runtime.concurrency import RouteConcurrencyLimiter
@@ -152,6 +153,13 @@ def test_vyro_accepts_custom_cache_invalidation_hooks() -> None:
     hooks = CacheInvalidationHooks()
     app.set_cache_invalidation_hooks(hooks)
     assert app._cache_invalidation is hooks  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_canary_routing_controls() -> None:
+    app = Vyro()
+    controls = CanaryRoutingControls()
+    app.set_canary_routing(controls)
+    assert app._canary is controls  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_backpressure_controller() -> None:
