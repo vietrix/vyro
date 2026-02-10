@@ -17,6 +17,7 @@ from vyro.runtime.cors import CORSProfile
 from vyro.runtime.cron import CronScheduler
 from vyro.runtime.csrf import CSRFProtector
 from vyro.runtime.db_pool import DBConnectionPoolManager
+from vyro.runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
 from vyro.runtime.etag import ETagManager
 from vyro.runtime.grpc_gateway import GrpcGateway
 from vyro.runtime.http_client import AsyncHttpClient
@@ -314,6 +315,20 @@ def test_vyro_accepts_custom_db_pool_manager() -> None:
     manager = DBConnectionPoolManager()
     app.set_db_pool_manager(manager)
     assert app._db_pools is manager  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_dead_letter_queue() -> None:
+    app = Vyro()
+    queue = DeadLetterQueue()
+    app.set_dead_letter_queue(queue)
+    assert app._dead_letter_queue is queue  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_job_retry_executor() -> None:
+    app = Vyro()
+    executor = JobRetryExecutor(max_retries=1)
+    app.set_job_retry_executor(executor)
+    assert app._job_retry is executor  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_secrets_manager() -> None:

@@ -12,6 +12,7 @@ from .cors import CORSProfile, CORSProfileName
 from .cron import CronJob, CronScheduler
 from .csrf import CSRFProtector
 from .db_pool import DBConnectionPool, DBConnectionPoolManager
+from .dead_letter import DeadLetterEntry, DeadLetterQueue, JobRetryExecutor
 from .etag import ETagEvaluation, ETagManager
 from .grpc_gateway import GrpcGateway, GrpcRoute
 from .http_client import AsyncHttpClient, HttpResponse
@@ -62,6 +63,9 @@ __all__ = [
     "CSRFProtector",
     "DBConnectionPool",
     "DBConnectionPoolManager",
+    "DeadLetterEntry",
+    "DeadLetterQueue",
+    "JobRetryExecutor",
     "JWTAuthGuard",
     "JobRuntime",
     "HttpResponse",
