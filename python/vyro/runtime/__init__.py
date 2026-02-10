@@ -22,6 +22,7 @@ from .migrations import MigrationResult, MigrationRunner
 from .negotiation import ContentNegotiator, NegotiationResult
 from .oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OIDCClaims, OAuth2Config, OAuth2OIDCHelper
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
+from .response_cache import ResponseCachePolicy, ResponseCacheService
 from .retry import RetryPolicy
 from .schema_drift import DriftIssue, DriftReport, SchemaDriftDetector
 from .secrets import EnvSecretsProvider, InMemorySecretsProvider, SecretsManager, SecretsProvider
@@ -77,6 +78,8 @@ __all__ = [
     "OutboundBulkhead",
     "OutboundCircuitBreaker",
     "RouteConcurrencyLimiter",
+    "ResponseCachePolicy",
+    "ResponseCacheService",
     "RetryPolicy",
     "DriftIssue",
     "DriftReport",

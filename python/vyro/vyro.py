@@ -30,6 +30,7 @@ from .runtime.migrations import MigrationRunner
 from .runtime.negotiation import ContentNegotiator
 from .runtime.oauth2_oidc import OAUTH2_DEFAULT_CONFIG, OAuth2OIDCHelper
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
+from .runtime.response_cache import ResponseCacheService
 from .runtime.retry import RetryPolicy
 from .runtime.schema_drift import SchemaDriftDetector
 from .runtime.secrets import SecretsManager
@@ -77,6 +78,7 @@ class Vyro:
         self._csrf = CSRFProtector.with_random_secret()
         self._db_pools = DBConnectionPoolManager()
         self._secrets = SecretsManager()
+        self._response_cache = ResponseCacheService(backend=self._cache)
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
@@ -222,6 +224,9 @@ class Vyro:
 
     def set_secrets_manager(self, manager: SecretsManager) -> None:
         self._secrets = manager
+
+    def set_response_cache_service(self, service: ResponseCacheService) -> None:
+        self._response_cache = service
 
     def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
         self._outbound_circuit_breaker = breaker
