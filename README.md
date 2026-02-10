@@ -33,6 +33,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Production-readiness doctor checks with strict mode for CI gates.
 - API contract lint integration in `vyro check` (OpenAPI compatibility gate).
 - Built-in `vyro bench` command for routing/json/latency smoke benchmarking.
+- CI benchmark regression gate with baseline comparison.
 - Configurable log sampling policy (`VYRO_LOG_SAMPLE_INFO/WARN/ERROR`).
 - Sensitive field redaction in logs (`VYRO_LOG_REDACT_KEYS`).
 - OpenTelemetry-friendly trace span exporter with `traceparent` propagation.

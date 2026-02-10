@@ -56,3 +56,26 @@ jobs:
         with:
           command: build
           manylinux: auto
+
+  perf-regression-gate:
+    runs-on: ubuntu-latest
+    needs: [lint-rust, test-rust, test-python]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Benchmark smoke
+        run: |
+          PYTHONPATH=python python -m vyro bench --suite all --iterations 5000 --out benchmark.current.json
+      - name: Benchmark regression gate
+        run: |
+          PYTHONPATH=python python -m scripts.ci.bench_regression \
+            --baseline .github/benchmarks/baseline.json \
+            --current benchmark.current.json \
+            --threshold-percent 200
+      - name: Upload benchmark artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-current
+          path: benchmark.current.json
