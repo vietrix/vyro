@@ -24,7 +24,15 @@ def test_build_openapi_document_from_routes() -> None:
             normalized_path="/users/{id}",
             dispatch=_dispatch,
             handler=_handler,
-        )
+        ),
+        RouteRecord(
+            method="GET",
+            original_path="/legacy",
+            normalized_path="/legacy",
+            dispatch=_dispatch,
+            handler=_handler,
+            deprecated="use /v2/users/{id}",
+        ),
     ]
     doc = build_openapi_document(routes, OpenAPIMeta(title="Demo", version="1.2.3"))
     assert doc["openapi"] == "3.1.0"
@@ -36,6 +44,9 @@ def test_build_openapi_document_from_routes() -> None:
     assert params[0]["schema"]["type"] == "integer"
     assert params[1]["in"] == "query"
     assert params[1]["schema"]["format"] == "uuid"
+    assert doc["paths"]["/users/{id}"]["get"]["deprecated"] is False
+    assert doc["paths"]["/legacy"]["get"]["deprecated"] is True
+    assert doc["paths"]["/legacy"]["get"]["x-vyro-deprecation-message"] == "use /v2/users/{id}"
 
 
 def test_write_openapi_document(tmp_path: Path) -> None:

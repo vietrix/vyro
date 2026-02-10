@@ -20,6 +20,7 @@ class RouterRegistry:
         path: str,
         *,
         version: str | None = None,
+        deprecated: bool | str = False,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
         normalized_path = normalize_path(path)
         version_prefix = _normalize_version(version) if version is not None else None
@@ -37,6 +38,7 @@ class RouterRegistry:
                     dispatch=dispatch,
                     handler=fn,
                     version=version_prefix,
+                    deprecated=_normalize_deprecation(deprecated),
                 )
             )
             self._compiled = None
@@ -63,3 +65,14 @@ def _normalize_version(version: str) -> str:
     if value.startswith("v"):
         return f"/{value}"
     return f"/v{value}"
+
+
+def _normalize_deprecation(value: bool | str) -> str | None:
+    if value is False:
+        return None
+    if value is True:
+        return "deprecated"
+    cleaned = value.strip()
+    if not cleaned:
+        return "deprecated"
+    return cleaned

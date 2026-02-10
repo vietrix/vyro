@@ -16,3 +16,4 @@ class RouteRecord:
     dispatch: Handler
     handler: Callable[..., Any]
     version: str | None = None
+    deprecated: str | None = None

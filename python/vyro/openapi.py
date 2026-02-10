@@ -28,6 +28,8 @@ def build_openapi_document(routes: list[RouteRecord], meta: OpenAPIMeta | None =
             "operationId": operation_id,
             "parameters": _build_parameters(route),
             "responses": {"200": {"description": "Successful Response"}},
+            "deprecated": route.deprecated is not None,
+            "x-vyro-deprecation-message": route.deprecated,
         }
 
     return {

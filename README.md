@@ -49,6 +49,10 @@ async def hello(ctx: Context):
 async def get_user(ctx: Context, id: int):
     return {"id": id}
 
+@app.get("/legacy", deprecated="use /v2/users/:id")
+async def legacy(ctx: Context):
+    return {"legacy": True}
+
 if __name__ == "__main__":
     app.run(port=8000, workers=2)
 ```

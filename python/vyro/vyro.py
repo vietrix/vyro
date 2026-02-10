@@ -19,32 +19,36 @@ class Vyro:
         path: str,
         *,
         version: str | None = None,
+        deprecated: bool | str = False,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("GET", path, version=version)
+        return self._router.add_route("GET", path, version=version, deprecated=deprecated)
 
     def post(
         self,
         path: str,
         *,
         version: str | None = None,
+        deprecated: bool | str = False,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("POST", path, version=version)
+        return self._router.add_route("POST", path, version=version, deprecated=deprecated)
 
     def put(
         self,
         path: str,
         *,
         version: str | None = None,
+        deprecated: bool | str = False,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("PUT", path, version=version)
+        return self._router.add_route("PUT", path, version=version, deprecated=deprecated)
 
     def delete(
         self,
         path: str,
         *,
         version: str | None = None,
+        deprecated: bool | str = False,
     ) -> Callable[[Callable[..., Any]], Callable[..., Any]]:
-        return self._router.add_route("DELETE", path, version=version)
+        return self._router.add_route("DELETE", path, version=version, deprecated=deprecated)
 
     def add_middleware(self, mw: Middleware) -> None:
         self._middlewares.add(mw)
