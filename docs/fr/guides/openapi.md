@@ -1,15 +1,3 @@
-# OpenAPI and API Contracts
+# OpenAPI et contrats API
 
-Generate OpenAPI:
-
-```bash
-vyro openapi --app examples.hello_world:app --out openapi.json
-```
-
-Compare compatibility:
-
-```bash
-vyro compat --base openapi-prev.json --target openapi.json
-```
-
-Use this in CI to prevent breaking API changes.
+Utilisez `vyro openapi` puis `vyro compat` pour prevenir les breaking changes.

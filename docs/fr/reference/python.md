@@ -1,13 +1,7 @@
-# Python API Reference
-
-## Package
+# Reference API Python
 
 ::: vyro
 
-## Runtime
-
 ::: vyro.runtime
-
-## Routing
 
 ::: vyro.routing
