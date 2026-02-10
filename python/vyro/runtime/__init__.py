@@ -1,5 +1,6 @@
 from .backpressure import BackpressureController
 from .authorization import AuthorizationCore
+from .api_keys import APIKeyManager, APIKeyRecord
 from .bulkhead import OutboundBulkhead
 from .circuit_breaker import OutboundCircuitBreaker
 from .compression import CompressionProfile, ResponseCompressor
@@ -26,6 +27,8 @@ from .websocket import WebSocketRouteRegistry
 __all__ = [
     "BackpressureController",
     "AuthorizationCore",
+    "APIKeyManager",
+    "APIKeyRecord",
     "MultiKeyRateLimiter",
     "AsyncHttpClient",
     "ETagEvaluation",

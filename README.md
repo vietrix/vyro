@@ -14,6 +14,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Pythonic routing and handler authoring.
 - Async-first handler model (`async def` only).
 - RBAC/ABAC authorization core primitives.
+- API key manager and rotation hook primitives.
 - Structured release automation (tag -> changelog -> PyPI -> GitHub Release).
 - Native file-path response streaming (return `pathlib.Path` from handler).
 - OpenAPI 3.1 + JSON schema generation from route handlers.
