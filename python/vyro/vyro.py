@@ -29,6 +29,7 @@ from .runtime.etag import ETagManager
 from .runtime.event_bus import InternalEventBus
 from .runtime.feature_flags import FeatureFlagEngine
 from .runtime.grpc_gateway import GrpcGateway
+from .runtime.hot_reload import SafeRuntimeConfigReloader
 from .runtime.http_client import AsyncHttpClient
 from .runtime.http2 import Http2StreamManager
 from .runtime.jwt_auth import JWTAuthGuard
@@ -87,6 +88,7 @@ class Vyro:
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
         self._multipart_parser = MultipartParser()
         self._migrations = MigrationRunner(database=Path("app.db"), migrations_dir=Path("migrations"))
+        self._hot_reload = SafeRuntimeConfigReloader()
         self._negotiator = ContentNegotiator()
         self._oauth2 = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
         self._outbox = OutboxPatternHelper()
@@ -272,6 +274,9 @@ class Vyro:
 
     def set_migration_runner(self, runner: MigrationRunner) -> None:
         self._migrations = runner
+
+    def set_runtime_config_reloader(self, reloader: SafeRuntimeConfigReloader) -> None:
+        self._hot_reload = reloader
 
     def set_content_negotiator(self, negotiator: ContentNegotiator) -> None:
         self._negotiator = negotiator

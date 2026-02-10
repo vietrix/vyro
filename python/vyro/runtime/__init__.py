@@ -20,6 +20,7 @@ from .etag import ETagEvaluation, ETagManager
 from .event_bus import InternalEvent, InternalEventBus
 from .feature_flags import FeatureFlagEngine, FeatureFlagRule
 from .grpc_gateway import GrpcGateway, GrpcRoute
+from .hot_reload import RuntimeConfigReloadError, RuntimeConfigSnapshot, SafeRuntimeConfigReloader
 from .http_client import AsyncHttpClient, HttpResponse
 from .http2 import Http2Stream, Http2StreamManager
 from .jwt_auth import JWTAuthGuard
@@ -89,6 +90,9 @@ __all__ = [
     "InternalEventBus",
     "FeatureFlagEngine",
     "FeatureFlagRule",
+    "RuntimeConfigReloadError",
+    "RuntimeConfigSnapshot",
+    "SafeRuntimeConfigReloader",
     "JWTAuthGuard",
     "JobRuntime",
     "HttpResponse",

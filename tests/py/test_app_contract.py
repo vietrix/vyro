@@ -25,6 +25,7 @@ from vyro.runtime.etag import ETagManager
 from vyro.runtime.event_bus import InternalEventBus
 from vyro.runtime.feature_flags import FeatureFlagEngine
 from vyro.runtime.grpc_gateway import GrpcGateway
+from vyro.runtime.hot_reload import SafeRuntimeConfigReloader
 from vyro.runtime.http_client import AsyncHttpClient
 from vyro.runtime.http2 import Http2StreamManager
 from vyro.runtime.jwt_auth import JWTAuthGuard
@@ -280,6 +281,13 @@ def test_vyro_accepts_custom_migration_runner(tmp_path) -> None:  # type: ignore
     runner = MigrationRunner(database=tmp_path / "app.db", migrations_dir=tmp_path / "migrations")
     app.set_migration_runner(runner)
     assert app._migrations is runner  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_runtime_config_reloader() -> None:
+    app = Vyro()
+    reloader = SafeRuntimeConfigReloader()
+    app.set_runtime_config_reloader(reloader)
+    assert app._hot_reload is reloader  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_content_negotiator() -> None:

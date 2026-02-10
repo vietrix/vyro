@@ -21,6 +21,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - Response cache TTL policy primitives.
 - Canary routing control primitives.
 - Blue-green rollout helper primitives.
+- Safe runtime config hot-reload primitives.
 - Idempotency-key middleware primitives.
 - Structured release automation (tag -> changelog -> PyPI -> GitHub Release).
 - Native file-path response streaming (return `pathlib.Path` from handler).

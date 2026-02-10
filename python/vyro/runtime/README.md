@@ -14,6 +14,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Response cache TTL policy primitives.
 - Canary routing control primitives.
 - Blue-green rollout helper primitives.
+- Safe runtime config hot-reload primitives.
 - Graceful shutdown policy primitives.
 - Backpressure controller primitives.
 - Per-route concurrency limiter primitives.
