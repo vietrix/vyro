@@ -9,6 +9,7 @@ from .http_client import AsyncHttpClient, HttpResponse
 from .http2 import Http2Stream, Http2StreamManager
 from .multipart_upload import MultipartUploadStream
 from .multipart_parser import MultipartParser, MultipartSection
+from .negotiation import ContentNegotiator, NegotiationResult
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .retry import RetryPolicy
 from .server import run_native_server
@@ -31,6 +32,8 @@ __all__ = [
     "MultipartUploadStream",
     "MultipartParser",
     "MultipartSection",
+    "ContentNegotiator",
+    "NegotiationResult",
     "GrpcGateway",
     "GrpcRoute",
     "OutboundBulkhead",

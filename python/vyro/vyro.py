@@ -17,6 +17,7 @@ from .runtime.http_client import AsyncHttpClient
 from .runtime.http2 import Http2StreamManager
 from .runtime.multipart_upload import MultipartUploadStream
 from .runtime.multipart_parser import MultipartParser
+from .runtime.negotiation import ContentNegotiator
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.retry import RetryPolicy
 from .runtime.shutdown import GracefulShutdownPolicy
@@ -42,6 +43,7 @@ class Vyro:
         self._grpc_gateway = GrpcGateway()
         self._multipart_upload = MultipartUploadStream(boundary=b"vyro-default")
         self._multipart_parser = MultipartParser()
+        self._negotiator = ContentNegotiator()
         self._static_files = StaticFileService(root=Path(DEFAULT_STATIC_ROOT))
         self._compression = ResponseCompressor()
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
@@ -134,6 +136,9 @@ class Vyro:
 
     def set_multipart_parser(self, parser: MultipartParser) -> None:
         self._multipart_parser = parser
+
+    def set_content_negotiator(self, negotiator: ContentNegotiator) -> None:
+        self._negotiator = negotiator
 
     def set_static_files(self, service: StaticFileService) -> None:
         self._static_files = service

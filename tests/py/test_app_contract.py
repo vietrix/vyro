@@ -13,6 +13,7 @@ from vyro.runtime.http_client import AsyncHttpClient
 from vyro.runtime.http2 import Http2StreamManager
 from vyro.runtime.multipart_parser import MultipartParser
 from vyro.runtime.multipart_upload import MultipartUploadStream
+from vyro.runtime.negotiation import ContentNegotiator
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.retry import RetryPolicy
 from vyro.runtime.shutdown import GracefulShutdownPolicy
@@ -151,6 +152,13 @@ def test_vyro_accepts_custom_multipart_parser() -> None:
     parser = MultipartParser()
     app.set_multipart_parser(parser)
     assert app._multipart_parser is parser  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_content_negotiator() -> None:
+    app = Vyro()
+    negotiator = ContentNegotiator()
+    app.set_content_negotiator(negotiator)
+    assert app._negotiator is negotiator  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_static_file_service(tmp_path) -> None:  # type: ignore[no-untyped-def]

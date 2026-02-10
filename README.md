@@ -38,6 +38,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 - gRPC gateway mapping/transcoding foundation primitives.
 - Streaming multipart upload collector primitives.
 - High-performance multipart parser primitives.
+- Content negotiation primitives for `Accept` header matching.
 - Static file serving primitives with safe path resolution.
 - Response compression primitives with speed/balanced/size profiles.
 - Outbound circuit-breaker primitive for upstream dependency protection.
