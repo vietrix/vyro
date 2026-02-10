@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import json
 import os
 import shutil
+import statistics
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 import typer
@@ -152,6 +155,59 @@ def build(
     if sdist:
         command.append("--sdist")
     run_command(command)
+
+
+@app.command("bench")
+def bench(
+    suite: str = typer.Option(
+        "all",
+        "--suite",
+        help="Benchmark suite: routing|json|latency|all",
+    ),
+    iterations: int = typer.Option(10000, "--iterations", help="Iterations per benchmark."),
+    out: Path | None = typer.Option(None, "--out", help="Optional JSON output file."),
+) -> None:
+    if iterations < 1:
+        typer.echo("ERROR: --iterations must be >= 1", err=True)
+        raise typer.Exit(code=2)
+
+    selected = suite.strip().lower()
+    allowed = {"routing", "json", "latency", "all"}
+    if selected not in allowed:
+        typer.echo("ERROR: --suite must be one of routing|json|latency|all", err=True)
+        raise typer.Exit(code=2)
+
+    benches = []
+    if selected in {"routing", "all"}:
+        benches.append(("routing", _bench_routing))
+    if selected in {"json", "all"}:
+        benches.append(("json", _bench_json))
+    if selected in {"latency", "all"}:
+        benches.append(("latency", _bench_latency))
+
+    results: dict[str, dict[str, float | int]] = {}
+    for name, fn in benches:
+        duration_sec = fn(iterations)
+        ops_per_sec = iterations / duration_sec if duration_sec > 0 else float("inf")
+        us_per_op = (duration_sec * 1_000_000) / iterations
+        results[name] = {
+            "iterations": iterations,
+            "duration_sec": round(duration_sec, 6),
+            "ops_per_sec": round(ops_per_sec, 2),
+            "us_per_op": round(us_per_op, 3),
+        }
+        info(
+            f"bench[{name}] iterations={iterations} duration={duration_sec:.6f}s "
+            f"ops_per_sec={ops_per_sec:.2f} us_per_op={us_per_op:.3f}"
+        )
+
+    if out is not None:
+        payload = {
+            "suite": selected,
+            "results": results,
+        }
+        out.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        info(f"Benchmark result written to '{out}'.")
 
 
 @app.command("migrate")
@@ -335,3 +391,34 @@ def _run_api_contract_lint(
             )
         raise typer.Exit(code=1)
     info("API contract lint passed.")
+
+
+def _bench_routing(iterations: int) -> float:
+    from vyro.routing.normalize import normalize_path
+
+    samples = ["/users/:id", "/static/*", "/v1/orders/:order_id/items/:item_id", "/health"]
+    start = time.perf_counter()
+    for i in range(iterations):
+        normalize_path(samples[i % len(samples)])
+    return time.perf_counter() - start
+
+
+def _bench_json(iterations: int) -> float:
+    payload = {"id": 1, "name": "vyro", "tags": ["rust", "python", "api"], "nested": {"ok": True}}
+    start = time.perf_counter()
+    for _ in range(iterations):
+        encoded = json.dumps(payload, separators=(",", ":"))
+        json.loads(encoded)
+    return time.perf_counter() - start
+
+
+def _bench_latency(iterations: int) -> float:
+    samples: list[float] = []
+    for i in range(iterations):
+        t0 = time.perf_counter_ns()
+        _ = (i * 3) ^ (i >> 1)
+        t1 = time.perf_counter_ns()
+        samples.append(float(t1 - t0))
+    mean_ns = statistics.fmean(samples) if samples else 0.0
+    total_sec = (mean_ns * iterations) / 1_000_000_000
+    return total_sec
