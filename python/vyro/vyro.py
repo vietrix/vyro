@@ -39,6 +39,7 @@ from .runtime.outbox import OutboxPatternHelper
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.response_cache import ResponseCacheService
 from .runtime.retry import RetryPolicy
+from .runtime.saga import SagaOrchestrator
 from .runtime.schema_drift import SchemaDriftDetector
 from .runtime.secrets import SecretsManager
 from .runtime.shutdown import GracefulShutdownPolicy
@@ -95,6 +96,7 @@ class Vyro:
         self._event_bus = InternalEventBus()
         self._secrets = SecretsManager()
         self._response_cache = ResponseCacheService(backend=self._cache)
+        self._saga = SagaOrchestrator()
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
@@ -271,6 +273,9 @@ class Vyro:
 
     def set_response_cache_service(self, service: ResponseCacheService) -> None:
         self._response_cache = service
+
+    def set_saga_orchestrator(self, saga: SagaOrchestrator) -> None:
+        self._saga = saga
 
     def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
         self._outbound_circuit_breaker = breaker

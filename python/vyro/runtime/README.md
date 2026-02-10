@@ -39,6 +39,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Typed internal event bus primitives.
 - CQRS scaffolding primitives (command/query bus).
 - Transactional outbox pattern helper primitives.
+- Saga orchestration primitives.
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
 - Query timeout and slow query log primitives.

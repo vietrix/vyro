@@ -30,6 +30,7 @@ from .outbox import InMemoryOutboxStore, OutboxMessage, OutboxPatternHelper, Out
 from .rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .response_cache import ResponseCachePolicy, ResponseCacheService
 from .retry import RetryPolicy
+from .saga import SagaError, SagaOrchestrator, SagaResult, SagaStep, SagaStepFailedError
 from .schema_drift import DriftIssue, DriftReport, SchemaDriftDetector
 from .secrets import EnvSecretsProvider, InMemorySecretsProvider, SecretsManager, SecretsProvider
 from .server import run_native_server
@@ -105,6 +106,11 @@ __all__ = [
     "ResponseCachePolicy",
     "ResponseCacheService",
     "RetryPolicy",
+    "SagaError",
+    "SagaOrchestrator",
+    "SagaResult",
+    "SagaStep",
+    "SagaStepFailedError",
     "DriftIssue",
     "DriftReport",
     "SchemaDriftDetector",

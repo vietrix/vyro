@@ -35,6 +35,7 @@ from vyro.runtime.outbox import OutboxPatternHelper
 from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.response_cache import ResponseCacheService
 from vyro.runtime.retry import RetryPolicy
+from vyro.runtime.saga import SagaOrchestrator
 from vyro.runtime.secrets import SecretsManager
 from vyro.runtime.shutdown import GracefulShutdownPolicy
 from vyro.runtime.sql import SQLiteAsyncAdapter
@@ -374,6 +375,13 @@ def test_vyro_accepts_custom_response_cache_service() -> None:
     service = ResponseCacheService()
     app.set_response_cache_service(service)
     assert app._response_cache is service  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_saga_orchestrator() -> None:
+    app = Vyro()
+    saga = SagaOrchestrator()
+    app.set_saga_orchestrator(saga)
+    assert app._saga is saga  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_outbound_circuit_breaker() -> None:
