@@ -4,6 +4,7 @@ from .api_keys import APIKeyManager, APIKeyRecord
 from .audit import AuditEvent, SecurityAuditLogger
 from .cache import CacheBackend, MemoryCacheBackend, RedisCacheBackend
 from .cache_invalidation import CacheInvalidationHooks, InvalidationHook
+from .blue_green import BlueGreenRolloutHelper, BlueGreenState
 from .bulkhead import OutboundBulkhead
 from .canary import CanaryRoutingControls, CanaryRule
 from .circuit_breaker import OutboundCircuitBreaker
@@ -59,6 +60,8 @@ __all__ = [
     "RedisCacheBackend",
     "CacheInvalidationHooks",
     "InvalidationHook",
+    "BlueGreenRolloutHelper",
+    "BlueGreenState",
     "CanaryRoutingControls",
     "CanaryRule",
     "MultiKeyRateLimiter",

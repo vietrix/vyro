@@ -9,6 +9,7 @@ from vyro.runtime.api_keys import APIKeyManager
 from vyro.runtime.audit import SecurityAuditLogger
 from vyro.runtime.cache import MemoryCacheBackend
 from vyro.runtime.cache_invalidation import CacheInvalidationHooks
+from vyro.runtime.blue_green import BlueGreenRolloutHelper
 from vyro.runtime.bulkhead import OutboundBulkhead
 from vyro.runtime.canary import CanaryRoutingControls
 from vyro.runtime.circuit_breaker import OutboundCircuitBreaker
@@ -160,6 +161,13 @@ def test_vyro_accepts_custom_canary_routing_controls() -> None:
     controls = CanaryRoutingControls()
     app.set_canary_routing(controls)
     assert app._canary is controls  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_blue_green_rollout_helper() -> None:
+    app = Vyro()
+    helper = BlueGreenRolloutHelper()
+    app.set_blue_green_rollout(helper)
+    assert app._blue_green is helper  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_backpressure_controller() -> None:

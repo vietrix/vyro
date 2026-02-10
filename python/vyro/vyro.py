@@ -13,6 +13,7 @@ from .runtime.api_keys import APIKeyManager
 from .runtime.audit import SecurityAuditLogger
 from .runtime.cache import CacheBackend, MemoryCacheBackend
 from .runtime.cache_invalidation import CacheInvalidationHooks
+from .runtime.blue_green import BlueGreenRolloutHelper
 from .runtime.bulkhead import OutboundBulkhead
 from .runtime.canary import CanaryRoutingControls
 from .runtime.circuit_breaker import OutboundCircuitBreaker
@@ -67,6 +68,7 @@ class Vyro:
         self._audit = SecurityAuditLogger()
         self._cache: CacheBackend = MemoryCacheBackend()
         self._cache_invalidation = CacheInvalidationHooks()
+        self._blue_green = BlueGreenRolloutHelper()
         self._canary = CanaryRoutingControls()
         self._shutdown_policy = GracefulShutdownPolicy()
         self._backpressure = BackpressureController()
@@ -219,6 +221,9 @@ class Vyro:
 
     def set_canary_routing(self, controls: CanaryRoutingControls) -> None:
         self._canary = controls
+
+    def set_blue_green_rollout(self, helper: BlueGreenRolloutHelper) -> None:
+        self._blue_green = helper
 
     def set_backpressure(self, controller: BackpressureController) -> None:
         self._backpressure = controller
