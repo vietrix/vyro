@@ -1,18 +1,18 @@
-# Release Policy
+# Chính sách phát hành
 
 ## Versioning
 
 - Stable tags: `vX.Y.Z`
 - Pre-release tags: `vX.Y.Z-rc.N`
 
-## Release pipeline
+## Pipeline phát hành
 
 1. Quality gate
 2. Build artifacts
 3. Publish PyPI
-4. Create GitHub Release
-5. Publish docs on push to `main`
+4. Tạo GitHub Release
+5. Publish docs khi push vào `main`
 
 ## Changelog
 
-Generated from Conventional Commits and curated release notes.
+Được sinh từ Conventional Commits và curated release notes.

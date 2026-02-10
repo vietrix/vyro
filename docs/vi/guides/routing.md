@@ -1,11 +1,11 @@
-# Routing
+# Định tuyến
 
 ## Path DSL
 
-- `/users/:id` -> named param
-- `/static/*` -> catch-all
+- `/users/:id` -> tham số có tên
+- `/static/*` -> wildcard catch-all
 
-## Versioning and deprecation
+## Versioning và deprecation
 
 ```python
 @app.get("/v1/items/:id", version="v1", deprecated="use /v2")
@@ -13,6 +13,6 @@ async def get_item(ctx: Context, id: int):
     return {"id": id}
 ```
 
-## Errors
+## Lỗi
 
-Invalid signatures or ambiguous routes raise `RouteDefinitionError` / `HandlerSignatureError`.
+Signature không hợp lệ hoặc route mơ hồ sẽ raise `RouteDefinitionError` / `HandlerSignatureError`.

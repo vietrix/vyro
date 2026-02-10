@@ -1,21 +1,21 @@
 # FAQ
 
-## Vyro co phai de thay the FastAPI khong?
+## Vyro có phải để thay thế FastAPI không?
 
-Vyro huong den Python DX + Rust execution engine. Ban nen danh gia theo workload, latency target va mo hinh van hanh cua he thong.
+Vyro hướng đến Python DX + Rust execution engine. Bạn nên đánh giá theo workload, latency target và mô hình vận hành của hệ thống.
 
-## Vi sao docs co nhac `python -m vyro`?
+## Vì sao docs có nhắc `python -m vyro`?
 
-`vyro` la lenh chinh cho end-user. `python -m vyro` chi la fallback khi PATH tren may ban chua nhan script `vyro`.
+`vyro` là lệnh chính cho end-user. `python -m vyro` chỉ là fallback khi PATH trên máy bạn chưa nhận script `vyro`.
 
-## Nguoi dung cuoi co nen chay `scripts.dev.*` khong?
+## Người dùng cuối có nên chạy `scripts.dev.*` không?
 
-Khong. End-user dung `vyro ...`. Cac script trong `scripts.dev` la tooling noi bo cho developer.
+Không. End-user dùng `vyro ...`. Các script trong `scripts.dev` là tooling nội bộ cho developer.
 
-## Vyro co ho tro WebSocket khong?
+## Vyro có hỗ trợ WebSocket không?
 
-Co. Vyro co runtime edge primitives va route-level WebSocket handler.
+Có. Vyro hỗ trợ qua runtime edge primitives và route-level WebSocket handlers.
 
-## Co chay duoc tren Python 3.13 khong?
+## Có chạy được trên Python 3.13 không?
 
-Co. Vyro target Python 3.10-3.13.
+Có. Vyro target Python 3.10-3.13.

@@ -1,16 +1,16 @@
-# Tai lieu Vyro
+# Tài liệu Vyro
 
-Vyro ket hop trai nghiem Python voi Rust engine de xay dung API hieu nang cao.
+Vyro kết hợp trải nghiệm phát triển của Python với Rust runtime để xây dựng API hiệu năng cao, ổn định và dễ vận hành.
 
-## What you can do
+## Bạn có thể làm gì với Vyro
 
-- Build async APIs with `Vyro()`
-- Run services with `vyro run`
-- Generate API contracts with OpenAPI
-- Operate production services with observability and security primitives
+- Xây dựng API bất đồng bộ bằng `Vyro()`
+- Chạy dịch vụ bằng CLI `vyro run`
+- Sinh và kiểm tra API contract với OpenAPI
+- Triển khai production với logging, metrics, tracing và security primitives
 
-## Start here
+## Bắt đầu nhanh
 
-1. Read [Installation](getting-started/installation.md)
-2. Follow [Quickstart](getting-started/quickstart.md)
-3. Build your first endpoint in [First API](getting-started/first-api.md)
+1. Đọc [Cài đặt](getting-started/installation.md)
+2. Làm theo [Bắt đầu nhanh](getting-started/quickstart.md)
+3. Tạo endpoint đầu tiên tại [First API](getting-started/first-api.md)

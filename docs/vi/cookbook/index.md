@@ -1,14 +1,14 @@
-# Cookbook
+# Cẩm nang
 
-## Recipes
+## Các công thức triển khai
 
 - Multi-tenant routing
-- Background jobs and retries
+- Background jobs và retries
 - Cache + invalidation
 - Rate limiting policies
-- Static files with ETag/compression
-- WebSocket basics
-- gRPC gateway foundations
-- Migration runner usage
+- Static files với ETag/compression
+- WebSocket cơ bản
+- Nền tảng gRPC gateway
+- Cách dùng migration runner
 
-Each recipe should be copied and adapted to your production constraints.
+Mỗi recipe nên được sao chép và điều chỉnh theo ràng buộc production của hệ thống bạn.

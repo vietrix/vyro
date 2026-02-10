@@ -1,6 +1,6 @@
-# Python API Reference
+# Tham chiếu Python API
 
-## Package
+## Gói chính
 
 ::: vyro
 
@@ -8,6 +8,6 @@
 
 ::: vyro.runtime
 
-## Routing
+## Định tuyến
 
 ::: vyro.routing

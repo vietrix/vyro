@@ -1,12 +1,12 @@
-# Configuration
+# Cấu hình
 
-## Runtime parameters
+## Tham số runtime
 
 - `host`
 - `port`
 - `workers`
 
-## Environment variables
+## Biến môi trường
 
 - `VYRO_ENV`
 - `VYRO_SECRET_KEY`
@@ -15,4 +15,4 @@
 - `VYRO_LOG_SAMPLE_WARN`
 - `VYRO_LOG_SAMPLE_ERROR`
 
-Use `vyro doctor --strict` in CI for production readiness checks.
+Dùng `vyro doctor --strict` trong CI để kiểm tra production readiness.

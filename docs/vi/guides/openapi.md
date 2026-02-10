@@ -1,15 +1,15 @@
-# OpenAPI and API Contracts
+# OpenAPI và API Contracts
 
-Generate OpenAPI:
+Sinh OpenAPI:
 
 ```bash
 vyro openapi --app examples.hello_world:app --out openapi.json
 ```
 
-Compare compatibility:
+So sánh compatibility:
 
 ```bash
 vyro compat --base openapi-prev.json --target openapi.json
 ```
 
-Use this in CI to prevent breaking API changes.
+Dùng bước này trong CI để ngăn breaking API changes.

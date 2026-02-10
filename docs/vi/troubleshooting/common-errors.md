@@ -1,17 +1,17 @@
-# Troubleshooting
+# Khắc phục sự cố
 
 ## `Invalid --app format`
 
-Use `<module>:<attribute>`, for example `examples.hello_world:app`.
+Dùng định dạng `<module>:<attribute>`, ví dụ `examples.hello_world:app`.
 
-## Route signature errors
+## Lỗi route signature
 
-Ensure handlers are `async def` and first arg is `ctx`.
+Đảm bảo handler dùng `async def` và tham số đầu tiên là `ctx`.
 
-## Native build issues
+## Lỗi build native
 
-Install Rust toolchain and rebuild with `maturin build --release`.
+Cài Rust toolchain rồi build lại bằng `maturin build --release`.
 
-## Docs build errors
+## Lỗi build docs
 
-Run `mkdocs build --strict` and fix broken links or missing pages.
+Chạy `mkdocs build --strict` và sửa broken links hoặc trang bị thiếu.

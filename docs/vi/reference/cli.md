@@ -1,6 +1,6 @@
-# CLI Reference
+# Tham chiếu CLI
 
-## Main commands
+## Các lệnh chính
 
 - `vyro run --app <module:attr>`
 - `vyro dev --app <module:attr>`
@@ -11,6 +11,6 @@
 
 ## Exit codes
 
-- `0`: success
-- `1`: execution/tooling/runtime error
-- `2`: validation/usage error
+- `0`: thành công
+- `1`: lỗi thực thi/tooling/runtime
+- `2`: lỗi validation/usage

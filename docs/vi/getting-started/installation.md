@@ -1,45 +1,45 @@
-# Cai dat
+# Cài đặt
 
-## Yeu cau
+## Yêu cầu
 
-- Python 3.10+
+- Python 3.10 trở lên
 - pip
-- Rust toolchain (chi can khi build tu source)
+- Rust toolchain (chỉ cần khi build từ source)
 
-## Cai tu PyPI
+## Cài từ PyPI
 
 ```bash
 pip install vyro
 ```
 
-## Kiem tra cai dat
+## Kiểm tra cài đặt
 
-Lenh chinh cho nguoi dung cuoi (khuyen nghi):
+Lệnh chính cho người dùng cuối (khuyến nghị):
 
 ```bash
 vyro --help
 ```
 
-Lenh fallback (khi PATH chua nhan `vyro`):
+Lệnh dự phòng khi shell chưa nhận `vyro` trong PATH:
 
 ```bash
 python -m vyro --help
 ```
 
-## Vi sao co 2 cach goi?
+## Vì sao có 2 cách gọi?
 
-- `vyro` la CLI chinh thuc cho end-user.
-- `python -m vyro` cung chay dung CLI do, dung de fallback/debug PATH.
+- `vyro` là CLI chính thức cho người dùng cuối.
+- `python -m vyro` chạy cùng một CLI module, dùng để fallback hoặc debug PATH.
 
-## Xu ly loi PATH
+## Xử lý lỗi PATH
 
-Neu khong tim thay `vyro`:
+Nếu hệ thống báo không tìm thấy `vyro`:
 
-1. Dong/mo lai terminal sau khi cai dat.
-2. Kiem tra thu muc Scripts cua Python da co trong PATH.
-3. Tam thoi dung `python -m vyro`.
+1. Đóng và mở lại terminal sau khi cài.
+2. Kiểm tra thư mục Scripts của Python đã nằm trong PATH.
+3. Dùng tạm `python -m vyro` cho đến khi PATH đúng.
 
-## Thiet lap cho dev
+## Thiết lập cho developer
 
 ```bash
 pip install -e .[dev]

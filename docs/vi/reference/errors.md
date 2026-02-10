@@ -1,12 +1,12 @@
-# Error Reference
+# Tham chiếu lỗi
 
-Common errors:
+Các lỗi thường gặp:
 
 - `HandlerSignatureError`
 - `RouteDefinitionError`
 
-Guideline:
+Hướng dẫn xử lý:
 
-- Fix handler signatures first
-- Then validate route DSL and normalization
-- Re-run tests for regression check
+- Sửa handler signature trước
+- Sau đó kiểm tra route DSL và normalization
+- Chạy lại test để tránh regression

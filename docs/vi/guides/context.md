@@ -1,13 +1,13 @@
-# Context and Request/Response
+# Context và Request/Response
 
-`Context` gives access to request metadata:
+`Context` cho phép truy cập metadata của request:
 
 - `ctx.headers`
 - `ctx.query`
 - `ctx.path_params`
 - `ctx.body_bytes()`
 
-Example:
+Ví dụ:
 
 ```python
 @app.post("/events")

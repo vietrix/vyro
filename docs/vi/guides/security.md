@@ -1,4 +1,4 @@
-# Security
+# Bảo mật
 
 ## Built-in primitives
 
@@ -11,7 +11,7 @@
 
 ## Best practices
 
-- Rotate secrets and keys
-- Use strict CORS in production
-- Enforce authz checks for sensitive routes
-- Log security events with correlation IDs
+- Luân chuyển secrets và keys định kỳ
+- Dùng CORS strict trong production
+- Bắt buộc authz checks cho routes nhạy cảm
+- Ghi security events kèm correlation IDs

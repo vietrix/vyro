@@ -30,7 +30,7 @@ plugins:
           name: English
           build: true
         - locale: vi
-          name: Tieng Viet
+          name: Tiếng Việt
           build: true
         - locale: ko
           name: Korean

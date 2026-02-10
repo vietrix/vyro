@@ -1,6 +1,6 @@
-# First API
+# API đầu tiên
 
-This example shows path params, query access, and JSON response.
+Ví dụ này minh họa cách nhận path params, đọc query và trả JSON response.
 
 ```python
 from vyro import Vyro, Context
@@ -13,7 +13,7 @@ async def get_user(ctx: Context, id: int):
     return {"id": id, "verbose": verbose == "true"}
 ```
 
-## Response types
+## Kiểu dữ liệu trả về
 
 - `dict` / `list` -> JSON
 - `str` -> text response

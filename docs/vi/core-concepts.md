@@ -1,17 +1,17 @@
-# Core Concepts
+# Khái niệm cốt lõi
 
-## Design model
+## Mô hình thiết kế
 
-- Python declares routes and handlers
-- Rust executes networking/runtime work
-- `Context` carries request metadata
+- Python khai báo routes và handlers
+- Rust thực thi networking và runtime
+- `Context` mang metadata của request
 
-## Handler rules
+## Quy tắc handler
 
-- Must be `async def`
-- First arg must be `ctx`
-- Additional typed args are bound from route/query
+- Bắt buộc dùng `async def`
+- Tham số đầu tiên phải là `ctx`
+- Các tham số typed bổ sung được bind từ route/query
 
-## Runtime ownership
+## Quyền sở hữu runtime
 
-`app.run()` starts the native runtime and worker model.
+`app.run()` khởi động native runtime và mô hình workers.

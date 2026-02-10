@@ -1,17 +1,17 @@
-# Observability
+# Quan sát hệ thống
 
 ## Logging
 
-Structured logs with sampling and redaction support.
+Structured logs có hỗ trợ sampling và redaction.
 
 ## Metrics
 
-Expose counters and latency distributions (`p50/p95/p99`).
+Expose counters và phân phối latency (`p50/p95/p99`).
 
 ## Tracing
 
-Use trace context propagation for cross-service request tracking.
+Dùng trace context propagation để theo dõi request xuyên service.
 
 ## Health
 
-Use liveness/readiness/startup checks for orchestration systems.
+Dùng liveness/readiness/startup checks cho môi trường orchestration.

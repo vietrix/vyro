@@ -1,17 +1,17 @@
 # Middleware
 
-Register middleware with explicit order:
+Đăng ký middleware với thứ tự rõ ràng:
 
 ```python
 app.add_middleware(my_middleware, priority=100)
 ```
 
-## Recommendations
+## Khuyến nghị
 
-- Keep middleware pure and fast
-- Use explicit priorities
-- Keep IO-heavy work in runtime primitives
+- Giữ middleware thuần và nhanh
+- Dùng priority tường minh
+- Đẩy phần IO nặng xuống runtime primitives
 
 ## Idempotency
 
-Use idempotency middleware for write endpoints to avoid duplicate side effects.
+Dùng idempotency middleware cho write endpoints để tránh tác dụng phụ lặp.
