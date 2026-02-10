@@ -9,6 +9,7 @@ from .runtime.backpressure import BackpressureController
 from .runtime.bulkhead import OutboundBulkhead
 from .runtime.circuit_breaker import OutboundCircuitBreaker
 from .runtime.concurrency import RouteConcurrencyLimiter
+from .runtime.http_client import AsyncHttpClient
 from .runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from .runtime.retry import RetryPolicy
 from .runtime.shutdown import GracefulShutdownPolicy
@@ -26,6 +27,7 @@ class Vyro:
         self._concurrency = RouteConcurrencyLimiter()
         self._rate_limiter = TokenBucketRateLimiter(rate_per_sec=1000.0, burst=2000)
         self._multi_rate_limiter = MultiKeyRateLimiter(rate_per_sec=500.0, burst=1000)
+        self._http_client = AsyncHttpClient()
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
         self._outbound_bulkhead = OutboundBulkhead()
         self._retry_policy = RetryPolicy()
@@ -90,6 +92,9 @@ class Vyro:
 
     def set_multi_rate_limiter(self, limiter: MultiKeyRateLimiter) -> None:
         self._multi_rate_limiter = limiter
+
+    def set_http_client(self, client: AsyncHttpClient) -> None:
+        self._http_client = client
 
     def set_outbound_circuit_breaker(self, breaker: OutboundCircuitBreaker) -> None:
         self._outbound_circuit_breaker = breaker
