@@ -22,6 +22,7 @@ from .retry import RetryPolicy
 from .secrets import EnvSecretsProvider, InMemorySecretsProvider, SecretsManager, SecretsProvider
 from .server import run_native_server
 from .shutdown import GracefulShutdownPolicy
+from .sql import AsyncSQLAdapter, SQLiteAsyncAdapter
 from .static_files import StaticFileService
 from .timeout_budget import TimeoutBudget
 from .websocket import WebSocketRouteRegistry
@@ -65,6 +66,8 @@ __all__ = [
     "InMemorySecretsProvider",
     "SecretsManager",
     "SecretsProvider",
+    "AsyncSQLAdapter",
+    "SQLiteAsyncAdapter",
     "StaticFileService",
     "TimeoutBudget",
     "TokenBucketRateLimiter",

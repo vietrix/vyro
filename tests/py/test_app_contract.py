@@ -25,6 +25,7 @@ from vyro.runtime.rate_limit import MultiKeyRateLimiter, TokenBucketRateLimiter
 from vyro.runtime.retry import RetryPolicy
 from vyro.runtime.secrets import SecretsManager
 from vyro.runtime.shutdown import GracefulShutdownPolicy
+from vyro.runtime.sql import SQLiteAsyncAdapter
 from vyro.runtime.static_files import StaticFileService
 from vyro.runtime.timeout_budget import TimeoutBudget
 
@@ -211,6 +212,13 @@ def test_vyro_accepts_custom_static_file_service(tmp_path) -> None:  # type: ign
     service = StaticFileService(root=static_root)
     app.set_static_files(service)
     assert app._static_files is service  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_sql_adapter(tmp_path) -> None:  # type: ignore[no-untyped-def]
+    app = Vyro()
+    adapter = SQLiteAsyncAdapter(database=tmp_path / "app.db")
+    app.set_sql_adapter(adapter)
+    assert app._sql is adapter  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_response_compressor() -> None:

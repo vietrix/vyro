@@ -30,6 +30,7 @@ from .runtime.retry import RetryPolicy
 from .runtime.secrets import SecretsManager
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
+from .runtime.sql import AsyncSQLAdapter, SQLiteAsyncAdapter
 from .runtime.static_files import StaticFileService
 from .runtime.timeout_budget import TimeoutBudget
 from .runtime.websocket import WebSocketRouteRegistry
@@ -58,6 +59,7 @@ class Vyro:
         self._negotiator = ContentNegotiator()
         self._oauth2 = OAuth2OIDCHelper(config=OAUTH2_DEFAULT_CONFIG)
         self._static_files = StaticFileService(root=Path(DEFAULT_STATIC_ROOT))
+        self._sql: AsyncSQLAdapter = SQLiteAsyncAdapter(database=Path(":memory:"))
         self._compression = ResponseCompressor()
         self._cors = CORSProfile.preset("standard")
         self._csrf = CSRFProtector.with_random_secret()
@@ -173,6 +175,9 @@ class Vyro:
 
     def set_static_files(self, service: StaticFileService) -> None:
         self._static_files = service
+
+    def set_sql_adapter(self, adapter: AsyncSQLAdapter) -> None:
+        self._sql = adapter
 
     def set_response_compressor(self, compressor: ResponseCompressor) -> None:
         self._compression = compressor
