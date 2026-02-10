@@ -4,9 +4,22 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 import hashlib
 import json
+import os
 from typing import Any
 
 import typer
+
+
+DEFAULT_REDACT_KEYS = {
+    "password",
+    "passwd",
+    "secret",
+    "token",
+    "access_token",
+    "refresh_token",
+    "authorization",
+    "api_key",
+}
 
 
 @dataclass(slots=True, frozen=True)
@@ -34,7 +47,7 @@ def make_log_record(level: str, message: str, **fields: Any) -> dict[str, Any]:
     }
     for key, value in fields.items():
         if value is not None:
-            record[key] = value
+            record[key] = _sanitize_field(key, value)
     return record
 
 
@@ -63,3 +76,17 @@ def emit_log(
     if not should_emit(level, key, policy):
         return
     typer.echo(json.dumps(make_log_record(level, message, **fields), ensure_ascii=False), err=err)
+
+
+def _sanitize_field(key: str, value: Any) -> Any:
+    redacted_keys = set(DEFAULT_REDACT_KEYS)
+    extra = os.getenv("VYRO_LOG_REDACT_KEYS", "")
+    for raw in extra.split(","):
+        cleaned = raw.strip().lower()
+        if cleaned:
+            redacted_keys.add(cleaned)
+    if key.lower() in redacted_keys:
+        return "***REDACTED***"
+    if isinstance(value, dict):
+        return {k: _sanitize_field(str(k), v) for k, v in value.items()}
+    return value
