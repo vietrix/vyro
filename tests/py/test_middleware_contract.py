@@ -2,6 +2,7 @@ import asyncio
 
 from vyro.middleware.base import Middleware
 from vyro.middleware.chain import MiddlewareChain
+from vyro.middleware.registry import MiddlewareRegistry
 
 
 class _SampleMiddleware:
@@ -50,3 +51,37 @@ def test_middleware_chain_skips_default_hooks() -> None:
     asyncio.run(chain.run_before({}))
     response = asyncio.run(chain.run_after({}, {"ok": True}))
     assert response == {"ok": True}
+
+
+def test_middleware_registry_orders_by_priority_then_insert_order() -> None:
+    class _Fast(Middleware):
+        priority = 10
+
+    class _DefaultA(Middleware):
+        pass
+
+    class _DefaultB(Middleware):
+        pass
+
+    reg = MiddlewareRegistry()
+    fast = _Fast()
+    a = _DefaultA()
+    b = _DefaultB()
+    reg.add(a)
+    reg.add(fast)
+    reg.add(b)
+    ordered = reg.items()
+    assert ordered == [fast, a, b]
+
+
+def test_middleware_registry_explicit_priority_overrides_class_default() -> None:
+    class _Custom(Middleware):
+        priority = 50
+
+    reg = MiddlewareRegistry()
+    a = _Custom()
+    b = _Custom()
+    reg.add(a, priority=5)
+    reg.add(b, priority=90)
+    ordered = reg.items()
+    assert ordered == [a, b]
