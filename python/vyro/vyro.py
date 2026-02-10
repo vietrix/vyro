@@ -5,6 +5,7 @@ from typing import Any, Callable
 from .middleware import Middleware
 from .middleware.registry import MiddlewareRegistry
 from .routing.registry import RouterRegistry
+from .runtime.backpressure import BackpressureController
 from .runtime.shutdown import GracefulShutdownPolicy
 from .runtime.server import run_native_server
 from .settings import DEFAULT_HOST, DEFAULT_PORT, DEFAULT_WORKERS
@@ -15,6 +16,7 @@ class Vyro:
         self._router = RouterRegistry()
         self._middlewares = MiddlewareRegistry()
         self._shutdown_policy = GracefulShutdownPolicy()
+        self._backpressure = BackpressureController()
 
     def get(
         self,
@@ -63,6 +65,9 @@ class Vyro:
 
     def set_shutdown_policy(self, policy: GracefulShutdownPolicy) -> None:
         self._shutdown_policy = policy
+
+    def set_backpressure(self, controller: BackpressureController) -> None:
+        self._backpressure = controller
 
     def run(
         self,

@@ -2,6 +2,7 @@ import pytest
 
 from vyro import Vyro
 from vyro.errors import HandlerSignatureError
+from vyro.runtime.backpressure import BackpressureController
 from vyro.runtime.shutdown import GracefulShutdownPolicy
 
 
@@ -46,3 +47,10 @@ def test_vyro_accepts_custom_shutdown_policy() -> None:
     app.set_shutdown_policy(policy)
     assert app._shutdown_policy.timeout_seconds == 12  # noqa: SLF001
     assert app._shutdown_policy.drain_inflight is False  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_backpressure_controller() -> None:
+    app = Vyro()
+    controller = BackpressureController(max_inflight=8)
+    app.set_backpressure(controller)
+    assert app._backpressure.max_inflight == 8  # noqa: SLF001
