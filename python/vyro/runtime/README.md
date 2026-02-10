@@ -42,6 +42,7 @@ Bootstrap helpers for invoking native runtime from Python.
 - Saga orchestration primitives.
 - Multi-tenant isolation model primitives.
 - Tenant-aware routing and config primitives.
+- Feature flag engine primitives for progressive rollout.
 - Secrets provider abstraction primitives.
 - Async SQL adapter primitives.
 - Query timeout and slow query log primitives.

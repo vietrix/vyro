@@ -21,6 +21,7 @@ from vyro.runtime.db_pool import DBConnectionPoolManager
 from vyro.runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
 from vyro.runtime.etag import ETagManager
 from vyro.runtime.event_bus import InternalEventBus
+from vyro.runtime.feature_flags import FeatureFlagEngine
 from vyro.runtime.grpc_gateway import GrpcGateway
 from vyro.runtime.http_client import AsyncHttpClient
 from vyro.runtime.http2 import Http2StreamManager
@@ -363,6 +364,13 @@ def test_vyro_accepts_custom_event_bus() -> None:
     bus = InternalEventBus()
     app.set_event_bus(bus)
     assert app._event_bus is bus  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_feature_flags() -> None:
+    app = Vyro()
+    engine = FeatureFlagEngine()
+    app.set_feature_flags(engine)
+    assert app._feature_flags is engine  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_secrets_manager() -> None:
