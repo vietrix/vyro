@@ -25,7 +25,8 @@ theme:
 
 extra:
   generator: false
-  copyright: Copyright © 2026 Vyro by Vietrix
+
+copyright: Copyright &copy; 2026 Vyro by Vietrix
 
 plugins:
   - search
