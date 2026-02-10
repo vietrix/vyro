@@ -19,6 +19,7 @@ from vyro.runtime.csrf import CSRFProtector
 from vyro.runtime.db_pool import DBConnectionPoolManager
 from vyro.runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
 from vyro.runtime.etag import ETagManager
+from vyro.runtime.event_bus import InternalEventBus
 from vyro.runtime.grpc_gateway import GrpcGateway
 from vyro.runtime.http_client import AsyncHttpClient
 from vyro.runtime.http2 import Http2StreamManager
@@ -329,6 +330,13 @@ def test_vyro_accepts_custom_job_retry_executor() -> None:
     executor = JobRetryExecutor(max_retries=1)
     app.set_job_retry_executor(executor)
     assert app._job_retry is executor  # noqa: SLF001
+
+
+def test_vyro_accepts_custom_event_bus() -> None:
+    app = Vyro()
+    bus = InternalEventBus()
+    app.set_event_bus(bus)
+    assert app._event_bus is bus  # noqa: SLF001
 
 
 def test_vyro_accepts_custom_secrets_manager() -> None:

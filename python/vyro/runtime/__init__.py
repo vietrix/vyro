@@ -14,6 +14,7 @@ from .csrf import CSRFProtector
 from .db_pool import DBConnectionPool, DBConnectionPoolManager
 from .dead_letter import DeadLetterEntry, DeadLetterQueue, JobRetryExecutor
 from .etag import ETagEvaluation, ETagManager
+from .event_bus import InternalEvent, InternalEventBus
 from .grpc_gateway import GrpcGateway, GrpcRoute
 from .http_client import AsyncHttpClient, HttpResponse
 from .http2 import Http2Stream, Http2StreamManager
@@ -67,6 +68,8 @@ __all__ = [
     "DeadLetterEntry",
     "DeadLetterQueue",
     "JobRetryExecutor",
+    "InternalEvent",
+    "InternalEventBus",
     "JWTAuthGuard",
     "JobRuntime",
     "HttpResponse",

@@ -23,6 +23,7 @@ from .runtime.csrf import CSRFProtector
 from .runtime.db_pool import DBConnectionPoolManager
 from .runtime.dead_letter import DeadLetterQueue, JobRetryExecutor
 from .runtime.etag import ETagManager
+from .runtime.event_bus import InternalEventBus
 from .runtime.grpc_gateway import GrpcGateway
 from .runtime.http_client import AsyncHttpClient
 from .runtime.http2 import Http2StreamManager
@@ -86,6 +87,7 @@ class Vyro:
         self._db_pools = DBConnectionPoolManager()
         self._dead_letter_queue = DeadLetterQueue()
         self._job_retry = JobRetryExecutor(dead_letter_queue=self._dead_letter_queue)
+        self._event_bus = InternalEventBus()
         self._secrets = SecretsManager()
         self._response_cache = ResponseCacheService(backend=self._cache)
         self._outbound_circuit_breaker = OutboundCircuitBreaker()
@@ -246,6 +248,9 @@ class Vyro:
 
     def set_job_retry_executor(self, executor: JobRetryExecutor) -> None:
         self._job_retry = executor
+
+    def set_event_bus(self, bus: InternalEventBus) -> None:
+        self._event_bus = bus
 
     def set_secrets_manager(self, manager: SecretsManager) -> None:
         self._secrets = manager
