@@ -9,6 +9,9 @@ on:
 permissions:
   contents: read
 
+env:
+  MATURIN_VERSION: "1.7.8"
+
 jobs:
   quality-gate:
     runs-on: ubuntu-latest
@@ -38,10 +41,10 @@ jobs:
         run: cargo test
 
       - name: Build wheel for test
-        run: maturin build --release
+        run: maturin build --release --out dist
 
       - name: Install built package
-        run: pip install --force-reinstall target/wheels/*.whl
+        run: pip install --force-reinstall dist/*.whl
 
       - name: CLI smoke test
         run: |
@@ -51,7 +54,68 @@ jobs:
       - name: Python tests
         run: PYTHONPATH=.:python pytest tests/py tests/integration -q
 
-  prepare-release:
+  build-wheels:
+    name: Build wheels (${{ matrix.os }} / ${{ matrix.target }})
+    needs: quality-gate
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64
+            args: --release --out dist
+          - os: ubuntu-latest
+            target: aarch64
+            args: --release --out dist
+          - os: windows-latest
+            target: x64
+            args: --release --out dist
+          - os: macos-13
+            target: x86_64
+            args: --release --out dist
+          - os: macos-14
+            target: aarch64
+            args: --release --out dist
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build wheels
+        uses: PyO3/maturin-action@v1
+        with:
+          maturin-version: ${{ env.MATURIN_VERSION }}
+          target: ${{ matrix.target }}
+          args: ${{ matrix.args }}
+
+      - name: Upload wheel artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.os }}-${{ matrix.target }}
+          path: dist/*
+
+  build-sdist:
+    runs-on: ubuntu-latest
+    needs: quality-gate
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build sdist
+        run: |
+          python -m pip install --upgrade pip
+          pip install maturin
+          maturin sdist --out dist
+
+      - name: Upload sdist
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdist
+          path: dist/*
+
+  prepare-release-notes:
     runs-on: ubuntu-latest
     needs: quality-gate
     steps:
@@ -77,15 +141,6 @@ jobs:
             --changelog CHANGELOG.md \
             --out release_notes.md
 
-      - name: Build artifacts
-        run: maturin build --release --sdist
-
-      - name: Upload dist artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: target/wheels/*
-
       - name: Upload release notes
         uses: actions/upload-artifact@v4
         with:
@@ -96,14 +151,21 @@ jobs:
 
   publish-pypi:
     runs-on: ubuntu-latest
-    needs: prepare-release
+    needs: [build-wheels, build-sdist, prepare-release-notes]
     permissions:
       id-token: write
     steps:
-      - name: Download dist artifacts
+      - name: Download all wheel artifacts
         uses: actions/download-artifact@v4
         with:
-          name: dist
+          pattern: wheels-*
+          path: dist
+          merge-multiple: true
+
+      - name: Download sdist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sdist
           path: dist
 
       - name: Publish to PyPI
@@ -113,14 +175,21 @@ jobs:
 
   github-release:
     runs-on: ubuntu-latest
-    needs: [quality-gate, prepare-release, publish-pypi]
+    needs: [publish-pypi, prepare-release-notes]
     permissions:
       contents: write
     steps:
-      - name: Download dist artifacts
+      - name: Download all wheel artifacts
         uses: actions/download-artifact@v4
         with:
-          name: dist
+          pattern: wheels-*
+          path: dist
+          merge-multiple: true
+
+      - name: Download sdist artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: sdist
           path: dist
 
       - name: Download release notes

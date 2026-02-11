@@ -9,7 +9,7 @@
 ## Install from PyPI
 
 ```bash
-pip install vyro
+pip install "vyro>=0.2.2" --only-binary=:all:
 ```
 
 ## Verify installation
