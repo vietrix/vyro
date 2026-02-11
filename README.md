@@ -96,7 +96,7 @@ Vyro is a backend framework that combines Python developer experience with a Rus
 ### Install from PyPI
 
 ```bash
-pip install vyro
+pip install "vyro>=0.2.2" --only-binary=:all:
 ```
 
 ### Local development setup
