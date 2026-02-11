@@ -71,9 +71,6 @@ jobs:
           - os: windows-latest
             target: x64
             args: --release --out dist
-          - os: macos-13
-            target: x86_64
-            args: --release --out dist
           - os: macos-14
             target: aarch64
             args: --release --out dist
