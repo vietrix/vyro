@@ -56,6 +56,10 @@ def load_vyro_app(target: str) -> Vyro:
         raise typer.Exit(code=2)
 
     module_name, attr_name = target.split(":", maxsplit=1)
+    cwd = str(Path.cwd())
+    if cwd not in sys.path:
+        sys.path.insert(0, cwd)
+
     try:
         module = importlib.import_module(module_name)
     except Exception as exc:

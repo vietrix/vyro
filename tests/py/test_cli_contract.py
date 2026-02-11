@@ -1,10 +1,13 @@
 import json
+import sys
 from pathlib import Path
 
 from typer.testing import CliRunner
 
 from vyro.cli.main import app
 from vyro.cli.commands import core as core_cmd
+from vyro.cli.runtime import load_vyro_app
+from vyro.app.vyro import Vyro
 
 
 def test_cli_help() -> None:
@@ -68,6 +71,24 @@ def test_cli_run_requires_valid_app_target() -> None:
     runner = CliRunner()
     result = runner.invoke(app, ["run", "--app", "invalid-target"])
     assert result.exit_code == 2
+
+
+def test_load_vyro_app_imports_module_from_current_working_directory(
+    tmp_path, monkeypatch
+) -> None:  # type: ignore[no-untyped-def]
+    app_module = tmp_path / "app.py"
+    app_module.write_text(
+        "from vyro import Vyro\n"
+        "app = Vyro()\n",
+        encoding="utf-8",
+    )
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setattr(sys, "path", [entry for entry in sys.path if entry and entry != str(tmp_path)])
+    sys.modules.pop("app", None)
+
+    loaded = load_vyro_app("app:app")
+
+    assert isinstance(loaded, Vyro)
 
 
 def test_cli_migrate_dry_run() -> None:
